@@ -11,17 +11,17 @@ using [NestJS](https://nestjs.com/) as the backend framework and
 Create a `.env` file with the following environment variables inside the backend
 folder:
 
-`DATABASE_URL`: postgres://`dbName`:`dbPassword`@`dbHost`:`dbPort`/`dbName`
+`DATABASE_URL`: postgres://`dbName`:`dbPassword`@`dbHost`:`dbPort`/`dbName` (e.g. `postgres://handijob:handijob@localhost:5432/handijob`)
 
-`JWT_ACCESS_TOKEN_SECRET`: Secret key for signing JWT access tokens
+`JWT_ACCESS_TOKEN_SECRET`: Secret key for signing JWT access tokens. (e.g. `handicap_access`)
 
 `JWT_ACCESS_TOKEN_EXPIRATION_TIME`: Expiration time in ms for signing JWT access
-tokens
+tokens. (e.g. `8640` which is one day)
 
-`JWT_REFRESH_TOKEN_SECRET`: Secret key for signing JWT refresh tokens
+`JWT_REFRESH_TOKEN_SECRET`: Secret key for signing JWT refresh tokens (e.g. `handijob_refresh`)
 
 `JWT_REFRESH_TOKEN_EXPIRATION_TIME`: Expiration time in ms for signing JWT refresh
-tokens
+tokens. (e.g. `31540000` which is one year)
 
 ### Step 2: Install dependencies
 
