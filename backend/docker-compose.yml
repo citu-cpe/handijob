@@ -2,16 +2,16 @@ version: '3'
 
 services:
   postgres:
-    container_name: template_postgres
+    container_name: handijob_postgres
     image: postgres:13
     ports:
       - 5432:5432
     volumes:
       - pg_data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_USER=template
-      - POSTGRES_PASSWORD=template
-      - POSTGRES_DB=template
+      - POSTGRES_USER=handijob
+      - POSTGRES_PASSWORD=handijob
+      - POSTGRES_DB=handijob
       - PGDATA=/var/lib/postgresql/data/pgdata
     networks:
       - postgres
@@ -19,15 +19,15 @@ services:
   pgadmin:
       links:
         - postgres:postgres
-      container_name: template_pgadmin
+      container_name: handijob_pgadmin
       image: dpage/pgadmin4
       ports:
         - 8080:80
       volumes:
         - pg_admin_data:/root/.pgadmin
       environment:
-        - PGADMIN_DEFAULT_EMAIL=template@template.com
-        - PGADMIN_DEFAULT_PASSWORD=template
+        - PGADMIN_DEFAULT_EMAIL=handijob@handijob.com
+        - PGADMIN_DEFAULT_PASSWORD=handijob
       networks:
         - postgres
 
