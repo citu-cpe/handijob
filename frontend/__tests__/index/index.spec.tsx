@@ -8,7 +8,7 @@ describe('Home Page', () => {
 
   it('shows landing page', () => {
     const heading = screen.getByRole<HTMLHeadingElement>('heading', {
-      name: 'NextJS/NestJS Template',
+      name: /handijob/i,
     });
 
     const loginLink = screen.getByRole<HTMLAnchorElement>('link', {
