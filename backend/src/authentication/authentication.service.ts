@@ -9,7 +9,7 @@ import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { RegisterUserDTO } from './dto/register-user.dto';
-import { TokenPayload } from './types/tokenPayload.interface';
+import { TokenPayload } from './types/token-payload.interface';
 import { PostgresErrorCode } from '../database/postgresErrorCodes.enum';
 import { LoginUserDTO } from './dto/login-user.dto';
 import { LoginResponseDTO } from './dto/login-response.dto';
@@ -72,8 +72,9 @@ export class AuthenticationService {
   }
 
   public async refresh(refreshToken?: string): Promise<AccessTokenDTO> {
-    if (!refreshToken)
+    if (!refreshToken) {
       throw new UnauthorizedException({ invalidRefreshToken: true });
+    }
 
     const payload = this.jwtService.decode(refreshToken) as TokenPayload;
 
