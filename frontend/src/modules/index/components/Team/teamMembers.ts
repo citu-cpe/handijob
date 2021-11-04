@@ -14,4 +14,11 @@ const dina: TeamMember = {
     'https://scontent.fceb2-1.fna.fbcdn.net/v/t1.6435-9/84189333_4058323397527037_7186479514644381696_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeEKaltmcp7vgyfXbFYpKuQjkstIh7UAFBGSy0iHtQAUER-2P_7fhxC1TIGavQXOjiazWV3feJbDWPT1yW1E-Zou&_nc_ohc=COFNNhYeoJMAX8sLRvC&_nc_ht=scontent.fceb2-1.fna&oh=3c3e3673cedefea14108c8bc270372a8&oe=61A8EF8F',
 };
 
-export const teamMembers: TeamMember[] = [ej, dina];
+const princh: TeamMember = {
+  name: 'Princh Harold Cañal',
+  role: 'Developer and Scrum Master',
+  imageUrl:
+    'https://static.wixstatic.com/media/52abf6_b7699713df634b36bf42cf9c5d2ceffb~mv2.jpg/v1/fill/w_612,h_614,al_c,q_85,usm_0.66_1.00_0.01/Studioportrait.webp',
+};
+
+export const teamMembers: TeamMember[] = [ej, dina, princh];
