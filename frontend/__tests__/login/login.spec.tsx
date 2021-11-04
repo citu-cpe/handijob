@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { Login } from '../../src/modules/login/components/Login';
+import { Login } from '../../src/modules/login/components/Login/Login';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import userEvent from '@testing-library/user-event';
 

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Landing } from '../../src/modules/index/components/Landing';
+import { Landing } from '../../src/modules/index/components/Landing/Landing';
 
 describe('Home Page', () => {
   beforeEach(() => {
