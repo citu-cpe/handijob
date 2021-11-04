@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { Landing } from '../../src/modules/index/components/Landing';
+import { Landing } from '../../src/modules/index/components/Landing/Landing';
 
 describe('Home Page', () => {
   beforeEach(() => {
@@ -8,7 +8,7 @@ describe('Home Page', () => {
 
   it('shows landing page', () => {
     const heading = screen.getByRole<HTMLHeadingElement>('heading', {
-      name: /handijob/i,
+      name: 'HandiJob',
     });
 
     const loginLink = screen.getByRole<HTMLAnchorElement>('link', {

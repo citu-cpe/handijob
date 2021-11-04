@@ -1,6 +1,6 @@
 import { Center, Heading, Button } from '@chakra-ui/react';
 import React from 'react';
-import { useLogout } from '../hooks/useLogout';
+import { useLogout } from '../../hooks/useLogout';
 
 export const Home = () => {
   const logout = useLogout().mutate;
