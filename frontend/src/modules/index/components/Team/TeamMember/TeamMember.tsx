@@ -1,4 +1,4 @@
-import { Box, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
 
 export interface TeamMember {
@@ -21,11 +21,15 @@ export const TeamMember = ({ teamMember }: TeamMemberProps) => {
       bgColor='gray.50'
       shadow='md'
     >
-      <Image
-        src={teamMember.imageUrl}
-        alt='Princh Canal'
+      <Box
+        bgColor='gray.50'
+        h='20rem'
+        bgImg={`url("${teamMember.imageUrl}")`}
+        bgRepeat='no-repeat'
+        bgPos='center'
+        bgSize='cover'
         borderTopRadius={borderRadius}
-      />
+      ></Box>
       <Box p='5'>
         <Heading size='md'>{teamMember.name}</Heading>
         <Text fontStyle='italic'>{teamMember.role}</Text>
