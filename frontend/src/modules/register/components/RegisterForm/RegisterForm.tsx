@@ -1,24 +1,27 @@
-import { Box, Button, Flex, Link } from '@chakra-ui/react';
-import { FieldProps, Field, Form, Formik } from 'formik';
-import { Input } from '../../../shared/components/form/Input/Input';
-import React from 'react';
-import { useLogin } from '../hooks/useLogin';
+import { Input } from '../../../../shared/components/form/Input/Input';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
-import { LoginUserDTO } from 'generated-api';
+import { FieldProps, Field, Form, Formik } from 'formik';
+import React from 'react';
+import { Box, Button, Flex, Link } from '@chakra-ui/react';
+import { useRegister } from '../../hooks/useRegister';
+import { RegisterUserDTO } from 'generated-api';
 
-export const LoginForm = () => {
-  const mutation = useLogin();
+export const RegisterForm = () => {
+  const mutation = useRegister();
 
-  const onSubmit = (loginDTO: LoginUserDTO) => {
-    mutation.mutate(loginDTO);
+  const onSubmit = (registerDTO: RegisterUserDTO) => {
+    mutation.mutate(registerDTO);
   };
 
-  const initialValues = { email: '', password: '' };
+  const initialValues = { email: '', username: '', password: '' };
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().required('Required'),
+    username: Yup.string().required('Required'),
+    password: Yup.string()
+      .min(4, 'Password must be at least 4 characters')
+      .required('Required'),
   });
 
   return (
@@ -31,8 +34,22 @@ export const LoginForm = () => {
         {() => (
           <Form noValidate>
             <Box mb='4'>
+              <Field name='username'>
+                {(fieldProps: FieldProps<string, RegisterUserDTO>) => (
+                  <Input
+                    fieldProps={fieldProps}
+                    name='username'
+                    label='Username'
+                    type='text'
+                    id='username'
+                    borderColor='gray.300'
+                    bgColor='gray.50'
+                    color='gray.800'
+                  />
+                )}
+              </Field>
               <Field name='email' type='email'>
-                {(fieldProps: FieldProps<string, LoginUserDTO>) => (
+                {(fieldProps: FieldProps<string, RegisterUserDTO>) => (
                   <Input
                     fieldProps={fieldProps}
                     name='email'
@@ -46,7 +63,7 @@ export const LoginForm = () => {
                 )}
               </Field>
               <Field name='password' type='password'>
-                {(fieldProps: FieldProps<string, LoginUserDTO>) => (
+                {(fieldProps: FieldProps<string, RegisterUserDTO>) => (
                   <Input
                     fieldProps={fieldProps}
                     name='password'
@@ -62,7 +79,7 @@ export const LoginForm = () => {
             </Box>
             <Box mb='4'>
               <Button
-                data-cy='login-submit-btn'
+                data-cy='register-submit-btn'
                 formNoValidate
                 type='submit'
                 isLoading={mutation.isLoading}
@@ -71,15 +88,15 @@ export const LoginForm = () => {
                 color='gray.50'
                 _hover={{ bgColor: 'gray.800', color: 'gray.50' }}
               >
-                Log In
+                Register
               </Button>
             </Box>
           </Form>
         )}
       </Formik>
       <Flex justifyContent='right' color='gray.500'>
-        <NextLink href='/register' passHref>
-          <Link>Register</Link>
+        <NextLink href='/login' passHref>
+          <Link>Log In</Link>
         </NextLink>
       </Flex>
     </Box>
