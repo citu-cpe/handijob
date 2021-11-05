@@ -18,7 +18,7 @@ const princh: TeamMember = {
   name: 'Princh Harold Cañal',
   role: 'Developer and Scrum Master',
   imageUrl:
-    'https://static.wixstatic.com/media/52abf6_b7699713df634b36bf42cf9c5d2ceffb~mv2.jpg/v1/fill/w_612,h_614,al_c,q_85,usm_0.66_1.00_0.01/Studioportrait.webp',
+    'https://scontent.fceb1-2.fna.fbcdn.net/v/t1.6435-9/245525504_4764237243636487_2060169419405097316_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=OhL4ePqUGuoAX-LHsSJ&tn=GK2rfZgBnALfkJnZ&_nc_ht=scontent.fceb1-2.fna&oh=824bc62d5145c32d9945ef5b5a98ff88&oe=61AA8C73',
 };
 
 const patrick: TeamMember = {
