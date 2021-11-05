@@ -13,5 +13,10 @@ const dina: TeamMember = {
   imageUrl:
     'https://scontent.fceb2-1.fna.fbcdn.net/v/t1.6435-9/84189333_4058323397527037_7186479514644381696_n.jpg?_nc_cat=108&ccb=1-5&_nc_sid=e3f864&_nc_eui2=AeEKaltmcp7vgyfXbFYpKuQjkstIh7UAFBGSy0iHtQAUER-2P_7fhxC1TIGavQXOjiazWV3feJbDWPT1yW1E-Zou&_nc_ohc=COFNNhYeoJMAX8sLRvC&_nc_ht=scontent.fceb2-1.fna&oh=3c3e3673cedefea14108c8bc270372a8&oe=61A8EF8F',
 };
-
-export const teamMembers: TeamMember[] = [ej, dina];
+const patrick: TeamMember = {
+  name: 'John Patrick Ryan Mandal',
+  role: 'Developer',
+  imageUrl:
+    'https://scontent.fmnl4-5.fna.fbcdn.net/v/t31.18172-8/22548756_1999054230365900_1945602351771038915_o.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeEZU_JyvtlRTG-DLgMKNYbJKGLwTuhFHzcoYvBO6EUfN89TJyUbBPxFfYXaIjnEBJe2e59TsWvyfPUwwZc1cIhT&_nc_ohc=IooV-rTGul4AX_68D7O&_nc_ht=scontent.fmnl4-5.fna&oh=e28bf508a57a078eaa6b3fa472d643d9&oe=61AB6540',
+};
+export const teamMembers: TeamMember[] = [ej, dina, patrick];
