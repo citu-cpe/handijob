@@ -21,4 +21,11 @@ const princh: TeamMember = {
     'https://static.wixstatic.com/media/52abf6_b7699713df634b36bf42cf9c5d2ceffb~mv2.jpg/v1/fill/w_612,h_614,al_c,q_85,usm_0.66_1.00_0.01/Studioportrait.webp',
 };
 
-export const teamMembers: TeamMember[] = [ej, dina, princh];
+const patrick: TeamMember = {
+  name: 'John Patrick Ryan Mandal',
+  role: 'Developer',
+  imageUrl:
+    'https://scontent.fmnl4-5.fna.fbcdn.net/v/t31.18172-8/22548756_1999054230365900_1945602351771038915_o.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeEZU_JyvtlRTG-DLgMKNYbJKGLwTuhFHzcoYvBO6EUfN89TJyUbBPxFfYXaIjnEBJe2e59TsWvyfPUwwZc1cIhT&_nc_ohc=IooV-rTGul4AX_68D7O&_nc_ht=scontent.fmnl4-5.fna&oh=e28bf508a57a078eaa6b3fa472d643d9&oe=61AB6540',
+};
+
+export const teamMembers: TeamMember[] = [ej, dina, patrick, princh];
