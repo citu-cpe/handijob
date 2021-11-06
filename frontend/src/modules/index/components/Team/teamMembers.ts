@@ -28,4 +28,11 @@ const patrick: TeamMember = {
     'https://scontent.fmnl4-5.fna.fbcdn.net/v/t31.18172-8/22548756_1999054230365900_1945602351771038915_o.jpg?_nc_cat=111&ccb=1-5&_nc_sid=174925&_nc_eui2=AeEZU_JyvtlRTG-DLgMKNYbJKGLwTuhFHzcoYvBO6EUfN89TJyUbBPxFfYXaIjnEBJe2e59TsWvyfPUwwZc1cIhT&_nc_ohc=IooV-rTGul4AX_68D7O&_nc_ht=scontent.fmnl4-5.fna&oh=e28bf508a57a078eaa6b3fa472d643d9&oe=61AB6540',
 };
 
-export const teamMembers: TeamMember[] = [ej, dina, patrick, princh];
+const seth: TeamMember = {
+  name: 'Seth Angelo L. Llenos',
+  role: 'Product Tester',
+  imageUrl:
+    'https://pbs.twimg.com/profile_images/1456902521469865988/1ew1hlmA_400x400.jpg',
+};
+
+export const teamMembers: TeamMember[] = [ej, dina, patrick, princh, seth];
