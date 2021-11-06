@@ -48,4 +48,19 @@ export interface UserDTO {
    * @memberof UserDTO
    */
   username: string;
+  /**
+   *
+   * @type {Array<string>}
+   * @memberof UserDTO
+   */
+  accountTypes: Array<UserDTOAccountTypesEnum>;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum UserDTOAccountTypesEnum {
+  Freelancer = 'FREELANCER',
+  Employer = 'EMPLOYER',
 }
