@@ -15,6 +15,9 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import * as helmet from 'helmet';
+import { AccountTypeModule } from '../../src/account-type/account-type.module';
+import { FreelancerModule } from '../../src/freelancer/freelancer.module';
+import { EmployerModule } from '../../src/employer/employer.module';
 
 // TODO: convert to typescript
 export default class TestEnvironment extends NodeEnvironment {
@@ -80,6 +83,9 @@ export default class TestEnvironment extends NodeEnvironment {
         }),
         AuthenticationModule,
         UserModule,
+        AccountTypeModule,
+        FreelancerModule,
+        EmployerModule,
       ],
       controllers: [AppController],
       providers: [AppService],

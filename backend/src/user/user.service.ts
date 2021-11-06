@@ -4,10 +4,14 @@ import { User } from './user.entity';
 import { RegisterUserDTO } from '../authentication/dto/register-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user.repository';
+import { AccountTypeService } from '../account-type/account-type.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly accountTypeService: AccountTypeService
+  ) {}
 
   public async findByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findByEmail(email);
@@ -30,8 +34,11 @@ export class UserService {
   }
 
   public async register(userData: RegisterUserDTO): Promise<User> {
-    const newUser = this.userRepository.create(userData);
+    const user = await this.fromRegisterDTO(userData);
+
+    const newUser = this.userRepository.create(user);
     await this.userRepository.save(newUser);
+
     return newUser;
   }
 
@@ -65,5 +72,21 @@ export class UserService {
     return this.userRepository.update(userId, {
       currentHashedRefreshToken: null,
     });
+  }
+
+  public async fromRegisterDTO(registerDTO: RegisterUserDTO): Promise<User> {
+    const { username, email, password, accountTypes } = registerDTO;
+
+    const user = new User();
+    user.username = username;
+    user.email = email;
+    user.password = password;
+
+    const accountTypesToAdd = await this.accountTypeService.findByAccountTypes(
+      accountTypes
+    );
+    user.accountTypes = accountTypesToAdd;
+
+    return user;
   }
 }

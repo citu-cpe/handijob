@@ -1,4 +1,11 @@
-import { IsDateString, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDateString,
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
+import { AccountTypes } from '../../account-type/types/account-types.enum';
 
 export class UserDTO {
   @IsString()
@@ -19,4 +26,8 @@ export class UserDTO {
   @IsString()
   @IsNotEmpty({ message: 'Email is required' })
   public username: string;
+
+  @IsArray()
+  @IsNotEmpty({ message: 'Account types is required' })
+  public accountTypes: AccountTypes[];
 }

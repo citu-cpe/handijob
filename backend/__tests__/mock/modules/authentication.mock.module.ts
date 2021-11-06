@@ -5,11 +5,15 @@ import { PassportModule } from '@nestjs/passport';
 import { AuthenticationController } from '../../../src/authentication/authentication.controller';
 import { AuthenticationService } from '../../../src/authentication/authentication.service';
 import { JwtStrategy } from '../../../src/authentication/strategies/jwt.strategy';
+import { MockEmployerModule } from './employer.mock.module';
+import { MockFreelancerModule } from './freelancer.mock.module';
 import { MockUserModule } from './user.mock.module';
 
 @Module({
   imports: [
     MockUserModule,
+    MockFreelancerModule,
+    MockEmployerModule,
     ConfigModule,
     PassportModule,
     JwtModule.registerAsync({

@@ -7,6 +7,9 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { DatabaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { AuthorizationModule } from './authorization/authorization.module';
+import { AccountTypeModule } from './account-type/account-type.module';
+import { FreelancerModule } from './freelancer/freelancer.module';
+import { EmployerModule } from './employer/employer.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { AuthorizationModule } from './authorization/authorization.module';
     AuthenticationModule,
     UserModule,
     AuthorizationModule,
+    AccountTypeModule,
+    FreelancerModule,
+    EmployerModule,
   ],
   controllers: [AppController],
   providers: [AppService],

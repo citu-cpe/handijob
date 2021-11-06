@@ -11,6 +11,8 @@ import { UserDTO } from '../../src/user/dto/user.dto';
 import { createApp } from './utils/create-app';
 import { AccessTokenDTO } from '../../src/authentication/dto/access-token.dto';
 import { LoginResponseDTO } from '../../src/authentication/dto/login-response.dto';
+import { AccountTypes } from '../../src/account-type/types/account-types.enum';
+import { AccountType } from '../../src/account-type/account-type.entity';
 
 describe('AuthenticationController', () => {
   let loginRoute: string;
@@ -37,13 +39,15 @@ describe('AuthenticationController', () => {
     user: LoginUserDTO | RegisterUserDTO
   ): Promise<User> => {
     const mockUser = new User();
+    const accountType = new AccountType();
+    accountType.type = AccountTypes.FREELANCER;
 
     mockUser.id = '';
     mockUser.email = user.email;
     mockUser.createdAt = new Date();
     mockUser.updatedAt = new Date();
     mockUser.password = await bcrypt.hash(user.password, 10);
-    mockUser.currentHashedRefreshToken;
+    mockUser.accountTypes = [accountType];
 
     if (user instanceof RegisterUserDTO) {
       mockUser.username = user.username;
@@ -118,6 +122,7 @@ describe('AuthenticationController', () => {
         username: 'new_mock_user',
         email: 'new_mock@mock.com',
         password: 'mock',
+        accountTypes: [AccountTypes.FREELANCER],
       };
 
       const registerUser = await createMockUser(registerUserDTO);
@@ -151,6 +156,7 @@ describe('AuthenticationController', () => {
         username: 'mock',
         email: 'not an email',
         password: 'mock',
+        accountTypes: [AccountTypes.FREELANCER],
       };
 
       await request.post(registerRoute).expect(HttpStatus.BAD_REQUEST);
@@ -181,6 +187,7 @@ describe('AuthenticationController', () => {
         updatedAt: new Date(),
         email: 'mock@mock.com',
         username: 'mock',
+        accountTypes: [AccountTypes.FREELANCER],
       };
 
       await request.post(logoutRoute).send(userDTO).expect(HttpStatus.OK);

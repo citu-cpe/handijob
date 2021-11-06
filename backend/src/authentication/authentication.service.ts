@@ -14,11 +14,19 @@ import { PostgresErrorCode } from '../database/postgresErrorCodes.enum';
 import { LoginUserDTO } from './dto/login-user.dto';
 import { LoginResponseDTO } from './dto/login-response.dto';
 import { AccessTokenDTO } from './dto/access-token.dto';
+import { FreelancerService } from '../freelancer/freelancer.service';
+import { Freelancer } from '../freelancer/freelancer.entity';
+import { AccountTypes } from '../account-type/types/account-types.enum';
+import { EmployerService } from '../employer/employer.service';
+import { Employer } from '../employer/employer.entity';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthenticationService {
   constructor(
     private readonly userService: UserService,
+    private readonly freelancerService: FreelancerService,
+    private readonly employerService: EmployerService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService
   ) {}
@@ -50,10 +58,12 @@ export class AuthenticationService {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-      await this.userService.register({
+      const user = await this.userService.register({
         ...registerUserDTO,
         password: hashedPassword,
       });
+
+      await this.saveAccountTypeEntities(registerUserDTO.accountTypes, user);
 
       return this.login({ email, password });
     } catch (error) {
@@ -138,5 +148,22 @@ export class AuthenticationService {
 
   public tokenExpired(exp: number) {
     return Date.now() > exp * 1000;
+  }
+
+  private async saveAccountTypeEntities(
+    accountTypes: AccountTypes[],
+    user: User
+  ): Promise<void> {
+    if (accountTypes.includes(AccountTypes.FREELANCER)) {
+      const freelancer = new Freelancer();
+      freelancer.user = user;
+      await this.freelancerService.save(freelancer);
+    }
+
+    if (accountTypes.includes(AccountTypes.EMPLOYER)) {
+      const employer = new Employer();
+      employer.user = user;
+      await this.employerService.save(employer);
+    }
   }
 }
