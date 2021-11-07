@@ -30,7 +30,7 @@ export const RegisterForm = () => {
     email: '',
     username: '',
     password: '',
-    accountTypes: [],
+    accountTypes: [RegisterUserDTOAccountTypesEnum.Freelancer],
   };
 
   const validationSchema = Yup.object({
