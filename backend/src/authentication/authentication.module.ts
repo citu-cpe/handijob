@@ -6,10 +6,14 @@ import { UserModule } from '../user/user.module';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from './authentication.controller';
+import { FreelancerModule } from '../freelancer/freelancer.module';
+import { EmployerModule } from '../employer/employer.module';
 
 @Module({
   imports: [
     UserModule,
+    FreelancerModule,
+    EmployerModule,
     ConfigModule,
     PassportModule,
     JwtModule.registerAsync({

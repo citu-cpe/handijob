@@ -1,7 +1,7 @@
-import { UserRepository } from '../../../src/user/user.repository';
+import { AccountTypeRepository } from '../../../src/account-type/account-type.repository';
 import { MockType } from '../utils/mock.type';
 
-export const mockUserRepositoryFactory: () => MockType<UserRepository> =
+export const mockAccountTypeRepositoryFactory: () => MockType<AccountTypeRepository> =
   jest.fn(() => ({
     find: jest.fn(),
     findOne: jest.fn(),
@@ -9,4 +9,5 @@ export const mockUserRepositoryFactory: () => MockType<UserRepository> =
     create: jest.fn(),
     save: jest.fn(),
     update: jest.fn(),
+    findByAccountTypes: jest.fn(),
   }));

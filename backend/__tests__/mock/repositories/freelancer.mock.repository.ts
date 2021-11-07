@@ -1,7 +1,7 @@
-import { UserRepository } from '../../../src/user/user.repository';
+import { FreelancerRepository } from '../../../src/freelancer/freelancer.repository';
 import { MockType } from '../utils/mock.type';
 
-export const mockUserRepositoryFactory: () => MockType<UserRepository> =
+export const mockFreelancerRepositoryFactory: () => MockType<FreelancerRepository> =
   jest.fn(() => ({
     find: jest.fn(),
     findOne: jest.fn(),

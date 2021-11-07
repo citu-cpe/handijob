@@ -32,8 +32,23 @@ export interface RegisterUserDTO {
   username: string;
   /**
    *
+   * @type {Array<string>}
+   * @memberof RegisterUserDTO
+   */
+  accountTypes: Array<RegisterUserDTOAccountTypesEnum>;
+  /**
+   *
    * @type {string}
    * @memberof RegisterUserDTO
    */
   password: string;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum RegisterUserDTOAccountTypesEnum {
+  Freelancer = 'FREELANCER',
+  Employer = 'EMPLOYER',
 }

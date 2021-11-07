@@ -3,9 +3,21 @@ import * as Yup from 'yup';
 import NextLink from 'next/link';
 import { FieldProps, Field, Form, Formik } from 'formik';
 import React from 'react';
-import { Box, Button, Flex, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Link,
+  Select,
+} from '@chakra-ui/react';
 import { useRegister } from '../../hooks/useRegister';
-import { RegisterUserDTO } from 'generated-api';
+import {
+  RegisterUserDTO,
+  RegisterUserDTOAccountTypesEnum,
+} from 'generated-api';
 
 export const RegisterForm = () => {
   const mutation = useRegister();
@@ -14,7 +26,12 @@ export const RegisterForm = () => {
     mutation.mutate(registerDTO);
   };
 
-  const initialValues = { email: '', username: '', password: '' };
+  const initialValues = {
+    email: '',
+    username: '',
+    password: '',
+    accountTypes: [RegisterUserDTOAccountTypesEnum.Freelancer],
+  };
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email').required('Required'),
@@ -22,6 +39,9 @@ export const RegisterForm = () => {
     password: Yup.string()
       .min(4, 'Password must be at least 4 characters')
       .required('Required'),
+    accountTypes: Yup.array()
+      .min(1, 'Choose at least one account type')
+      .required(),
   });
 
   return (
@@ -74,6 +94,49 @@ export const RegisterForm = () => {
                     bgColor='gray.50'
                     color='gray.800'
                   />
+                )}
+              </Field>
+              <Field name='accountTypes'>
+                {(fieldProps: FieldProps<string, RegisterUserDTO>) => (
+                  <FormControl
+                    isInvalid={
+                      !!fieldProps.form.errors.accountTypes &&
+                      !!fieldProps.form.touched.accountTypes
+                    }
+                    isRequired
+                    mb='4'
+                  >
+                    <FormLabel
+                      htmlFor='accountTypes'
+                      color='gray.800'
+                      fontWeight='semibold'
+                    >
+                      Become a(n):
+                    </FormLabel>
+                    <Select
+                      id='accountTypes'
+                      {...fieldProps.field}
+                      onChange={(e) => {
+                        fieldProps.form.setFieldValue(
+                          'accountTypes',
+                          [e.target.value],
+                          true
+                        );
+                      }}
+                      value={fieldProps.field.value[0]}
+                    >
+                      {Object.values(RegisterUserDTOAccountTypesEnum).map(
+                        (val) => (
+                          <option key={val} value={val}>
+                            {val}
+                          </option>
+                        )
+                      )}
+                    </Select>
+                    <FormErrorMessage>
+                      {fieldProps.form.errors.accountTypes}
+                    </FormErrorMessage>
+                  </FormControl>
                 )}
               </Field>
             </Box>
