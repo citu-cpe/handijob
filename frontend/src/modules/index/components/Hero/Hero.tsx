@@ -7,6 +7,7 @@ export const Hero = () => {
       <Center h='100%' w='100%' flexDir='column'>
         <Heading display='block'>Welcome to HandiJob</Heading>
         <Text>The best place for freelancers and employers</Text>
+        <Text>Apply Now !</Text>
       </Center>
     </Box>
   );
