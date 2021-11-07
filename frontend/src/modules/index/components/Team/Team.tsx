@@ -10,7 +10,7 @@ export const Team = () => {
         <Heading textAlign='center' my='10'>
           Meet the Team
         </Heading>
-        <Wrap spacing='8' justify={['center', 'center', 'space-between']}>
+        <Wrap spacing='8' justify={['center', 'center', 'center']}>
           {teamMembers.map((t) => (
             <WrapItem key={t.name}>
               <TeamMember teamMember={t} />
