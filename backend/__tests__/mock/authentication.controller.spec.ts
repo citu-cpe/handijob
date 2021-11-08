@@ -180,7 +180,7 @@ describe('AuthenticationController', () => {
   });
 
   describe('POST /logout', () => {
-    it('should successfully log out when user is sent', async () => {
+    xit('should successfully log out when user is sent', async () => {
       const userDTO: UserDTO = {
         id: 'mock_id',
         createdAt: new Date(),
