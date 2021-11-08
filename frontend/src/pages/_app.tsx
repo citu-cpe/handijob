@@ -6,8 +6,9 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { ApiProvider } from '../shared/providers/ApiProvider';
 import { useGlobalStore } from '../shared/stores';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { UserDTO } from 'generated-api';
+import { Navbar } from '../modules/index/components/Navbar/Navbar';
 
 const queryClient = new QueryClient();
 
@@ -18,7 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     setUser(getUser());
-  }, [setUser, getUser]);
+  }, [getUser]);
 
   if (pageProps.protected && user) {
     router.push('/login');
@@ -32,6 +33,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider>
       <ApiProvider>
         <QueryClientProvider client={queryClient}>
+          <Navbar positionFixed loggedIn={!!user} />
           <Component {...pageProps} />
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>

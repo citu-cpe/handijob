@@ -3,23 +3,25 @@ import type { FieldProps } from 'formik';
 import {
   FormControl,
   FormLabel,
-  Input as ChakraInput,
   FormErrorMessage,
-  InputProps as ChakraInputProps,
+  CheckboxGroup as ChakraCheckboxGroup,
+  CheckboxGroupProps as ChakraCheckboxGroupProps,
 } from '@chakra-ui/react';
 
-interface InputProps {
+interface CheckboxGroupProps {
   fieldProps: FieldProps;
   label?: string;
+  name?: string;
+  id?: string;
   isRequired?: boolean;
 }
 
-export const Input = ({
+export const CheckboxGroup = ({
   fieldProps: { field, form },
   label,
   isRequired,
   ...props
-}: InputProps & ChakraInputProps) => (
+}: CheckboxGroupProps & ChakraCheckboxGroupProps) => (
   <FormControl
     isInvalid={!!form.errors[props.name!] && !!form.touched[props.name!]}
     isRequired={isRequired}
@@ -35,7 +37,7 @@ export const Input = ({
         {label}
       </FormLabel>
     )}
-    <ChakraInput {...field} {...props} />
+    <ChakraCheckboxGroup {...field} {...props} />
     <FormErrorMessage>{form.errors[props.name!]}</FormErrorMessage>
   </FormControl>
 );

@@ -25,6 +25,7 @@ export class JobOfferService {
   public async getAllJobOffers(): Promise<JobOfferDTO[]> {
     const jobOffers = await this.jobOfferRepository.find({
       relations: ['employer'],
+      order: { createdAt: 'DESC' },
     });
 
     return jobOffers.map((jobOffer) => jobOffer.toDTO());

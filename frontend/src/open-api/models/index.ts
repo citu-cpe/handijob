@@ -1,4 +1,7 @@
 export * from './access-token-dto';
+export * from './category-dto';
+export * from './create-job-offer-dto';
+export * from './job-offer-dto';
 export * from './login-response-dto';
 export * from './login-user-dto';
 export * from './refresh-token-dto';

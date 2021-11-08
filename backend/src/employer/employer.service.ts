@@ -12,6 +12,6 @@ export class EmployerService {
   }
 
   public findByUser(user: User): Promise<Employer> {
-    return this.employerRepository.findOneOrFail({ user });
+    return this.employerRepository.findOne({ user });
   }
 }

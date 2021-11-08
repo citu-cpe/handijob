@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { User } from '../user/user.entity';
 import { Freelancer } from './freelancer.entity';
 import { FreelancerRepository } from './freelancer.repository';
 
@@ -8,5 +9,9 @@ export class FreelancerService {
 
   public save(freelancer: Freelancer) {
     return this.freelancerRepository.save(freelancer);
+  }
+
+  public findByUser(user: User): Promise<Freelancer> {
+    return this.freelancerRepository.findOne({ user });
   }
 }

@@ -5,7 +5,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -26,7 +26,9 @@ export class JobOffer {
   @UpdateDateColumn({ name: 'updated_at' })
   public updatedAt: Date;
 
-  @OneToOne(() => Employer)
+  @ManyToOne(() => Employer, (employer) => employer.jobOffers, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'employer_id' })
   public employer: Employer;
 

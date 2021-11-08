@@ -1,14 +1,15 @@
 import { VStack, Box } from '@chakra-ui/react';
 import React from 'react';
+import { useGlobalStore } from '../../../../shared/stores';
 import { Hero } from '../Hero/Hero';
-import { Navbar } from '../Navbar/Navbar';
 import { Team } from '../Team/Team';
 
 export const Landing = () => {
+  const navbarHeight = useGlobalStore((state) => state.navbarHeight);
+
   return (
     <>
-      <Navbar positionFixed />
-      <Box mt='75px' pb='50'>
+      <Box mt={navbarHeight} pb='50'>
         <VStack spacing='0'>
           <Hero />
           <Team />

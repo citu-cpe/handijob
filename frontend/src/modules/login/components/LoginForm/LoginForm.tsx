@@ -42,6 +42,7 @@ export const LoginForm = () => {
                     borderColor='gray.300'
                     bgColor='gray.50'
                     color='gray.800'
+                    isRequired
                   />
                 )}
               </Field>
@@ -56,6 +57,7 @@ export const LoginForm = () => {
                     borderColor='gray.300'
                     bgColor='gray.50'
                     color='gray.800'
+                    isRequired
                   />
                 )}
               </Field>

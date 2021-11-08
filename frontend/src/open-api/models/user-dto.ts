@@ -54,6 +54,18 @@ export interface UserDTO {
    * @memberof UserDTO
    */
   accountTypes: Array<UserDTOAccountTypesEnum>;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDTO
+   */
+  employerId?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDTO
+   */
+  freelancerId?: string;
 }
 
 /**

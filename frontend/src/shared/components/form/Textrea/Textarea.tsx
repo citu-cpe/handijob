@@ -3,23 +3,23 @@ import type { FieldProps } from 'formik';
 import {
   FormControl,
   FormLabel,
-  Input as ChakraInput,
   FormErrorMessage,
-  InputProps as ChakraInputProps,
+  Textarea as ChakraTextarea,
+  TextareaProps as ChakraTextareaProps,
 } from '@chakra-ui/react';
 
-interface InputProps {
+interface TextareaProps {
   fieldProps: FieldProps;
   label?: string;
   isRequired?: boolean;
 }
 
-export const Input = ({
+export const Textarea = ({
   fieldProps: { field, form },
   label,
   isRequired,
   ...props
-}: InputProps & ChakraInputProps) => (
+}: TextareaProps & ChakraTextareaProps) => (
   <FormControl
     isInvalid={!!form.errors[props.name!] && !!form.touched[props.name!]}
     isRequired={isRequired}
@@ -35,7 +35,7 @@ export const Input = ({
         {label}
       </FormLabel>
     )}
-    <ChakraInput {...field} {...props} />
+    <ChakraTextarea {...field} {...props} />
     <FormErrorMessage>{form.errors[props.name!]}</FormErrorMessage>
   </FormControl>
 );

@@ -42,7 +42,17 @@ export class AuthenticationService {
 
     await this.userService.setCurrentRefreshToken(refreshToken, user.id);
 
+    const employer = await this.employerService.findByUser(user);
+    const freelancer = await this.freelancerService.findByUser(user);
+
     const userDTO = user.toDTO();
+
+    if (employer) {
+      userDTO.employerId = employer.id;
+    }
+    if (freelancer) {
+      userDTO.freelancerId = freelancer.id;
+    }
 
     return {
       user: userDTO,
