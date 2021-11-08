@@ -19,6 +19,9 @@
       "description": "Secret for refresh token",
       "generator": "secret"
     },
-    "JWT_REFRESH_TOKEN_EXPIRATION_TIME": "31540000"
+    "JWT_REFRESH_TOKEN_EXPIRATION_TIME": "31540000",
+    "CLOUDINARY_CLOUD_NAME": "dfxxthku8",
+    "CLOUDINARY_API_KEY": "225299895453173",
+    "CLOUDINARY_API_SECRET": "_e8xRjNayHjAIf_oHfba8lImWGA"
   }
 }

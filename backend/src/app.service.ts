@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Request } from 'express';
+// import { Request } from 'express';
 
 @Injectable()
 export class AppService {
@@ -7,7 +7,7 @@ export class AppService {
     return 'Hello World!';
   }
 
-  public getCsrfToken(req: Request) {
-    return { csrfToken: req.csrfToken() };
-  }
+  // public getCsrfToken(req: Request) {
+  //   return { csrfToken: req.csrfToken() };
+  // }
 }

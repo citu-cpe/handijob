@@ -10,6 +10,8 @@ import { AuthorizationModule } from './authorization/authorization.module';
 import { AccountTypeModule } from './account-type/account-type.module';
 import { FreelancerModule } from './freelancer/freelancer.module';
 import { EmployerModule } from './employer/employer.module';
+import { CategoryModule } from './category/cateogry.module';
+import { JobOfferModule } from './job-offer/job-offer.module';
 
 @Module({
   imports: [
@@ -24,6 +26,9 @@ import { EmployerModule } from './employer/employer.module';
         JWT_ACCESS_TOKEN_EXPIRATION_TIME: Joi.number().required(),
         JWT_REFRESH_TOKEN_SECRET: Joi.string().required(),
         JWT_REFRESH_TOKEN_EXPIRATION_TIME: Joi.number().required(),
+        CLOUDINARY_CLOUD_NAME: Joi.string().required(),
+        CLOUDINARY_API_KEY: Joi.string().required(),
+        CLOUDINARY_API_SECRET: Joi.string().required(),
       }),
     }),
     DatabaseModule,
@@ -33,6 +38,8 @@ import { EmployerModule } from './employer/employer.module';
     AccountTypeModule,
     FreelancerModule,
     EmployerModule,
+    CategoryModule,
+    JobOfferModule,
   ],
   controllers: [AppController],
   providers: [AppService],
