@@ -20,6 +20,10 @@ jobs:
       JWT_ACCESS_TOKEN_EXPIRATION_TIME: 86400
       JWT_REFRESH_TOKEN_SECRET: template_refresh
       JWT_REFRESH_TOKEN_EXPIRATION_TIME: 31540000
+      CLOUDINARY_CLOUD_NAME: dfxxthku8
+      CLOUDINARY_API_KEY: 225299895453173
+      CLOUDINARY_API_SECRET: _e8xRjNayHjAIf_oHfba8lImWGA
+
       IS_CI_BUILD: 1
     steps:
       - setup_remote_docker:
@@ -98,6 +102,9 @@ jobs:
       JWT_ACCESS_TOKEN_EXPIRATION_TIME: 86400
       JWT_REFRESH_TOKEN_SECRET: template_refresh
       JWT_REFRESH_TOKEN_EXPIRATION_TIME: 31540000
+      CLOUDINARY_CLOUD_NAME: dfxxthku8
+      CLOUDINARY_API_KEY: 225299895453173
+      CLOUDINARY_API_SECRET: _e8xRjNayHjAIf_oHfba8lImWGA
     steps:
       - checkout
       - run:
@@ -120,8 +127,8 @@ jobs:
 workflows:
   test:
     jobs:
-      - test-backend-integration:
-          name: Backend Integration Tests
+      # - test-backend-integration:
+      #     name: Backend Integration Tests
       - test-backend-mock:
           name: Backend Mock Integration Tests
       - test-frontend:

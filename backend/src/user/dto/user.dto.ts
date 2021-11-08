@@ -4,12 +4,13 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
+  IsUUID,
 } from 'class-validator';
 import { AccountTypes } from '../../account-type/types/account-types.enum';
 
 export class UserDTO {
-  @IsString()
-  @IsNotEmpty({ message: 'Email is required' })
+  @IsUUID()
+  @IsNotEmpty({ message: 'Id is required' })
   public id: string;
 
   @IsDateString(undefined, { message: 'Invalid date string' })
