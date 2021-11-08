@@ -15,8 +15,13 @@ import { useGetJobOffers } from './hooks/useGetJobOffers';
 import { JobOffer } from './components/JobOffer/JobOffer';
 import { JobOfferForm } from './components/JobOfferForm.tsx/JobOfferForm';
 import { useGlobalStore } from '../../../../shared/stores';
+import { UserDTO } from 'generated-api';
 
-export const Home = () => {
+interface HomeProps {
+  user: UserDTO;
+}
+
+export const Home = ({ user }: HomeProps) => {
   const { jobOffers } = useGetJobOffers();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navbarHeight = useGlobalStore((state) => state.navbarHeight);
@@ -38,16 +43,18 @@ export const Home = () => {
         </ModalContent>
       </Modal>
 
-      <BottomRightButton
-        onClick={() => {
-          onOpen();
-        }}
-        rounded='full'
-        w='20'
-        h='20'
-      >
-        <AddIcon />
-      </BottomRightButton>
+      {user.employerId && (
+        <BottomRightButton
+          onClick={() => {
+            onOpen();
+          }}
+          rounded='full'
+          w='20'
+          h='20'
+        >
+          <AddIcon />
+        </BottomRightButton>
+      )}
     </Box>
   );
 };

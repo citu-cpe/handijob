@@ -13,7 +13,7 @@ const Index: NextPage = () => {
     setUser(getUser());
   }, [getUser]);
 
-  return user ? <Home /> : <Landing />;
+  return user ? <Home user={user} /> : <Landing />;
 };
 
 export default Index;

@@ -36,11 +36,12 @@ export class JobOfferService {
     createJobOfferDTO: CreateJobOfferDTO,
     image: Express.Multer.File
   ): Promise<JobOfferDTO> {
-    let employer: Employer;
-    try {
-      employer = await this.employerService.findByUser(user);
-    } catch (e) {
-      throw new BadRequestException('User is not an employer');
+    const employer = await this.employerService.findByUser(user);
+
+    if (!employer) {
+      throw new BadRequestException(
+        'You must have an employer account to create a job offer'
+      );
     }
 
     let imageUrl: string;
