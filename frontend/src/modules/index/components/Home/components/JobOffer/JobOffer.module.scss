@@ -1,0 +1,22 @@
+.JobOffer {
+  color: gray;
+  border: 1px solid gray;
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 50%;
+  padding: 1rem;
+  transition: all 0.2s ease-out;
+
+  button {
+    background-color: red;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-out;
+
+    &:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+  }
+}

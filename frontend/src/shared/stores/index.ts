@@ -6,6 +6,7 @@ interface GlobalState {
   getUser: () => UserDTO | undefined;
   setUser: (user: UserDTO) => void;
   removeUser: () => void;
+  navbarHeight: string;
 }
 
 export const useGlobalStore = create<GlobalState>(() => ({
@@ -24,4 +25,5 @@ export const useGlobalStore = create<GlobalState>(() => ({
   removeUser: () => {
     localStorage.removeItem(LocalStorageKeys.USER);
   },
+  navbarHeight: '75px',
 }));

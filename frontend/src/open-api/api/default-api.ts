@@ -39,6 +39,12 @@ import {
 // @ts-ignore
 import { AccessTokenDTO } from '../models';
 // @ts-ignore
+import { CategoryDTO } from '../models';
+// @ts-ignore
+import { CreateJobOfferDTO } from '../models';
+// @ts-ignore
+import { JobOfferDTO } from '../models';
+// @ts-ignore
 import { LoginResponseDTO } from '../models';
 // @ts-ignore
 import { LoginUserDTO } from '../models';
@@ -58,11 +64,149 @@ export const DefaultApiAxiosParamCreator = function (
   return {
     /**
      *
+     * @param {CreateJobOfferDTO} createJobOfferDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getCsrfToken: async (options: any = {}): Promise<RequestArgs> => {
-      const localVarPath = `/api/v1/csrf`;
+    createJobOffer: async (
+      createJobOfferDTO: CreateJobOfferDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createJobOfferDTO' is not null or undefined
+      assertParamExists(
+        'createJobOffer',
+        'createJobOfferDTO',
+        createJobOfferDTO
+      );
+      const localVarPath = `/api/v1/job-offer`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createJobOfferDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {JobOfferDTO} jobOfferDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteJobOffer: async (
+      jobOfferDTO: JobOfferDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'jobOfferDTO' is not null or undefined
+      assertParamExists('deleteJobOffer', 'jobOfferDTO', jobOfferDTO);
+      const localVarPath = `/api/v1/job-offer`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'DELETE',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        jobOfferDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAllCategories: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/category`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAllJobOffers: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/job-offer`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -336,15 +480,86 @@ export const DefaultApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @param {CreateJobOfferDTO} createJobOfferDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    async getCsrfToken(
+    async createJobOffer(
+      createJobOfferDTO: CreateJobOfferDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<JobOfferDTO>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.createJobOffer(
+        createJobOfferDTO,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {JobOfferDTO} jobOfferDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async deleteJobOffer(
+      jobOfferDTO: JobOfferDTO,
       options?: any
     ): Promise<
       (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
     > {
-      const localVarAxiosArgs = await localVarAxiosParamCreator.getCsrfToken(
+      const localVarAxiosArgs = await localVarAxiosParamCreator.deleteJobOffer(
+        jobOfferDTO,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getAllCategories(
+      options?: any
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<Array<CategoryDTO>>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getAllCategories(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getAllJobOffers(
+      options?: any
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<Array<JobOfferDTO>>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getAllJobOffers(
         options
       );
       return createRequestFunction(
@@ -488,12 +703,50 @@ export const DefaultApiFactory = function (
   return {
     /**
      *
+     * @param {CreateJobOfferDTO} createJobOfferDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    getCsrfToken(options?: any): AxiosPromise<void> {
+    createJobOffer(
+      createJobOfferDTO: CreateJobOfferDTO,
+      options?: any
+    ): AxiosPromise<JobOfferDTO> {
       return localVarFp
-        .getCsrfToken(options)
+        .createJobOffer(createJobOfferDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {JobOfferDTO} jobOfferDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteJobOffer(
+      jobOfferDTO: JobOfferDTO,
+      options?: any
+    ): AxiosPromise<void> {
+      return localVarFp
+        .deleteJobOffer(jobOfferDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAllCategories(options?: any): AxiosPromise<Array<CategoryDTO>> {
+      return localVarFp
+        .getAllCategories(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getAllJobOffers(options?: any): AxiosPromise<Array<JobOfferDTO>> {
+      return localVarFp
+        .getAllJobOffers(options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -571,13 +824,51 @@ export const DefaultApiFactory = function (
 export class DefaultApi extends BaseAPI {
   /**
    *
+   * @param {CreateJobOfferDTO} createJobOfferDTO
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof DefaultApi
    */
-  public getCsrfToken(options?: any) {
+  public createJobOffer(createJobOfferDTO: CreateJobOfferDTO, options?: any) {
     return DefaultApiFp(this.configuration)
-      .getCsrfToken(options)
+      .createJobOffer(createJobOfferDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {JobOfferDTO} jobOfferDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public deleteJobOffer(jobOfferDTO: JobOfferDTO, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .deleteJobOffer(jobOfferDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getAllCategories(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getAllCategories(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getAllJobOffers(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getAllJobOffers(options)
       .then((request) => request(this.axios, this.basePath));
   }
 

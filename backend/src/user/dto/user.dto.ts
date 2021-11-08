@@ -3,6 +3,7 @@ import {
   IsDateString,
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
@@ -31,4 +32,12 @@ export class UserDTO {
   @IsArray()
   @IsNotEmpty({ message: 'Account types is required' })
   public accountTypes: AccountTypes[];
+
+  @IsUUID()
+  @IsOptional()
+  public employerId?: string;
+
+  @IsUUID()
+  @IsOptional()
+  public freelancerId?: string;
 }
