@@ -1,5 +1,4 @@
-import { Controller, Get, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -11,8 +10,8 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/csrf')
-  public getCsrfToken(@Req() req: Request) {
-    return this.appService.getCsrfToken(req);
-  }
+  // @Get('/csrf')
+  // public getCsrfToken(@Req() req: Request) {
+  //   return this.appService.getCsrfToken(req);
+  // }
 }
