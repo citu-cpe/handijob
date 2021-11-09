@@ -27,7 +27,7 @@ export const Home = ({ user }: HomeProps) => {
   const navbarHeight = useGlobalStore((state) => state.navbarHeight);
 
   return (
-    <Box flexDir='column' maxW='container.xl' m='auto' mt={navbarHeight}>
+    <Box maxW='container.sm' mx='auto' mt={navbarHeight}>
       {jobOffers.map((jobOffer) => (
         <JobOffer key={jobOffer.id} jobOffer={jobOffer} />
       ))}
