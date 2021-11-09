@@ -70,9 +70,11 @@ export const JobOffer = ({ jobOffer }: JobOfferProps) => {
         </Wrap>
       </Box>
 
-      <Text my='4' color='gray.200'>
-        {jobOffer.description}
-      </Text>
+      <Box my='4' color='gray.200'>
+        {jobOffer.description.split('\n').map((line, i) => (
+          <Text key={line + i}>{line}</Text>
+        ))}
+      </Box>
 
       {jobOffer.imageUrl && (
         <Img src={jobOffer.imageUrl} alt={jobOffer.title} w='100%' />
