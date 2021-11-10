@@ -25,5 +25,5 @@ export const useGlobalStore = create<GlobalState>(() => ({
   removeUser: () => {
     localStorage.removeItem(LocalStorageKeys.USER);
   },
-  navbarHeight: '75px',
+  navbarHeight: '150px',
 }));
