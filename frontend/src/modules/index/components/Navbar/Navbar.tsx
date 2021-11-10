@@ -1,4 +1,4 @@
-import { Flex, Box, Link, Container } from '@chakra-ui/react';
+import { Flex, Box, Link, Container, Image } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
 import { useLogout } from '../../hooks/useLogout';
@@ -25,11 +25,10 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
       <Container maxW='container.xl'>
         <Flex justifyContent='space-between' alignItems='center' paddingY='4'>
           <Box>
-            <img
+            <Image
               src='https://i.ibb.co/S5v61zN/Handi-Job-logo.png'
               alt='Handi-Job-logo'
               border='0'
-              alt=''
               style={{ height: navbarHeight }}
             />
           </Box>
