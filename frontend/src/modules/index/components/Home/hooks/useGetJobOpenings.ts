@@ -1,21 +1,21 @@
-import { JobOfferDTO } from 'generated-api';
+import { JobOpeningDTO } from 'generated-api';
 import { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { ApiContext } from '../../../../../shared/providers/ApiProvider';
 
-export const useGetJobOffers = () => {
+export const useGetJobOpenings = () => {
   const api = useContext(ApiContext);
 
-  const query = useQuery('jobOffers', () => api.getAllJobOffers());
+  const query = useQuery('jobOpenings', () => api.getAllJobOpenings());
   const { data } = query;
-  let jobOffers: JobOfferDTO[] = [];
+  let jobOpenings: JobOpeningDTO[] = [];
 
   if (data) {
-    jobOffers = data.data;
+    jobOpenings = data.data;
   }
 
   return {
     ...query,
-    jobOffers,
+    jobOpenings,
   };
 };

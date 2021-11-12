@@ -1,7 +1,7 @@
 import { ArrayNotEmpty, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { Categories } from '../../category/types/categories.enum';
 
-export class CreateJobOfferDTO {
+export class CreateJobOpeningDTO {
   @IsString()
   @IsNotEmpty({ message: 'Title is required' })
   public title: string;

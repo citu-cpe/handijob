@@ -14,13 +14,13 @@ export class Freelancer implements AccountTypeEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   public updatedAt: Date;
 
   @OneToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn()
   public user: User;
 }

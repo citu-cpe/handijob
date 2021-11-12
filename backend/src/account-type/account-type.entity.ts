@@ -11,12 +11,12 @@ export class AccountType {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   public updatedAt: Date;
 
-  @Column({ unique: true, name: 'type' })
+  @Column({ unique: true })
   public type: string;
 }

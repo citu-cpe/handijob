@@ -1,4 +1,4 @@
-import { JobOfferDTO, UserDTO } from 'generated-api';
+import { JobOpeningDTO, UserDTO } from 'generated-api';
 import {
   Box,
   Divider,
@@ -15,20 +15,20 @@ import {
   Text,
   Wrap,
 } from '@chakra-ui/react';
-import { useDeleteJobOffer } from '../../hooks/useDeleteJobOffer';
 import React, { useEffect, useState } from 'react';
 import { useGlobalStore } from '../../../../../../shared/stores';
 import { BsThreeDots } from 'react-icons/bs';
+import { useDeleteJobOpening } from '../../hooks/useDeleteJobOpening';
 
-interface JobOfferProps {
-  jobOffer: JobOfferDTO;
+interface JobOpeningProps {
+  jobOpening: JobOpeningDTO;
 }
 
-export const JobOffer = ({ jobOffer }: JobOfferProps) => {
-  const mutation = useDeleteJobOffer();
+export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
+  const mutation = useDeleteJobOpening();
   const [user, setUser] = useState<UserDTO | undefined>();
   const getUser = useGlobalStore((state) => state.getUser);
-  const isOwner = user?.employerId && user.employerId === jobOffer.employerId;
+  const isOwner = user?.employerId && user.employerId === jobOpening.employerId;
 
   useEffect(() => {
     setUser(getUser());
@@ -37,7 +37,7 @@ export const JobOffer = ({ jobOffer }: JobOfferProps) => {
   return (
     <Box p='8' rounded='md' bg='gray.700' mb='4' w='100%'>
       <Flex justify='space-between'>
-        <Heading color='gray.200'>{jobOffer.title}</Heading>
+        <Heading color='gray.200'>{jobOpening.title}</Heading>
         {isOwner && (
           <Box alignSelf='start'>
             <Menu>
@@ -49,7 +49,10 @@ export const JobOffer = ({ jobOffer }: JobOfferProps) => {
                 )}
               </MenuButton>
               <MenuList>
-                <MenuItem color='red' onClick={() => mutation.mutate(jobOffer)}>
+                <MenuItem
+                  color='red'
+                  onClick={() => mutation.mutate(jobOpening)}
+                >
                   Delete
                 </MenuItem>
               </MenuList>
@@ -62,7 +65,7 @@ export const JobOffer = ({ jobOffer }: JobOfferProps) => {
 
       <Box my='4'>
         <Wrap>
-          {jobOffer.categories.map((category) => (
+          {jobOpening.categories.map((category) => (
             <Tag key={category} colorScheme='teal'>
               {category}
             </Tag>
@@ -71,13 +74,13 @@ export const JobOffer = ({ jobOffer }: JobOfferProps) => {
       </Box>
 
       <Box my='4' color='gray.200'>
-        {jobOffer.description.split('\n').map((line, i) => (
+        {jobOpening.description.split('\n').map((line, i) => (
           <Text key={line + i}>{line}</Text>
         ))}
       </Box>
 
-      {jobOffer.imageUrl && (
-        <Img src={jobOffer.imageUrl} alt={jobOffer.title} w='100%' />
+      {jobOpening.imageUrl && (
+        <Img src={jobOpening.imageUrl} alt={jobOpening.title} w='100%' />
       )}
     </Box>
   );

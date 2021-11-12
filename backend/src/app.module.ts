@@ -11,7 +11,7 @@ import { AccountTypeModule } from './account-type/account-type.module';
 import { FreelancerModule } from './freelancer/freelancer.module';
 import { EmployerModule } from './employer/employer.module';
 import { CategoryModule } from './category/cateogry.module';
-import { JobOfferModule } from './job-offer/job-offer.module';
+import { JobOpeningModule } from './job-offer/job-opening.module';
 
 @Module({
   imports: [
@@ -39,7 +39,7 @@ import { JobOfferModule } from './job-offer/job-offer.module';
     FreelancerModule,
     EmployerModule,
     CategoryModule,
-    JobOfferModule,
+    JobOpeningModule,
   ],
   controllers: [AppController],
   providers: [AppService],

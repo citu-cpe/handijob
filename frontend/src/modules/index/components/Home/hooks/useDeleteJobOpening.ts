@@ -1,17 +1,17 @@
-import { JobOfferDTO } from 'generated-api';
+import { JobOpeningDTO } from 'generated-api';
 import { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { ApiContext } from '../../../../../shared/providers/ApiProvider';
 
-export const useDeleteJobOffer = () => {
+export const useDeleteJobOpening = () => {
   const api = useContext(ApiContext);
   const queryClient = useQueryClient();
 
   return useMutation(
-    (jobOfferDTO: JobOfferDTO) => api.deleteJobOffer(jobOfferDTO),
+    (jobOpeningDTO: JobOpeningDTO) => api.deleteJobOpening(jobOpeningDTO),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('jobOffers');
+        queryClient.invalidateQueries('jobOpenings');
       },
     }
   );
