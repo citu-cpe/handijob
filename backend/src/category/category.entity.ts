@@ -12,13 +12,13 @@ export class Category {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   public updatedAt: Date;
 
-  @Column({ name: 'name' })
+  @Column()
   public name: string;
 
   public toDTO(): CategoryDTO {

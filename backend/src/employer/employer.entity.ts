@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { AccountTypeEntity } from '../account-type/types/account-type-entity.interface';
-import { JobOffer } from '../job-offer/job-offer.entity';
+import { JobOpening } from '../job-offer/job-opening.entity';
 import { User } from '../user/user.entity';
 
 @Entity()
@@ -16,16 +16,16 @@ export class Employer implements AccountTypeEntity {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   public updatedAt: Date;
 
   @OneToOne(() => User, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'user_id' })
+  @JoinColumn()
   public user: User;
 
-  @OneToMany(() => JobOffer, (jobOffer) => jobOffer.employer)
-  public jobOffers: JobOffer[];
+  @OneToMany(() => JobOpening, (jobOpening) => jobOpening.employer)
+  public jobOpenings: JobOpening[];
 }

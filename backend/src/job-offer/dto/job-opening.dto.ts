@@ -10,7 +10,7 @@ import {
 } from 'class-validator';
 import { Categories } from '../../category/types/categories.enum';
 
-export class JobOfferDTO {
+export class JobOpeningDTO {
   @IsString()
   @IsNotEmpty({ message: 'Id is required' })
   public id: string;

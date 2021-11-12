@@ -1,18 +1,18 @@
-import { CreateJobOfferDTO } from 'generated-api';
+import { CreateJobOpeningDTO } from 'generated-api';
 import { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { ApiContext } from '../../../../../../../shared/providers/ApiProvider';
 
-export const useCreateJobOffer = (onClose?: () => void) => {
+export const useCreateJobOpening = (onClose?: () => void) => {
   const api = useContext(ApiContext);
   const queryClient = useQueryClient();
 
   return useMutation(
-    (createJobOfferDTO: CreateJobOfferDTO) =>
-      api.createJobOffer(createJobOfferDTO),
+    (createJobOpeningDTO: CreateJobOpeningDTO) =>
+      api.createJobOpening(createJobOpeningDTO),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries('jobOffers');
+        queryClient.invalidateQueries('jobOpenings');
 
         if (onClose) {
           onClose();

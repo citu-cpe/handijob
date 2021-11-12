@@ -11,34 +11,34 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 import React from 'react';
 import { BottomRightButton } from '../../../../shared/components/button/BottomRightButton';
-import { useGetJobOffers } from './hooks/useGetJobOffers';
-import { JobOffer } from './components/JobOffer/JobOffer';
-import { JobOfferForm } from './components/JobOfferForm.tsx/JobOfferForm';
 import { useGlobalStore } from '../../../../shared/stores';
 import { UserDTO } from 'generated-api';
+import { useGetJobOpenings } from './hooks/useGetJobOpenings';
+import { JobOpening } from './components/JobOpening/JobOpening';
+import { JobOpeningForm } from './components/JobOpeningForm/JobOpeningForm';
 
 interface HomeProps {
   user: UserDTO;
 }
 
 export const Home = ({ user }: HomeProps) => {
-  const { jobOffers } = useGetJobOffers();
+  const { jobOpenings } = useGetJobOpenings();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navbarHeight = useGlobalStore((state) => state.navbarHeight);
 
   return (
     <Box maxW='container.sm' mx='auto' mt={navbarHeight}>
-      {jobOffers.map((jobOffer) => (
-        <JobOffer key={jobOffer.id} jobOffer={jobOffer} />
+      {jobOpenings.map((jobOpening) => (
+        <JobOpening key={jobOpening.id} jobOpening={jobOpening} />
       ))}
 
       <Modal onClose={onClose} isOpen={isOpen} size='2xl'>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Create a Job Offer</ModalHeader>
+          <ModalHeader>Create a Job Opening</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <JobOfferForm onClose={onClose} />
+            <JobOpeningForm onClose={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

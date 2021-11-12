@@ -17,23 +17,23 @@ export class User {
   @PrimaryGeneratedColumn('uuid')
   public id: string;
 
-  @CreateDateColumn({ name: 'created_at' })
+  @CreateDateColumn()
   public createdAt: Date;
 
-  @UpdateDateColumn({ name: 'updated_at' })
+  @UpdateDateColumn()
   public updatedAt: Date;
 
-  @Column({ unique: true, name: 'email' })
+  @Column({ unique: true })
   public email: string;
 
-  @Column({ unique: true, name: 'username' })
+  @Column({ unique: true })
   public username: string;
 
-  @Column({ name: 'password' })
+  @Column()
   @Exclude()
   public password: string;
 
-  @Column({ nullable: true, name: 'current_hashed_refresh_token' })
+  @Column({ nullable: true })
   @Exclude()
   public currentHashedRefreshToken?: string;
 

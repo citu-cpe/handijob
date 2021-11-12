@@ -15,70 +15,34 @@
 /**
  *
  * @export
- * @interface JobOfferDTO
+ * @interface CreateJobOpeningDTO
  */
-export interface JobOfferDTO {
+export interface CreateJobOpeningDTO {
   /**
    *
    * @type {string}
-   * @memberof JobOfferDTO
-   */
-  id: string;
-  /**
-   *
-   * @type {string}
-   * @memberof JobOfferDTO
-   */
-  createdAt: string;
-  /**
-   *
-   * @type {string}
-   * @memberof JobOfferDTO
-   */
-  updatedAt: string;
-  /**
-   *
-   * @type {string}
-   * @memberof JobOfferDTO
+   * @memberof CreateJobOpeningDTO
    */
   title: string;
   /**
    *
    * @type {string}
-   * @memberof JobOfferDTO
+   * @memberof CreateJobOpeningDTO
    */
   description: string;
   /**
    *
-   * @type {string}
-   * @memberof JobOfferDTO
-   */
-  imageUrl?: string;
-  /**
-   *
-   * @type {string}
-   * @memberof JobOfferDTO
-   */
-  cloudinaryPublicId?: string;
-  /**
-   *
    * @type {Array<string>}
-   * @memberof JobOfferDTO
+   * @memberof CreateJobOpeningDTO
    */
-  categories: Array<JobOfferDTOCategoriesEnum>;
-  /**
-   *
-   * @type {string}
-   * @memberof JobOfferDTO
-   */
-  employerId: string;
+  categories: Array<CreateJobOpeningDTOCategoriesEnum>;
 }
 
 /**
  * @export
  * @enum {string}
  */
-export enum JobOfferDTOCategoriesEnum {
+export enum CreateJobOpeningDTOCategoriesEnum {
   It = 'IT',
   Art = 'Art',
   ConstructionWorker = 'Construction Worker',

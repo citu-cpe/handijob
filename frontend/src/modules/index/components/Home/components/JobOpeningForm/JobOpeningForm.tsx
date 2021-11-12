@@ -8,7 +8,6 @@ import {
   FormikHelpers,
   FormikProps,
 } from 'formik';
-import { CreateJobOfferDTO } from 'generated-api';
 import React, { ChangeEvent, useState } from 'react';
 import * as Yup from 'yup';
 import { Textarea } from '../../../../../../shared/components/form/Textrea/Textarea';
@@ -16,8 +15,9 @@ import { useGetCategories } from './hooks/useGetCategories';
 import { CheckboxGroup } from '../../../../../../shared/components/form/CheckboxGroup/CheckboxGroup';
 import { useAxios } from '../../../../../../shared/hooks/useAxios';
 import { useQueryClient } from 'react-query';
+import { CreateJobOpeningDTO } from 'generated-api';
 
-interface JobOfferFormProps {
+interface JobOpeningFormProps {
   onClose?: () => void;
 }
 
@@ -28,7 +28,7 @@ interface FormGroup {
   categories: never[];
 }
 
-export const JobOfferForm = ({ onClose }: JobOfferFormProps) => {
+export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
   const { categories } = useGetCategories();
   const axios = useAxios();
   const [isLoading, setIsLoading] = useState(false);
@@ -65,10 +65,10 @@ export const JobOfferForm = ({ onClose }: JobOfferFormProps) => {
     );
 
     setIsLoading(true);
-    await axios.post('/job-offer', formData);
+    await axios.post('/job-opening', formData);
     setIsLoading(false);
     formikHelpers.resetForm();
-    queryClient.invalidateQueries('jobOffers');
+    queryClient.invalidateQueries('jobOpenings');
 
     if (onClose) {
       onClose();
@@ -98,7 +98,7 @@ export const JobOfferForm = ({ onClose }: JobOfferFormProps) => {
           <Form noValidate>
             <Box mb='4'>
               <Field name='title'>
-                {(fieldProps: FieldProps<string, CreateJobOfferDTO>) => (
+                {(fieldProps: FieldProps<string, CreateJobOpeningDTO>) => (
                   <Input
                     fieldProps={fieldProps}
                     name='title'
@@ -113,7 +113,7 @@ export const JobOfferForm = ({ onClose }: JobOfferFormProps) => {
                 )}
               </Field>
               <Field name='description'>
-                {(fieldProps: FieldProps<string, CreateJobOfferDTO>) => (
+                {(fieldProps: FieldProps<string, CreateJobOpeningDTO>) => (
                   <Textarea
                     fieldProps={fieldProps}
                     name='description'
@@ -128,7 +128,7 @@ export const JobOfferForm = ({ onClose }: JobOfferFormProps) => {
                 )}
               </Field>
               <Field name='categories'>
-                {(fieldProps: FieldProps<string, CreateJobOfferDTO>) => (
+                {(fieldProps: FieldProps<string, CreateJobOpeningDTO>) => (
                   <Box mb='8'>
                     <CheckboxGroup
                       defaultValue={[]}
@@ -178,7 +178,7 @@ export const JobOfferForm = ({ onClose }: JobOfferFormProps) => {
                 color='gray.50'
                 _hover={{ bgColor: 'gray.800', color: 'gray.50' }}
               >
-                Create Job Offer
+                Create Job Opening
               </Button>
             </Box>
           </Form>

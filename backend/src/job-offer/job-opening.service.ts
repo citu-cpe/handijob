@@ -8,39 +8,39 @@ import { CategoryService } from '../category/category.service';
 import { Employer } from '../employer/employer.entity';
 import { EmployerService } from '../employer/employer.service';
 import { User } from '../user/user.entity';
-import { CreateJobOfferDTO } from './dto/create-job-offer.dto';
-import { JobOfferDTO } from './dto/job-offer.dto';
-import { JobOfferRepository } from './job-offer.repository';
 import { v2 as cloudinary } from 'cloudinary';
 import { deleteFile } from '../util/delete-file';
+import { JobOpeningRepository } from './job-opening.repository';
+import { JobOpeningDTO } from './dto/job-opening.dto';
+import { CreateJobOpeningDTO } from './dto/create-job-opening.dto';
 
 @Injectable()
-export class JobOfferService {
+export class JobOpeningService {
   constructor(
-    private readonly jobOfferRepository: JobOfferRepository,
+    private readonly jobOpeningRepository: JobOpeningRepository,
     private readonly employerService: EmployerService,
     private readonly categoryService: CategoryService
   ) {}
 
-  public async getAllJobOffers(): Promise<JobOfferDTO[]> {
-    const jobOffers = await this.jobOfferRepository.find({
+  public async getAllJobOpenings(): Promise<JobOpeningDTO[]> {
+    const jobOpenings = await this.jobOpeningRepository.find({
       relations: ['employer'],
       order: { createdAt: 'DESC' },
     });
 
-    return jobOffers.map((jobOffer) => jobOffer.toDTO());
+    return jobOpenings.map((jobOpening) => jobOpening.toDTO());
   }
 
-  public async createJobOffer(
+  public async createJobOpening(
     user: User,
-    createJobOfferDTO: CreateJobOfferDTO,
+    createJobOpeningDTO: CreateJobOpeningDTO,
     image: Express.Multer.File
-  ): Promise<JobOfferDTO> {
+  ): Promise<JobOpeningDTO> {
     const employer = await this.employerService.findByUser(user);
 
     if (!employer) {
       throw new BadRequestException(
-        'You must have an employer account to create a job offer'
+        'You must have an employer account to create a job opening'
       );
     }
 
@@ -57,28 +57,28 @@ export class JobOfferService {
       deleteFile(image.path);
     }
 
-    const { categories } = createJobOfferDTO;
+    const { categories } = createJobOpeningDTO;
 
     const categoriesToAdd = await this.categoryService.findByCategories(
       categories
     );
 
-    const newJobOffer = this.jobOfferRepository.create({
-      ...createJobOfferDTO,
+    const newJobOpening = this.jobOpeningRepository.create({
+      ...createJobOpeningDTO,
       imageUrl,
       employer,
       categories: categoriesToAdd,
       cloudinaryPublicId,
     });
 
-    const jobOffer = await this.jobOfferRepository.save(newJobOffer);
+    const jobOpening = await this.jobOpeningRepository.save(newJobOpening);
 
-    return jobOffer.toDTO();
+    return jobOpening.toDTO();
   }
 
-  public async deleteJobOffer(
+  public async deleteJobOpening(
     user: User,
-    jobOfferDTO: JobOfferDTO
+    jobOpeningDTO: JobOpeningDTO
   ): Promise<void> {
     let employer: Employer;
     try {
@@ -87,20 +87,20 @@ export class JobOfferService {
       throw new BadRequestException('User is not an employer');
     }
 
-    if (employer.id !== jobOfferDTO.employerId) {
-      throw new ForbiddenException('You do not own this job offer');
+    if (employer.id !== jobOpeningDTO.employerId) {
+      throw new ForbiddenException('You do not own this job opening');
     }
 
-    const { id, cloudinaryPublicId } = jobOfferDTO;
+    const { id, cloudinaryPublicId } = jobOpeningDTO;
 
     if (cloudinaryPublicId) {
       await cloudinary.uploader.destroy(cloudinaryPublicId);
     }
 
-    const deleteResponse = await this.jobOfferRepository.delete(id);
+    const deleteResponse = await this.jobOpeningRepository.delete(id);
 
     if (!deleteResponse.affected) {
-      throw new NotFoundException('Job offer was not found');
+      throw new NotFoundException('Job opening was not found');
     }
   }
 }
