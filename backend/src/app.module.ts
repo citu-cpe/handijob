@@ -12,6 +12,7 @@ import { FreelancerModule } from './freelancer/freelancer.module';
 import { EmployerModule } from './employer/employer.module';
 import { CategoryModule } from './category/cateogry.module';
 import { JobOpeningModule } from './job-opening/job-opening.module';
+import { JobApplicationModule } from './job-application/job-application.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { JobOpeningModule } from './job-opening/job-opening.module';
     EmployerModule,
     CategoryModule,
     JobOpeningModule,
+    JobApplicationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
