@@ -22,6 +22,10 @@ export class JobOpeningService {
     private readonly categoryService: CategoryService
   ) {}
 
+  public findById(id: string) {
+    return this.jobOpeningRepository.findOne(id);
+  }
+
   public async getAllJobOpenings(): Promise<JobOpeningDTO[]> {
     const jobOpenings = await this.jobOpeningRepository.find({
       relations: ['employer'],

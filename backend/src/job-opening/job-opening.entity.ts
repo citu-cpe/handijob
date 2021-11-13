@@ -6,12 +6,14 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Category } from '../category/category.entity';
 import { Categories } from '../category/types/categories.enum';
 import { Employer } from '../employer/employer.entity';
+import { JobApplication } from '../job-application/job-application.entity';
 import { spaceCaseToSnakeCase } from '../util/space-case-to-snake-case';
 import { JobOpeningDTO } from './dto/job-opening.dto';
 
@@ -35,6 +37,12 @@ export class JobOpening {
   @ManyToMany(() => Category, { eager: true })
   @JoinTable()
   public categories: Category[];
+
+  @OneToMany(
+    () => JobApplication,
+    (jobApplication) => jobApplication.jobOpening
+  )
+  public jobApplications: JobApplication[];
 
   @Column()
   public title: string;

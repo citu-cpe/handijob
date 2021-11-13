@@ -14,4 +14,8 @@ export class FreelancerService {
   public findByUser(user: User): Promise<Freelancer> {
     return this.freelancerRepository.findOne({ user });
   }
+
+  public findById(id: string): Promise<Freelancer> {
+    return this.freelancerRepository.findOne(id);
+  }
 }
