@@ -2,23 +2,6 @@ import axios from 'axios';
 
 let reviewAppUrl;
 
-// tslint:disable:no-console
-console.log('vercel is pull request', process.env.VERCEL_GIT_IS_PULL_REQUEST);
-console.log('vercel pr number', process.env.VERCEL_GIT_PULL_REQUEST_NUMBER);
-console.log(
-  'next public vercel is pull request',
-  process.env.NEXT_PUBLIC_VERCEL_GIT_IS_PULL_REQUEST
-);
-console.log(
-  'next public vercel pr number',
-  process.env.NEXT_PUBLIC_VERCEL_GIT_PULL_REQUEST_NUMBER
-);
-console.log(
-  'next public heroku preview url prefix',
-  process.env.NEXT_PUBLIC_HEROKU_PREVIEW_URL_PREFIX
-);
-console.log('next public base url', process.env.NEXT_PUBLIC_BASE_URL);
-
 if (process.env.NEXT_PUBLIC_VERCEL_GIT_IS_PULL_REQUEST === '1') {
   const prNumber = process.env.NEXT_PUBLIC_VERCEL_GIT_PULL_REQUEST_NUMBER;
   reviewAppUrl = `${process.env.NEXT_PUBLIC_HEROKU_PREVIEW_URL_PREFIX}${prNumber}.herokuapp.com/api/v1`;
