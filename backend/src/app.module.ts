@@ -11,7 +11,7 @@ import { AccountTypeModule } from './account-type/account-type.module';
 import { FreelancerModule } from './freelancer/freelancer.module';
 import { EmployerModule } from './employer/employer.module';
 import { CategoryModule } from './category/cateogry.module';
-import { JobOpeningModule } from './job-offer/job-opening.module';
+import { JobOpeningModule } from './job-opening/job-opening.module';
 
 @Module({
   imports: [
