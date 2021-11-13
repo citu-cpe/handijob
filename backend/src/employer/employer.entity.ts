@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { AccountTypeEntity } from '../account-type/types/account-type-entity.interface';
-import { JobOpening } from '../job-offer/job-opening.entity';
+import { JobOpening } from '../job-opening/job-opening.entity';
 import { User } from '../user/user.entity';
 
 @Entity()
