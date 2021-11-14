@@ -45,7 +45,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
   const jobApplication = jobOpening.jobApplications.find(
     (j) => j.freelancer?.id === user?.freelancerId!
   );
-  const hasApplied = isFreelancer && !!jobApplication;
+  const hasApplied = !!jobApplication;
 
   useEffect(() => {
     setUser(getUser());
@@ -100,7 +100,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
         <Img src={jobOpening.imageUrl} alt={jobOpening.title} w='100%' />
       )}
 
-      {hasApplied ? (
+      {isFreelancer && hasApplied && !isOwner && (
         <Button
           onClick={() =>
             deleteJobApplication({
@@ -116,7 +116,9 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
         >
           Withdraw Application
         </Button>
-      ) : (
+      )}
+
+      {isFreelancer && !hasApplied && !isOwner && (
         <Button
           onClick={() =>
             createJobApplication({
