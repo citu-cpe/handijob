@@ -3,12 +3,14 @@ import {
   IsDateString,
   IsEnum,
   IsNotEmpty,
+  IsNotEmptyObject,
   IsOptional,
   IsString,
   IsUrl,
   IsUUID,
 } from 'class-validator';
 import { Categories } from '../../category/types/categories.enum';
+import { JobApplicationDTO } from '../../job-application/dto/job-application.dto';
 
 export class JobOpeningDTO {
   @IsString()
@@ -48,4 +50,7 @@ export class JobOpeningDTO {
   @IsUUID(undefined, { message: 'Invalid id' })
   @IsNotEmpty({ message: 'Employer id is required' })
   public employerId: string;
+
+  @IsNotEmptyObject({}, { each: true })
+  public jobApplications: JobApplicationDTO[];
 }

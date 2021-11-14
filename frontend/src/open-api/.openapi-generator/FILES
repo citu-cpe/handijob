@@ -11,8 +11,11 @@ git_push.sh
 index.ts
 models/access-token-dto.ts
 models/category-dto.ts
+models/create-job-application-dto.ts
 models/create-job-opening-dto.ts
+models/freelancer-dto.ts
 models/index.ts
+models/job-application-dto.ts
 models/job-opening-dto.ts
 models/login-response-dto.ts
 models/login-user-dto.ts

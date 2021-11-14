@@ -28,20 +28,21 @@ export class JobApplicationService {
       throw new NotFoundException('Freelancer not found');
     }
 
-    const existingJobApplication = this.jobApplicationRepository.find({
-      freelancer,
-    });
-
-    if (existingJobApplication) {
-      throw new BadRequestException('Already applied for this job opening');
-    }
-
     const jobOpening = await this.jobOpeningService.findById(
       createJobApplicationDTO.jobOpeningId
     );
 
     if (!jobOpening) {
       throw new NotFoundException('Job opening not found');
+    }
+
+    const existingJobApplication = await this.jobApplicationRepository.findOne({
+      jobOpening,
+      freelancer,
+    });
+
+    if (existingJobApplication) {
+      throw new BadRequestException('Already applied for this job opening');
     }
 
     const jobApplication = this.jobApplicationRepository.create({
@@ -80,5 +81,25 @@ export class JobApplicationService {
       await this.jobApplicationRepository.findByJobOpening(jobOpening);
 
     return jobApplications.map((j) => j.toDTO());
+  }
+
+  public async deleteJobApplication(
+    freelancerId: string,
+    jobApplicationId: string
+  ) {
+    const jobApplication = await this.jobApplicationRepository.findOne(
+      jobApplicationId,
+      { relations: ['freelancer'] }
+    );
+
+    if (!jobApplication) {
+      throw new NotFoundException('Job application not found');
+    }
+
+    if (jobApplication.freelancer.id !== freelancerId) {
+      throw new BadRequestException('You do not own this job application');
+    }
+
+    return this.jobApplicationRepository.delete(jobApplicationId);
   }
 }
