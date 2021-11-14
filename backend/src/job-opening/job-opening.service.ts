@@ -28,7 +28,7 @@ export class JobOpeningService {
 
   public async getAllJobOpenings(): Promise<JobOpeningDTO[]> {
     const jobOpenings = await this.jobOpeningRepository.find({
-      relations: ['employer'],
+      relations: ['employer', 'jobApplications', 'jobApplications.freelancer'],
       order: { createdAt: 'DESC' },
     });
 

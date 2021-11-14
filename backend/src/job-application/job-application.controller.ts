@@ -1,5 +1,14 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
+import { FreelancerDTO } from '../freelancer/dto/freelancer.dto';
 import { CreateJobApplicationDTO } from './dto/create-job-application.dto';
 import { JobApplicationDTO } from './dto/job-application.dto';
 import { JobApplicationService } from './job-application.service';
@@ -41,6 +50,18 @@ export class JobApplicationController {
   ): Promise<JobApplicationDTO[]> {
     return this.jobApplicationService.getJobApplicationsByFreelancer(
       freelancerId
+    );
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Delete(':jobApplicationId')
+  public async deleteJobApplication(
+    @Body() freelancerDTO: FreelancerDTO,
+    @Param('jobApplicationId') jobApplicationId: string
+  ) {
+    await this.jobApplicationService.deleteJobApplication(
+      freelancerDTO.id,
+      jobApplicationId
     );
   }
 }

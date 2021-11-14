@@ -12,6 +12,8 @@
  * Do not edit the class manually.
  */
 
+import { JobApplicationDTO } from './job-application-dto';
+
 /**
  *
  * @export
@@ -72,6 +74,12 @@ export interface JobOpeningDTO {
    * @memberof JobOpeningDTO
    */
   employerId: string;
+  /**
+   *
+   * @type {Array<JobApplicationDTO>}
+   * @memberof JobOpeningDTO
+   */
+  jobApplications: Array<JobApplicationDTO>;
 }
 
 /**
