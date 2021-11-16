@@ -1,8 +1,8 @@
 import { Flex, Box, Link, Container, Image } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
-import { useLogout } from '../../hooks/useLogout';
 import { useGlobalStore } from '../../../../shared/stores';
+import { useLogout } from '../../../../modules/index/hooks/useLogout';
 
 interface NavbarProps {
   positionFixed?: boolean;
@@ -20,13 +20,15 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
       top='0'
       left='0'
       w='100%'
-      h={navbarHeight}
+      bgColor='white'
+      shadow='md'
+      zIndex='100'
     >
       <Container maxW='container.xl'>
         <Flex justifyContent='space-between' alignItems='center' paddingY='4'>
           <Box>
             <Image
-              src='https://i.ibb.co/S5v61zN/Handi-Job-logo.png'
+              src='/logo.png'
               alt='Handi-Job-logo'
               border='0'
               style={{ height: navbarHeight }}

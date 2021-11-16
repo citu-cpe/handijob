@@ -14,4 +14,8 @@ export class EmployerService {
   public findByUser(user: User): Promise<Employer> {
     return this.employerRepository.findOne({ user });
   }
+
+  public findById(employerId: string): Promise<Employer> {
+    return this.employerRepository.findOne(employerId);
+  }
 }

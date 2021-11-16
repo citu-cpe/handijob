@@ -16,6 +16,11 @@ export const useDeleteJobApplication = () => {
     ({ jobApplicationId, freelancerDTO }: DeleteJobApplicationDTO) =>
       api.deleteJobApplication(jobApplicationId, freelancerDTO),
 
-    { onSuccess: () => queryClient.invalidateQueries('jobOpenings') }
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('jobOpenings');
+        queryClient.invalidateQueries('freelancerJobApplications');
+      },
+    }
   );
 };

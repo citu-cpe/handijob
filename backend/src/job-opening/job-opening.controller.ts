@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Post,
   Req,
   UploadedFile,
@@ -19,6 +20,7 @@ import { JobOpeningService } from './job-opening.service';
 @Controller(JobOpeningController.JOB_OPENING_API_ROUTE)
 export class JobOpeningController {
   public static readonly JOB_OPENING_API_ROUTE = 'job-opening';
+  public static readonly GET_FOR_EMPLOYER_API_ROUTE = 'employer';
 
   constructor(private readonly jobOpeningService: JobOpeningService) {}
 
@@ -26,6 +28,13 @@ export class JobOpeningController {
   @Get()
   public getAllJobOpenings(): Promise<JobOpeningDTO[]> {
     return this.jobOpeningService.getAllJobOpenings();
+  }
+
+  @Get(`${JobOpeningController.GET_FOR_EMPLOYER_API_ROUTE}/:employerId`)
+  public getJobOpeningsByEmployer(
+    @Param('employerId') employerId: string
+  ): Promise<JobOpeningDTO[]> {
+    return this.jobOpeningService.getJobOpeningsByEmployer(employerId);
   }
 
   @UseGuards(JwtAuthenticationGuard)

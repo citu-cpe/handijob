@@ -35,6 +35,20 @@ export class JobOpeningService {
     return jobOpenings.map((jobOpening) => jobOpening.toDTO());
   }
 
+  public async getJobOpeningsByEmployer(
+    employerId: string
+  ): Promise<JobOpeningDTO[]> {
+    const employer = this.employerService.findById(employerId);
+
+    const jobOpenings = await this.jobOpeningRepository.find({
+      where: { employer },
+      relations: ['employer', 'jobApplications', 'jobApplications.freelancer'],
+      order: { createdAt: 'DESC' },
+    });
+
+    return jobOpenings.map((jobOpening) => jobOpening.toDTO());
+  }
+
   public async createJobOpening(
     user: User,
     createJobOpeningDTO: CreateJobOpeningDTO,

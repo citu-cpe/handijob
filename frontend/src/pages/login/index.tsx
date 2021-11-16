@@ -1,7 +1,8 @@
-import { GetStaticProps, NextPage } from 'next';
+import { GetStaticProps } from 'next';
 import { Login } from '../../modules/login/components/Login/Login';
+import { NextPageWithLayout } from '../_app';
 
-const LoginPage: NextPage = () => <Login />;
+const LoginPage: NextPageWithLayout = () => <Login />;
 
 export const getStaticProps: GetStaticProps = () => {
   return {
