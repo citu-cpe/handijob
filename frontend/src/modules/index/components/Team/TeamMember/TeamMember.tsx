@@ -31,7 +31,9 @@ export const TeamMember = ({ teamMember }: TeamMemberProps) => {
         borderTopRadius={borderRadius}
       ></Box>
       <Box p='5'>
-        <Heading size='md'>{teamMember.name}</Heading>
+        <Heading size='md' color='teal.500'>
+          {teamMember.name}
+        </Heading>
         <Text fontStyle='italic'>{teamMember.role}</Text>
       </Box>
     </Box>

@@ -1,4 +1,4 @@
-import { Flex, Box, Link, Container, Image } from '@chakra-ui/react';
+import { Flex, Box, Link, Container, Image, Button } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
 import { useGlobalStore } from '../../../../shared/stores';
@@ -41,9 +41,17 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
           <Box>
             {loggedIn ? (
               <>
-                <Link mr='4' onClick={() => logout()}>
+                <Button
+                  mr='4'
+                  colorScheme='teal'
+                  variant='ghost'
+                  py='4'
+                  px='8'
+                  rounded='full'
+                  onClick={() => logout()}
+                >
                   Log Out
-                </Link>
+                </Button>
               </>
             ) : (
               <>

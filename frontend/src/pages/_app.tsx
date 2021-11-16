@@ -11,6 +11,9 @@ import { NextPage } from 'next';
 import { defaultGetLayout } from '../shared/components/layout/Layout/Layout';
 import { LocalStorageKeys } from '../shared/enums/localStorageKeys';
 import { LoginResponseDTO, UserDTO } from 'generated-api';
+import { theme } from '../shared/theme';
+import '@fontsource/poppins/700.css';
+import '@fontsource/montserrat/400.css';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -60,7 +63,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   }
 
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <ApiProvider>
         <QueryClientProvider client={queryClient}>
           {getLayout(<Component {...pageProps} />)}

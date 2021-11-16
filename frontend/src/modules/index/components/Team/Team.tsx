@@ -7,7 +7,12 @@ export const Team = () => {
   return (
     <Box w='100%'>
       <Container maxW='container.xl' centerContent>
-        <Heading textAlign='center' my='10'>
+        <Heading
+          textAlign='center'
+          my='10'
+          textTransform='uppercase'
+          color='teal.500'
+        >
           Meet the Team
         </Heading>
         <Wrap spacing='8' justify={['center', 'center', 'center']}>
