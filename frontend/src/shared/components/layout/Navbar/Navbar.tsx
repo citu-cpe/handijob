@@ -48,10 +48,28 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
             ) : (
               <>
                 <NextLink href='/login' passHref>
-                  <Link mr='4'>Log In</Link>
+                  <Link
+                    mr='4'
+                    bg='teal.50'
+                    color='teal.500'
+                    py='4'
+                    px='8'
+                    rounded='full'
+                  >
+                    Log In
+                  </Link>
                 </NextLink>
                 <NextLink href='/register' passHref>
-                  <Link mr='4'>Register</Link>
+                  <Link
+                    mr='4'
+                    bg='teal.500'
+                    color='teal.50'
+                    py='4'
+                    px='8'
+                    rounded='full'
+                  >
+                    Register
+                  </Link>
                 </NextLink>
               </>
             )}

@@ -22,7 +22,7 @@ export const LoginForm = () => {
   });
 
   return (
-    <Box bg='gray.200' p='8' borderRadius='md' w='xl'>
+    <Box bg='white' p='8' w='xl' shadow='md' rounded='md'>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -69,9 +69,7 @@ export const LoginForm = () => {
                 type='submit'
                 isLoading={mutation.isLoading}
                 isFullWidth
-                bgColor='gray.800'
-                color='gray.50'
-                _hover={{ bgColor: 'gray.800', color: 'gray.50' }}
+                colorScheme='teal'
               >
                 Log In
               </Button>
