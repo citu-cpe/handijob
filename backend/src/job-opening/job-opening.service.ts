@@ -13,6 +13,7 @@ import { deleteFile } from '../util/delete-file';
 import { JobOpeningRepository } from './job-opening.repository';
 import { JobOpeningDTO } from './dto/job-opening.dto';
 import { CreateJobOpeningDTO } from './dto/create-job-opening.dto';
+import { UserDTO } from '../user/dto/user.dto';
 
 @Injectable()
 export class JobOpeningService {
@@ -120,5 +121,33 @@ export class JobOpeningService {
     if (!deleteResponse.affected) {
       throw new NotFoundException('Job opening was not found');
     }
+  }
+
+  public async getApplicants(
+    user: User,
+    jobOpeningId: string
+  ): Promise<UserDTO[]> {
+    let employer: Employer;
+
+    try {
+      employer = await this.employerService.findByUser(user);
+    } catch (e) {
+      throw new BadRequestException('User is not an employer');
+    }
+
+    const jobOpening = await this.jobOpeningRepository.findOne(jobOpeningId, {
+      relations: [
+        'employer',
+        'jobApplications',
+        'jobApplications.freelancer',
+        'jobApplications.freelancer.user',
+      ],
+    });
+
+    if (employer.id !== jobOpening.employer.id) {
+      throw new ForbiddenException('You do not own this job opening');
+    }
+
+    return jobOpening.jobApplications.map((j) => j.freelancer.user.toDTO());
   }
 }

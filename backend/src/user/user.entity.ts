@@ -48,9 +48,9 @@ export class User {
       updatedAt: this.updatedAt,
       username: this.username,
       email: this.email,
-      accountTypes: this.accountTypes.map(
-        (accountType) => AccountTypes[accountType.type]
-      ),
+      accountTypes:
+        this.accountTypes &&
+        this.accountTypes.map((accountType) => AccountTypes[accountType.type]),
     };
   }
 }

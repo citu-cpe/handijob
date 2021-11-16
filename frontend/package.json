@@ -17,8 +17,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "tslint --project tsconfig.json --fix",
-      "prettier --write"
+      "prettier --write",
+      "tslint --project tsconfig.json --fix"
     ],
     "src/**/*.{css,scss}": [
       "prettier --write"

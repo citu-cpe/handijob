@@ -13,14 +13,16 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
 import { RequestWithUser } from '../authentication/types/request-with-user.interface';
+import { UserDTO } from '../user/dto/user.dto';
 import { CreateJobOpeningDTO } from './dto/create-job-opening.dto';
 import { JobOpeningDTO } from './dto/job-opening.dto';
 import { JobOpeningService } from './job-opening.service';
 
 @Controller(JobOpeningController.JOB_OPENING_API_ROUTE)
 export class JobOpeningController {
-  public static readonly JOB_OPENING_API_ROUTE = 'job-opening';
-  public static readonly GET_FOR_EMPLOYER_API_ROUTE = 'employer';
+  public static readonly JOB_OPENING_API_ROUTE = '/job-opening';
+  public static readonly GET_FOR_EMPLOYER_API_ROUTE = '/employer/:employerId';
+  public static readonly GET_JOB_APPLICANTS = '/:jobOpeningId/applicants';
 
   constructor(private readonly jobOpeningService: JobOpeningService) {}
 
@@ -30,7 +32,7 @@ export class JobOpeningController {
     return this.jobOpeningService.getAllJobOpenings();
   }
 
-  @Get(`${JobOpeningController.GET_FOR_EMPLOYER_API_ROUTE}/:employerId`)
+  @Get(JobOpeningController.GET_FOR_EMPLOYER_API_ROUTE)
   public getJobOpeningsByEmployer(
     @Param('employerId') employerId: string
   ): Promise<JobOpeningDTO[]> {
@@ -59,5 +61,14 @@ export class JobOpeningController {
     @Body() jobOpeningDTO: JobOpeningDTO
   ): Promise<void> {
     return this.jobOpeningService.deleteJobOpening(user, jobOpeningDTO);
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Get(JobOpeningController.GET_JOB_APPLICANTS)
+  public getApplicants(
+    @Req() { user }: RequestWithUser,
+    @Param('jobOpeningId') jobOpeningId: string
+  ): Promise<UserDTO[]> {
+    return this.jobOpeningService.getApplicants(user, jobOpeningId);
   }
 }
