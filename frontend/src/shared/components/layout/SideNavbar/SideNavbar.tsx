@@ -24,7 +24,7 @@ const SideNavbarLink = ({ linkText, href }: SideNavbarLinkProps) => {
           _hover={{
             bg: 'teal.50',
           }}
-          rounded='full'
+          rounded='md'
           py='4'
           px='8'
           transition='background .2s ease-out'
@@ -40,7 +40,7 @@ export const SideNavbar = () => {
   const user = useGlobalStore((state) => state.user);
 
   return (
-    <Box pl='10' w='100%'>
+    <Box pl='10' pos='fixed'>
       <SideNavbarLink linkText='Home' href='/' />
       {user && user.employerId && (
         <SideNavbarLink linkText='My Job Openings' href='/my/job-openings' />
