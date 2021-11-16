@@ -1,0 +1,21 @@
+.left {
+  width: 40%;
+  text-align: center;
+  align-self: center;
+}
+
+.right {
+  width: 60%;
+}
+
+.hero {
+  display: flex;
+  padding: 5rem 0;
+}
+
+.heading {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #319795;
+  margin-bottom: 1rem;
+}

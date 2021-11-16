@@ -1,14 +1,16 @@
-import { Box, Center, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
+import styles from './Hero.module.scss';
 
 export const Hero = () => {
   return (
-    <Box h='85vh' w='100%'>
-      <Center h='100%' w='100%' flexDir='column'>
-        <Heading display='block'>Welcome to HandiJob</Heading>
-        <Text>The best place for freelancers and employers</Text>
-        <Text>Apply Now !</Text>
-      </Center>
-    </Box>
+    <div className={styles.hero}>
+      <div className={styles.left}>
+        <h1 className={styles.heading}>Apply to HandIJob!</h1>
+        <p>Take your career further with HandIJob</p>
+      </div>
+      <div className={styles.right}>
+        <img src='/landing.svg' alt='' />
+      </div>
+    </div>
   );
 };
