@@ -27,12 +27,16 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
       <Container maxW='container.xl'>
         <Flex justifyContent='space-between' alignItems='center' paddingY='4'>
           <Box>
-            <Image
-              src='/logo.png'
-              alt='Handi-Job-logo'
-              border='0'
-              style={{ height: navbarHeight }}
-            />
+            <NextLink href='/' passHref>
+              <Link>
+                <Image
+                  src='/logo.png'
+                  alt='Handi-Job-logo'
+                  border='0'
+                  style={{ height: navbarHeight }}
+                />
+              </Link>
+            </NextLink>
           </Box>
           <Box>
             {loggedIn ? (

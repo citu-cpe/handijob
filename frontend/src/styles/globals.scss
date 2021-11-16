@@ -2,3 +2,7 @@ html,
 body {
   background-color: #edf2f7 !important;
 }
+
+*:focus {
+  box-shadow: none !important;
+}
