@@ -79,7 +79,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
         )}
       </Flex>
 
-      <Divider mt='4'></Divider>
+      <Divider mt='4' />
 
       <Box my='4'>
         <Wrap>

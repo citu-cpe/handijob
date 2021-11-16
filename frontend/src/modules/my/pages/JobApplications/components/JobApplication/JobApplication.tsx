@@ -59,10 +59,11 @@ export const JobApplication = ({ jobApplication }: JobApplicationProps) => {
       mb='4'
     >
       {imageUrl && (
-        <Box flexBasis='20%'>
-          <Img src={imageUrl} alt={title} w='100%' borderLeftRadius='md' />
+        <Box flexBasis='20%' p='4'>
+          <Img src={imageUrl} alt={title} w='100%' />
         </Box>
       )}
+
       <Box flexBasis='50%' overflow='hidden' textOverflow='ellipsis'>
         <Tooltip label={title.length > 40 && title}>
           <Heading size='md'>
@@ -71,6 +72,7 @@ export const JobApplication = ({ jobApplication }: JobApplicationProps) => {
           </Heading>
         </Tooltip>
       </Box>
+
       <Badge colorScheme={getColorScheme(jobApplication.status)}>
         {jobApplication.status}
       </Badge>

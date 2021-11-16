@@ -15,17 +15,19 @@ import { UserDTO } from 'generated-api';
 import { useGetJobOpenings } from './hooks/useGetJobOpenings';
 import { JobOpening } from './components/JobOpening/JobOpening';
 import { JobOpeningForm } from './components/JobOpeningForm/JobOpeningForm';
+import { JobOpeningSkeleton } from './components/JobOpeningSkeleton/JobOpeningSkeleton';
 
 interface HomeProps {
   user: UserDTO;
 }
 
 export const Home = ({ user }: HomeProps) => {
-  const { jobOpenings } = useGetJobOpenings();
+  const { jobOpenings, isLoading } = useGetJobOpenings();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
     <Box>
+      {isLoading && <JobOpeningSkeleton />}
       {jobOpenings.map((jobOpening) => (
         <JobOpening key={jobOpening.id} jobOpening={jobOpening} />
       ))}
