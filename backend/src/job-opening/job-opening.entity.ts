@@ -69,7 +69,8 @@ export class JobOpening {
       description: this.description,
       imageUrl: this.imageUrl,
       cloudinaryPublicId: this.cloudinaryPublicId,
-      jobApplications: this.jobApplications.map((j) => j.toDTO()),
+      jobApplications:
+        this.jobApplications && this.jobApplications.map((j) => j.toDTO()),
     };
   }
 }

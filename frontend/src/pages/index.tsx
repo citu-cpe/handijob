@@ -1,17 +1,10 @@
-import type { NextPage } from 'next';
 import { useGlobalStore } from '../shared/stores';
 import { Landing } from '../modules/index/components/Landing/Landing';
 import { Home } from '../modules/index/components/Home/Home';
-import { useEffect, useState } from 'react';
-import { UserDTO } from 'generated-api';
+import type { NextPageWithLayout } from './_app';
 
-const Index: NextPage = () => {
-  const [user, setUser] = useState<UserDTO | undefined>();
-  const getUser = useGlobalStore((state) => state.getUser);
-
-  useEffect(() => {
-    setUser(getUser());
-  }, [getUser]);
+const Index: NextPageWithLayout = () => {
+  const user = useGlobalStore((state) => state.user);
 
   return user ? <Home user={user} /> : <Landing />;
 };

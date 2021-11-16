@@ -1,29 +1,37 @@
-import { UserDTO } from 'generated-api';
+import { LoginResponseDTO, UserDTO } from 'generated-api';
 import create from 'zustand';
 import { LocalStorageKeys } from '../enums/localStorageKeys';
 
 interface GlobalState {
-  getUser: () => UserDTO | undefined;
-  setUser: (user: UserDTO) => void;
-  removeUser: () => void;
+  setUser: (user: UserDTO | undefined) => void;
   navbarHeight: string;
+  user: UserDTO | undefined;
+  // isFreelancer: boolean;
+  // isEmployer: boolean;
+  loginUser: (loginResponseDTO: LoginResponseDTO) => void;
+  logoutUser: () => void;
 }
 
-export const useGlobalStore = create<GlobalState>(() => ({
-  getUser: () => {
-    const user = localStorage.getItem(LocalStorageKeys.USER);
+export const useGlobalStore = create<GlobalState>((set) => ({
+  user: undefined,
+  setUser: (user: UserDTO | undefined) => set(() => ({ user })),
+  navbarHeight: '50px',
+  // isFreelancer: !!get().user?.freelancerId,
+  // isEmployer: !!get().user?.employerId,
+  loginUser: (loginResponseDTO: LoginResponseDTO) => {
+    const { user, accessToken, refreshToken } = loginResponseDTO;
 
-    if (user) {
-      return JSON.parse(user);
-    }
+    set(() => ({ user }));
 
-    return undefined;
-  },
-  setUser: (user: UserDTO) => {
+    localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
+    localStorage.setItem(LocalStorageKeys.REFRESH_TOKEN, refreshToken);
     localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
   },
-  removeUser: () => {
+  logoutUser: () => {
+    set(() => ({ user: undefined }));
+
+    localStorage.removeItem(LocalStorageKeys.ACCESS_TOKEN);
+    localStorage.removeItem(LocalStorageKeys.REFRESH_TOKEN);
     localStorage.removeItem(LocalStorageKeys.USER);
   },
-  navbarHeight: '150px',
 }));

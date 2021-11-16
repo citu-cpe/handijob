@@ -11,7 +11,6 @@ import {
 import { AddIcon } from '@chakra-ui/icons';
 import React from 'react';
 import { BottomRightButton } from '../../../../shared/components/button/BottomRightButton';
-import { useGlobalStore } from '../../../../shared/stores';
 import { UserDTO } from 'generated-api';
 import { useGetJobOpenings } from './hooks/useGetJobOpenings';
 import { JobOpening } from './components/JobOpening/JobOpening';
@@ -24,10 +23,9 @@ interface HomeProps {
 export const Home = ({ user }: HomeProps) => {
   const { jobOpenings } = useGetJobOpenings();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navbarHeight = useGlobalStore((state) => state.navbarHeight);
 
   return (
-    <Box maxW='container.sm' mx='auto' mt={navbarHeight}>
+    <Box>
       {jobOpenings.map((jobOpening) => (
         <JobOpening key={jobOpening.id} jobOpening={jobOpening} />
       ))}
@@ -45,6 +43,7 @@ export const Home = ({ user }: HomeProps) => {
 
       {user.employerId && (
         <BottomRightButton
+          colorScheme='teal'
           onClick={() => {
             onOpen();
           }}

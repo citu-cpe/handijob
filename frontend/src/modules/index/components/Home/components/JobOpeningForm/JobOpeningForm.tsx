@@ -132,7 +132,7 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
                   <Box mb='8'>
                     <CheckboxGroup
                       defaultValue={[]}
-                      colorScheme='green'
+                      colorScheme='teal'
                       fieldProps={fieldProps}
                       name='categories'
                       label='Choose at least one category for this job:'
@@ -174,9 +174,8 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
                 isLoading={isLoading}
                 type='submit'
                 isFullWidth
-                bgColor='gray.800'
                 color='gray.50'
-                _hover={{ bgColor: 'gray.800', color: 'gray.50' }}
+                colorScheme='teal'
               >
                 Create Job Opening
               </Button>

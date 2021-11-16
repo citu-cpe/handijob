@@ -1,4 +1,4 @@
-import { JobOpeningDTO, UserDTO } from 'generated-api';
+import { JobOpeningDTO } from 'generated-api';
 import {
   Box,
   Button,
@@ -14,9 +14,10 @@ import {
   Spinner,
   Tag,
   Text,
+  Tooltip,
   Wrap,
 } from '@chakra-ui/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useGlobalStore } from '../../../../../../shared/stores';
 import { BsThreeDots } from 'react-icons/bs';
 import { useDeleteJobOpening } from '../../hooks/useDeleteJobOpening';
@@ -38,8 +39,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
     mutate: deleteJobApplication,
     isLoading: deleteJobApplicationIsLoading,
   } = useDeleteJobApplication();
-  const [user, setUser] = useState<UserDTO | undefined>();
-  const getUser = useGlobalStore((state) => state.getUser);
+  const user = useGlobalStore((state) => state.user);
   const isOwner = user?.employerId && user.employerId === jobOpening.employerId;
   const isFreelancer = !!user?.freelancerId;
   const jobApplication = jobOpening.jobApplications.find(
@@ -47,14 +47,15 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
   );
   const hasApplied = !!jobApplication;
 
-  useEffect(() => {
-    setUser(getUser());
-  }, [getUser]);
-
   return (
-    <Box p='8' rounded='md' bg='gray.700' mb='4' w='100%'>
+    <Box p='8' rounded='md' bg='white' mb='4' w='100%' shadow='md'>
       <Flex justify='space-between'>
-        <Heading color='gray.200'>{jobOpening.title}</Heading>
+        <Tooltip label={jobOpening.title.length > 50 && jobOpening.title}>
+          <Heading color='gray.700' size='lg'>
+            {jobOpening.title.slice(0, 50)}
+            {jobOpening.title.length > 50 && '...'}
+          </Heading>
+        </Tooltip>
         {isOwner && (
           <Box alignSelf='start'>
             <Menu>
@@ -62,7 +63,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
                 {deleteJobOpeningIsLoading ? (
                   <Spinner color='red' />
                 ) : (
-                  <Icon color='gray.200' as={BsThreeDots} cursor='pointer' />
+                  <Icon color='gray.700' as={BsThreeDots} cursor='pointer' />
                 )}
               </MenuButton>
               <MenuList>
@@ -90,7 +91,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
         </Wrap>
       </Box>
 
-      <Box my='4' color='gray.200'>
+      <Box my='4' color='gray.700'>
         {jobOpening.description.split('\n').map((line, i) => (
           <Text key={line + i}>{line}</Text>
         ))}
@@ -104,8 +105,8 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
         <Button
           onClick={() =>
             deleteJobApplication({
-              jobApplicationId: jobApplication.id!,
-              freelancerDTO: { id: user.freelancerId! },
+              jobApplicationId: jobApplication?.id!,
+              freelancerDTO: { id: user?.freelancerId! },
             })
           }
           isFullWidth
