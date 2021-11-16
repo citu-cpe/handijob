@@ -39,7 +39,7 @@ export class JobOpeningService {
   public async getJobOpeningsByEmployer(
     employerId: string
   ): Promise<JobOpeningDTO[]> {
-    const employer = this.employerService.findById(employerId);
+    const employer = await this.employerService.findById(employerId);
 
     const jobOpenings = await this.jobOpeningRepository.find({
       where: { employer },
