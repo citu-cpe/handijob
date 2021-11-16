@@ -1,7 +1,6 @@
-import { Flex, Box, Link, Container, Image, Button } from '@chakra-ui/react';
+import { Flex, Box, Link, Container, Button, Heading } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
-import { useGlobalStore } from '../../../../shared/stores';
 import { useLogout } from '../../../../modules/index/hooks/useLogout';
 
 interface NavbarProps {
@@ -11,7 +10,6 @@ interface NavbarProps {
 
 export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
   const logout = useLogout().mutate;
-  const navbarHeight = useGlobalStore((state) => state.navbarHeight);
 
   return (
     <Box
@@ -29,12 +27,7 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
           <Box>
             <NextLink href='/' passHref>
               <Link>
-                <Image
-                  src='/logo.png'
-                  alt='Handi-Job-logo'
-                  border='0'
-                  style={{ height: navbarHeight }}
-                />
+                <Heading color='teal'>HandiJob</Heading>
               </Link>
             </NextLink>
           </Box>

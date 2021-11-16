@@ -7,6 +7,12 @@ export const Hero = () => {
   return (
     <div className={styles.hero}>
       <div className={styles.left}>
+        <div className={styles.imgContainer}>
+          <img
+            src='/logo.png'
+            style={{ width: '12rem', textAlign: 'center' }}
+          />
+        </div>
         <h1 className={styles.heading}>Apply to HandIJob!</h1>
         <p>Take your career further with HandIJob</p>
         <Box mt='10'>
