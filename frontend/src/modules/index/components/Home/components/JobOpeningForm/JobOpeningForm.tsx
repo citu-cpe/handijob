@@ -253,7 +253,7 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
                             <VStack display={hasImage ? 'none' : undefined}>
                               <Text color='teal.500'>Add a photo</Text>
                               <Text color='gray.200'>
-                                (accepts .jpg, .jpg, or .png files)
+                                (accepts .jpg, .jpeg, or .png files)
                               </Text>
                             </VStack>
                           </Center>
