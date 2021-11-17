@@ -13,6 +13,7 @@ import { LocalStorageKeys } from '../shared/enums/localStorageKeys';
 import { LoginResponseDTO, UserDTO } from 'generated-api';
 import { theme } from '../shared/theme';
 import '@fontsource/poppins/700.css';
+import '@fontsource/poppins/900.css';
 import '@fontsource/montserrat/400.css';
 
 export type NextPageWithLayout = NextPage & {

@@ -32,7 +32,12 @@ export const Home = ({ user }: HomeProps) => {
         <JobOpening key={jobOpening.id} jobOpening={jobOpening} />
       ))}
 
-      <Modal onClose={onClose} isOpen={isOpen} size='2xl'>
+      <Modal
+        onClose={onClose}
+        isOpen={isOpen}
+        size='2xl'
+        scrollBehavior='inside'
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Create a Job Opening</ModalHeader>

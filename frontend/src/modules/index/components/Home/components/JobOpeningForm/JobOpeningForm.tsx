@@ -1,4 +1,18 @@
-import { Box, Button, Checkbox, Wrap } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Center,
+  Checkbox,
+  FormLabel,
+  Wrap,
+  Text,
+  VStack,
+  IconButton,
+  Icon,
+  Input as ChakraInput,
+  CloseButton,
+  Flex,
+} from '@chakra-ui/react';
 import { Input } from '../../../../../../shared/components/form/Input/Input';
 import {
   Field,
@@ -8,7 +22,7 @@ import {
   FormikHelpers,
   FormikProps,
 } from 'formik';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { Textarea } from '../../../../../../shared/components/form/Textrea/Textarea';
 import { useGetCategories } from './hooks/useGetCategories';
@@ -16,6 +30,8 @@ import { CheckboxGroup } from '../../../../../../shared/components/form/Checkbox
 import { useAxios } from '../../../../../../shared/hooks/useAxios';
 import { useQueryClient } from 'react-query';
 import { CreateJobOpeningDTO } from 'generated-api';
+import { BsFillImageFill } from 'react-icons/bs';
+import { useToggle } from '../../../../../../shared/hooks/useToggle';
 
 interface JobOpeningFormProps {
   onClose?: () => void;
@@ -33,6 +49,10 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
   const axios = useAxios();
   const [isLoading, setIsLoading] = useState(false);
   const queryClient = useQueryClient();
+  const imagePreviewRef = useRef<HTMLDivElement>(null);
+  const imagePreviewContainerRef = useRef<HTMLDivElement>(null);
+  const [hasImage, setHasImage] = useState(false);
+  const [showImagePicker, toggleShowImagePicker] = useToggle();
 
   const initialValues = {
     title: '',
@@ -82,8 +102,34 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
     if (e.target.files && e.target.files[0]) {
       const image = e.target.files[0];
       formProps.setFieldValue('image', image);
+
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(image);
+      fileReader.onload = (ev) => {
+        if (imagePreviewRef.current) {
+          imagePreviewRef.current.style.backgroundImage = `url(${ev.target?.result})`;
+          setHasImage(true);
+        }
+      };
     } else {
+      removeImage(formProps);
+    }
+  };
+
+  const toggleImagePicker = (formProps: FormikProps<FormGroup>) => {
+    if (showImagePicker) {
+      removeImage(formProps);
+    }
+
+    toggleShowImagePicker();
+  };
+
+  const removeImage = (formProps: FormikProps<FormGroup>) => {
+    if (imagePreviewRef.current) {
       formProps.setFieldValue('image', '');
+      imagePreviewRef.current.style.backgroundImage = '';
+      setHasImage(false);
     }
   };
 
@@ -129,7 +175,7 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
               </Field>
               <Field name='categories'>
                 {(fieldProps: FieldProps<string, CreateJobOpeningDTO>) => (
-                  <Box mb='8'>
+                  <Box>
                     <CheckboxGroup
                       defaultValue={[]}
                       colorScheme='teal'
@@ -153,20 +199,109 @@ export const JobOpeningForm = ({ onClose }: JobOpeningFormProps) => {
                   </Box>
                 )}
               </Field>
-              <Field name='image'>
-                {() => (
-                  <input
-                    name='image'
-                    type='file'
-                    accept='.jpg, .jpeg, .png'
-                    id='title'
-                    color='gray.800'
-                    onChange={(e) => {
-                      handleOnChange(e, formProps);
+              <Flex justifyContent='space-between'>
+                <IconButton
+                  aria-label='Choose image'
+                  icon={<Icon as={BsFillImageFill} />}
+                  onClick={() => toggleImagePicker(formProps)}
+                />
+                {hasImage && (
+                  <CloseButton
+                    color='teal.500'
+                    onClick={() => {
+                      removeImage(formProps);
                     }}
                   />
                 )}
-              </Field>
+              </Flex>
+              {showImagePicker && (
+                <Field name='image'>
+                  {() => (
+                    <>
+                      <FormLabel
+                        htmlFor='image'
+                        mb='2'
+                        color='gray.800'
+                        fontWeight='semibold'
+                      >
+                        <Box
+                          p='4'
+                          bgColor='gray.300'
+                          rounded='md'
+                          pos='relative'
+                          my='4'
+                          ref={imagePreviewContainerRef}
+                          transition='all .2s ease-out'
+                        >
+                          <Center
+                            cursor='pointer'
+                            bg='gray.300'
+                            h='52'
+                            w='100%'
+                            borderStyle='dashed'
+                            borderWidth='thick'
+                            borderColor='gray.200'
+                            border={hasImage ? 'none' : undefined}
+                            rounded='md'
+                            bgRepeat='no-repeat'
+                            bgPos='center'
+                            bgSize='cover'
+                            ref={imagePreviewRef}
+                            textAlign='center'
+                            transition='all .2s ease-out'
+                          >
+                            <VStack display={hasImage ? 'none' : undefined}>
+                              <Text color='teal.500'>Add a photo</Text>
+                              <Text color='gray.200'>
+                                (accepts .jpg, .jpg, or .png files)
+                              </Text>
+                            </VStack>
+                          </Center>
+                          <ChakraInput
+                            name='image'
+                            type='file'
+                            accept='.jpg, .jpeg, .png'
+                            id='image'
+                            onChange={(e) => {
+                              handleOnChange(e, formProps);
+                            }}
+                            opacity='0'
+                            pos='absolute'
+                            top='0'
+                            left='0'
+                            w='full'
+                            h='full'
+                            cursor='pointer'
+                            onMouseOver={() => {
+                              if (
+                                imagePreviewRef.current &&
+                                imagePreviewContainerRef.current &&
+                                !hasImage
+                              ) {
+                                imagePreviewRef.current.style.backgroundColor =
+                                  '#A0AEC0';
+                                imagePreviewContainerRef.current.style.backgroundColor =
+                                  '#A0AEC0';
+                              }
+                            }}
+                            onMouseLeave={() => {
+                              if (
+                                imagePreviewRef.current &&
+                                imagePreviewContainerRef.current
+                              ) {
+                                imagePreviewRef.current.style.backgroundColor =
+                                  '';
+                                imagePreviewContainerRef.current.style.backgroundColor =
+                                  '';
+                              }
+                            }}
+                          />
+                        </Box>
+                      </FormLabel>
+                    </>
+                  )}
+                </Field>
+              )}
             </Box>
             <Box mb='4'>
               <Button
