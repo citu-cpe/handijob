@@ -1,4 +1,4 @@
-import { Flex, Box, Link, Container, Button, Heading } from '@chakra-ui/react';
+import { Flex, Box, Link, Container, Button, Img } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
 import { useLogout } from '../../../../modules/index/hooks/useLogout';
@@ -27,7 +27,7 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
           <Box>
             <NextLink href='/' passHref>
               <Link>
-                <Heading color='teal'>HandiJob</Heading>
+                <Img src='/logo-text.png' w='25%' />
               </Link>
             </NextLink>
           </Box>
