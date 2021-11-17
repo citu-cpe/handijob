@@ -9,7 +9,7 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
-  const logout = useLogout().mutate;
+  const { mutate: logout, isLoading } = useLogout();
 
   return (
     <Box
@@ -42,6 +42,7 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
                   px='8'
                   rounded='full'
                   onClick={() => logout()}
+                  isLoading={isLoading}
                 >
                   Log Out
                 </Button>
