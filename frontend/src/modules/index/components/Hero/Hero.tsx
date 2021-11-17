@@ -9,7 +9,7 @@ export const Hero = () => {
       <div className={styles.left}>
         <div className={styles.imgContainer}>
           <img
-            src='/logo.png'
+            src='/logo-icon.png'
             style={{ width: '12rem', textAlign: 'center' }}
           />
         </div>
