@@ -15,6 +15,7 @@ import { theme } from '../shared/theme';
 import '@fontsource/poppins/700.css';
 import '@fontsource/poppins/900.css';
 import '@fontsource/montserrat/400.css';
+import { SocketProvider } from '../shared/providers/SocketProvider';
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -67,8 +68,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     <ChakraProvider theme={theme}>
       <ApiProvider>
         <QueryClientProvider client={queryClient}>
-          {getLayout(<Component {...pageProps} />)}
-          <ReactQueryDevtools initialIsOpen={false} />
+          <SocketProvider>
+            {getLayout(<Component {...pageProps} />)}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </SocketProvider>
         </QueryClientProvider>
       </ApiProvider>
     </ChakraProvider>

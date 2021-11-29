@@ -2,6 +2,7 @@ import { Flex, Box, Link, Container, Button, Img } from '@chakra-ui/react';
 import React from 'react';
 import NextLink from 'next/link';
 import { useLogout } from '../../../../modules/index/hooks/useLogout';
+import { Notifications } from '../Notifications/Notifications';
 
 interface NavbarProps {
   positionFixed?: boolean;
@@ -9,7 +10,7 @@ interface NavbarProps {
 }
 
 export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
-  const { mutate: logout, isLoading } = useLogout();
+  const { mutate: logout, isLoading: logoutIsLoading } = useLogout();
 
   return (
     <Box
@@ -34,6 +35,7 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
           <Box>
             {loggedIn ? (
               <>
+                <Notifications />
                 <Button
                   mr='4'
                   colorScheme='teal'
@@ -42,7 +44,7 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
                   px='8'
                   rounded='full'
                   onClick={() => logout()}
-                  isLoading={isLoading}
+                  isLoading={logoutIsLoading}
                 >
                   Log Out
                 </Button>

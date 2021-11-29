@@ -45,6 +45,8 @@ import { CreateJobApplicationDTO } from '../models';
 // @ts-ignore
 import { CreateJobOpeningDTO } from '../models';
 // @ts-ignore
+import { CreateNotificationDTO } from '../models';
+// @ts-ignore
 import { FreelancerDTO } from '../models';
 // @ts-ignore
 import { JobApplicationDTO } from '../models';
@@ -54,6 +56,10 @@ import { JobOpeningDTO } from '../models';
 import { LoginResponseDTO } from '../models';
 // @ts-ignore
 import { LoginUserDTO } from '../models';
+// @ts-ignore
+import { NotificationDTO } from '../models';
+// @ts-ignore
+import { NotificationsDTO } from '../models';
 // @ts-ignore
 import { RefreshTokenDTO } from '../models';
 // @ts-ignore
@@ -165,6 +171,59 @@ export const DefaultApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         createJobOpeningDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {CreateNotificationDTO} createNotificationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createNotification: async (
+      createNotificationDTO: CreateNotificationDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createNotificationDTO' is not null or undefined
+      assertParamExists(
+        'createNotification',
+        'createNotificationDTO',
+        createNotificationDTO
+      );
+      const localVarPath = `/api/v1/notification`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createNotificationDTO,
         localVarRequestOptions,
         configuration
       );
@@ -584,6 +643,42 @@ export const DefaultApiAxiosParamCreator = function (
     },
     /**
      *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getNotifications: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/notification`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
      * @param {LoginUserDTO} loginUserDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -671,6 +766,59 @@ export const DefaultApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         userDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {NotificationDTO} notificationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    markNotifcationAsRead: async (
+      notificationDTO: NotificationDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'notificationDTO' is not null or undefined
+      assertParamExists(
+        'markNotifcationAsRead',
+        'notificationDTO',
+        notificationDTO
+      );
+      const localVarPath = `/api/v1/notification`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        notificationDTO,
         localVarRequestOptions,
         configuration
       );
@@ -827,6 +975,33 @@ export const DefaultApiFp = function (configuration?: Configuration) {
       const localVarAxiosArgs =
         await localVarAxiosParamCreator.createJobOpening(
           createJobOpeningDTO,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {CreateNotificationDTO} createNotificationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async createNotification(
+      createNotificationDTO: CreateNotificationDTO,
+      options?: any
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<NotificationDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.createNotification(
+          createNotificationDTO,
           options
         );
       return createRequestFunction(
@@ -1057,6 +1232,28 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getNotifications(
+      options?: any
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<NotificationsDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.getNotifications(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
      * @param {LoginUserDTO} loginUserDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1097,6 +1294,30 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         userDTO,
         options
       );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {NotificationDTO} notificationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async markNotifcationAsRead(
+      notificationDTO: NotificationDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.markNotifcationAsRead(
+          notificationDTO,
+          options
+        );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1193,6 +1414,20 @@ export const DefaultApiFactory = function (
     ): AxiosPromise<JobOpeningDTO> {
       return localVarFp
         .createJobOpening(createJobOpeningDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {CreateNotificationDTO} createNotificationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    createNotification(
+      createNotificationDTO: CreateNotificationDTO,
+      options?: any
+    ): AxiosPromise<NotificationDTO> {
+      return localVarFp
+        .createNotification(createNotificationDTO, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -1313,6 +1548,16 @@ export const DefaultApiFactory = function (
     },
     /**
      *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getNotifications(options?: any): AxiosPromise<NotificationsDTO> {
+      return localVarFp
+        .getNotifications(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
      * @param {LoginUserDTO} loginUserDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1334,6 +1579,20 @@ export const DefaultApiFactory = function (
     logOut(userDTO: UserDTO, options?: any): AxiosPromise<void> {
       return localVarFp
         .logOut(userDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {NotificationDTO} notificationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    markNotifcationAsRead(
+      notificationDTO: NotificationDTO,
+      options?: any
+    ): AxiosPromise<void> {
+      return localVarFp
+        .markNotifcationAsRead(notificationDTO, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -1403,6 +1662,22 @@ export class DefaultApi extends BaseAPI {
   ) {
     return DefaultApiFp(this.configuration)
       .createJobOpening(createJobOpeningDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {CreateNotificationDTO} createNotificationDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public createNotification(
+    createNotificationDTO: CreateNotificationDTO,
+    options?: any
+  ) {
+    return DefaultApiFp(this.configuration)
+      .createNotification(createNotificationDTO, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -1527,6 +1802,18 @@ export class DefaultApi extends BaseAPI {
 
   /**
    *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getNotifications(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getNotifications(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
    * @param {LoginUserDTO} loginUserDTO
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -1548,6 +1835,22 @@ export class DefaultApi extends BaseAPI {
   public logOut(userDTO: UserDTO, options?: any) {
     return DefaultApiFp(this.configuration)
       .logOut(userDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {NotificationDTO} notificationDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public markNotifcationAsRead(
+    notificationDTO: NotificationDTO,
+    options?: any
+  ) {
+    return DefaultApiFp(this.configuration)
+      .markNotifcationAsRead(notificationDTO, options)
       .then((request) => request(this.axios, this.basePath));
   }
 

@@ -3,9 +3,11 @@ import { CreateJobApplicationDTO } from 'generated-api';
 import { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
 import { ApiContext } from '../../../../../shared/providers/ApiProvider';
+import { SocketContext } from '../../../../../shared/providers/SocketProvider';
 
 export const useApplyForJobOpening = () => {
   const api = useContext(ApiContext);
+  const socket = useContext(SocketContext);
   const queryClient = useQueryClient();
   const toast = useToast();
 
@@ -20,6 +22,11 @@ export const useApplyForJobOpening = () => {
           title: 'Successfully applied for job opening!',
           isClosable: true,
           variant: 'subtle',
+        });
+
+        socket?.emit('applyJobOpening', {
+          userId: 'test user id',
+          content: 'test content',
         });
       },
     }

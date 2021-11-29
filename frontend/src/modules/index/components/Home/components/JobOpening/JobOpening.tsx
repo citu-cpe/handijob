@@ -55,20 +55,23 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
   );
   const hasApplied = !!jobApplication;
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const overflowLength = 50;
 
   return (
     <>
       <Box p='8' rounded='md' bg='white' mb='4' w='100%' shadow='md'>
         <Flex justify='space-between'>
-          <Tooltip label={jobOpening.title.length > 50 && jobOpening.title}>
+          <Tooltip
+            label={jobOpening.title.length > overflowLength && jobOpening.title}
+          >
             <Heading
               color='gray.700'
               size='lg'
               onClick={isOwner ? onOpen : undefined}
               cursor={isOwner ? 'pointer' : 'default'}
             >
-              {jobOpening.title.slice(0, 50)}
-              {jobOpening.title.length > 50 && '...'}
+              {jobOpening.title.slice(0, overflowLength)}
+              {jobOpening.title.length > overflowLength && '...'}
             </Heading>
           </Tooltip>
           {isOwner && (

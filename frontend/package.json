@@ -12,7 +12,7 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --runInBand --reporters=default --reporters=jest-junit",
     "test:e2e": "cypress open",
-    "test:e2e:ci": "wait-on http://localhost:5000/api/v1 && wait-on http://localhost:3000/ && cypress run",
+    "test:e2e:ci": "wait-on http://localhost:5001/api/v1 && wait-on http://localhost:3000/ && cypress run",
     "wait-on": "wait-on"
   },
   "lint-staged": {
@@ -50,6 +50,7 @@
     "react-icons": "^4.3.1",
     "react-query": "^3.24.4",
     "sass": "^1.42.1",
+    "socket.io-client": "^4.4.0",
     "ts-node": "^10.4.0",
     "vercel-is-pull-request": "0.0.8",
     "yup": "^0.32.9",

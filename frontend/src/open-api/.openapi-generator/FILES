@@ -13,12 +13,15 @@ models/access-token-dto.ts
 models/category-dto.ts
 models/create-job-application-dto.ts
 models/create-job-opening-dto.ts
+models/create-notification-dto.ts
 models/freelancer-dto.ts
 models/index.ts
 models/job-application-dto.ts
 models/job-opening-dto.ts
 models/login-response-dto.ts
 models/login-user-dto.ts
+models/notification-dto.ts
+models/notifications-dto.ts
 models/refresh-token-dto.ts
 models/register-user-dto.ts
 models/user-dto.ts
