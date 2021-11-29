@@ -1,5 +1,6 @@
 import { JobOpeningDTO } from 'generated-api';
 import {
+  Badge,
   Box,
   Button,
   Divider,
@@ -31,6 +32,7 @@ import { useDeleteJobOpening } from '../../hooks/useDeleteJobOpening';
 import { useApplyForJobOpening } from '../../hooks/useApplyForJobOpening';
 import { useDeleteJobApplication } from '../../hooks/useDeleteJobApplication';
 import { Applicants } from '../Applicants/Applicants';
+import { useArchiveJobOpening } from '../../hooks/useArchiveJobOpening';
 
 interface JobOpeningProps {
   jobOpening: JobOpeningDTO;
@@ -39,6 +41,8 @@ interface JobOpeningProps {
 export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
   const { mutate: deleteJobOpening, isLoading: deleteJobOpeningIsLoading } =
     useDeleteJobOpening();
+  const { mutate: archiveJobOpening, isLoading: archiveJobOpeningIsLoading } =
+    useArchiveJobOpening();
   const {
     mutate: createJobApplication,
     isLoading: createJobApplicationIsLoading,
@@ -64,27 +68,33 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
           <Tooltip
             label={jobOpening.title.length > overflowLength && jobOpening.title}
           >
-            <Heading
-              color='gray.700'
-              size='lg'
-              onClick={isOwner ? onOpen : undefined}
-              cursor={isOwner ? 'pointer' : 'default'}
-            >
-              {jobOpening.title.slice(0, overflowLength)}
-              {jobOpening.title.length > overflowLength && '...'}
-            </Heading>
+            <Box>
+              <Heading
+                color='gray.700'
+                size='lg'
+                onClick={isOwner ? onOpen : undefined}
+                cursor={isOwner ? 'pointer' : 'default'}
+              >
+                {jobOpening.title.slice(0, overflowLength)}
+                {jobOpening.title.length > overflowLength && '...'}
+              </Heading>
+              {jobOpening.archived && <Badge mt='2'>Archived</Badge>}
+            </Box>
           </Tooltip>
           {isOwner && (
             <Box alignSelf='start'>
               <Menu>
                 <MenuButton>
-                  {deleteJobOpeningIsLoading ? (
+                  {deleteJobOpeningIsLoading || archiveJobOpeningIsLoading ? (
                     <Spinner color='red' />
                   ) : (
                     <Icon color='gray.700' as={BsThreeDots} cursor='pointer' />
                   )}
                 </MenuButton>
                 <MenuList>
+                  <MenuItem onClick={() => archiveJobOpening(jobOpening)}>
+                    {jobOpening.archived ? 'Unarchive' : 'Archive'}
+                  </MenuItem>
                   <MenuItem
                     color='red'
                     onClick={() => deleteJobOpening(jobOpening)}

@@ -52,6 +52,12 @@ export interface JobOpeningDTO {
   description: string;
   /**
    *
+   * @type {boolean}
+   * @memberof JobOpeningDTO
+   */
+  archived: boolean;
+  /**
+   *
    * @type {string}
    * @memberof JobOpeningDTO
    */

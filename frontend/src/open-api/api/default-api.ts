@@ -76,6 +76,55 @@ export const DefaultApiAxiosParamCreator = function (
   return {
     /**
      *
+     * @param {JobOpeningDTO} jobOpeningDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    archiveJobOpening: async (
+      jobOpeningDTO: JobOpeningDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'jobOpeningDTO' is not null or undefined
+      assertParamExists('archiveJobOpening', 'jobOpeningDTO', jobOpeningDTO);
+      const localVarPath = `/api/v1/job-opening/archive`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        jobOpeningDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
      * @param {CreateJobApplicationDTO} createJobApplicationDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -938,6 +987,30 @@ export const DefaultApiFp = function (configuration?: Configuration) {
   return {
     /**
      *
+     * @param {JobOpeningDTO} jobOpeningDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async archiveJobOpening(
+      jobOpeningDTO: JobOpeningDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.archiveJobOpening(
+          jobOpeningDTO,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
      * @param {CreateJobApplicationDTO} createJobApplicationDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1390,6 +1463,20 @@ export const DefaultApiFactory = function (
   return {
     /**
      *
+     * @param {JobOpeningDTO} jobOpeningDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    archiveJobOpening(
+      jobOpeningDTO: JobOpeningDTO,
+      options?: any
+    ): AxiosPromise<void> {
+      return localVarFp
+        .archiveJobOpening(jobOpeningDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
      * @param {CreateJobApplicationDTO} createJobApplicationDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1633,6 +1720,19 @@ export const DefaultApiFactory = function (
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+  /**
+   *
+   * @param {JobOpeningDTO} jobOpeningDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public archiveJobOpening(jobOpeningDTO: JobOpeningDTO, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .archiveJobOpening(jobOpeningDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
   /**
    *
    * @param {CreateJobApplicationDTO} createJobApplicationDTO
