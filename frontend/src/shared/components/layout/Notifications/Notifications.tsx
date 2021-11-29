@@ -88,9 +88,9 @@ export const Notifications = () => {
                       {n.content.slice(0, overflowLength)}
                       {n.content.length > overflowLength && '...'}
                     </Text>
-                    <Text textAlign='right' color='gray.500' fontSize='sm'>
+                    {/*<Text textAlign='right' color='gray.500' fontSize='sm'>
                       {n.timeAgo}
-                    </Text>
+                      </Text>*/}
                   </Box>
                   <Divider />
                 </>
