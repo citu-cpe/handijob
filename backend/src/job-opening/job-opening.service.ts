@@ -24,7 +24,9 @@ export class JobOpeningService {
   ) {}
 
   public findById(id: string) {
-    return this.jobOpeningRepository.findOne(id);
+    return this.jobOpeningRepository.findOne(id, {
+      relations: ['employer', 'employer.user'],
+    });
   }
 
   public async getAllJobOpenings(): Promise<JobOpeningDTO[]> {

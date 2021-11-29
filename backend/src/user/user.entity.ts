@@ -5,12 +5,14 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { AccountType } from '../account-type/account-type.entity';
 import { AccountTypes } from '../account-type/types/account-types.enum';
 import { UserDTO } from './dto/user.dto';
+import { Notification } from '../notifications/notification.entity';
 
 @Entity()
 export class User {
@@ -40,6 +42,9 @@ export class User {
   @ManyToMany(() => AccountType, { eager: true })
   @JoinTable()
   public accountTypes: AccountType[];
+
+  @OneToMany(() => Notification, (notification) => notification.user)
+  public notifications: Notification[];
 
   public toDTO(): UserDTO {
     return {

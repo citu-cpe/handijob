@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 import { FreelancerService } from '../freelancer/freelancer.service';
 import { JobOpeningService } from '../job-opening/job-opening.service';
+import { NotificationService } from '../notifications/notification.service';
 import { CreateJobApplicationDTO } from './dto/create-job-application.dto';
 import { JobApplicationDTO } from './dto/job-application.dto';
 import { JobApplicationRepository } from './job-application.repository';
@@ -14,7 +15,8 @@ export class JobApplicationService {
   constructor(
     private readonly jobApplicationRepository: JobApplicationRepository,
     private readonly freelancerService: FreelancerService,
-    private readonly jobOpeningService: JobOpeningService
+    private readonly jobOpeningService: JobOpeningService,
+    private readonly notificationService: NotificationService
   ) {}
 
   public async createJobApplication(
@@ -51,6 +53,11 @@ export class JobApplicationService {
     });
 
     await this.jobApplicationRepository.save(jobApplication);
+
+    await this.notificationService.createNotification({
+      content: `@${freelancer.user.username} applied for ${jobOpening.title}`,
+      userId: jobOpening.employer.user.id,
+    });
   }
 
   public async getJobApplicationsByFreelancer(
