@@ -31,11 +31,12 @@ export class JobOpeningService {
 
   public async getAllJobOpenings(): Promise<JobOpeningDTO[]> {
     const jobOpenings = await this.jobOpeningRepository.find({
+      where: { archived: false },
       relations: ['employer', 'jobApplications', 'jobApplications.freelancer'],
       order: { updatedAt: 'DESC' },
     });
 
-    return jobOpenings.filter((j) => !j.archived).map((j) => j.toDTO());
+    return jobOpenings.map((j) => j.toDTO());
   }
 
   public async getJobOpeningsByEmployer(
