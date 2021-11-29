@@ -50,6 +50,9 @@ export class JobOpening {
   @Column()
   public description: string;
 
+  @Column({ default: false })
+  public archived: boolean;
+
   @Column({ nullable: true })
   public imageUrl?: string;
 
@@ -67,6 +70,7 @@ export class JobOpening {
       ),
       title: this.title,
       description: this.description,
+      archived: this.archived,
       imageUrl: this.imageUrl,
       cloudinaryPublicId: this.cloudinaryPublicId,
       jobApplications:

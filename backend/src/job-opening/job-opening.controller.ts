@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   Req,
   UploadedFile,
   UseGuards,
@@ -23,6 +24,7 @@ export class JobOpeningController {
   public static readonly JOB_OPENING_API_ROUTE = '/job-opening';
   public static readonly GET_FOR_EMPLOYER_API_ROUTE = '/employer/:employerId';
   public static readonly GET_JOB_APPLICANTS = '/:jobOpeningId/applicants';
+  public static readonly ARCHIVE_JOB_OPENING = '/archive';
 
   constructor(private readonly jobOpeningService: JobOpeningService) {}
 
@@ -61,6 +63,15 @@ export class JobOpeningController {
     @Body() jobOpeningDTO: JobOpeningDTO
   ): Promise<void> {
     return this.jobOpeningService.deleteJobOpening(user, jobOpeningDTO);
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Put(JobOpeningController.ARCHIVE_JOB_OPENING)
+  public archiveJobOpening(
+    @Req() { user }: RequestWithUser,
+    @Body() jobOpeningDTO: JobOpeningDTO
+  ): Promise<void> {
+    return this.jobOpeningService.archiveJobOpening(user, jobOpeningDTO);
   }
 
   @UseGuards(JwtAuthenticationGuard)

@@ -1,5 +1,6 @@
 import {
   ArrayNotEmpty,
+  IsBoolean,
   IsDateString,
   IsEnum,
   IsNotEmpty,
@@ -30,6 +31,10 @@ export class JobOpeningDTO {
   @IsString()
   @IsNotEmpty({ message: 'Description is required' })
   public description: string;
+
+  @IsBoolean()
+  @IsNotEmpty({ message: 'Archived is required' })
+  public archived: boolean;
 
   @IsUrl(undefined, { message: 'Invalid url' })
   @IsOptional()

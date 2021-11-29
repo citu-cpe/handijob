@@ -32,10 +32,10 @@ export class JobOpeningService {
   public async getAllJobOpenings(): Promise<JobOpeningDTO[]> {
     const jobOpenings = await this.jobOpeningRepository.find({
       relations: ['employer', 'jobApplications', 'jobApplications.freelancer'],
-      order: { createdAt: 'DESC' },
+      order: { updatedAt: 'DESC' },
     });
 
-    return jobOpenings.map((jobOpening) => jobOpening.toDTO());
+    return jobOpenings.filter((j) => !j.archived).map((j) => j.toDTO());
   }
 
   public async getJobOpeningsByEmployer(
@@ -123,6 +123,26 @@ export class JobOpeningService {
     if (!deleteResponse.affected) {
       throw new NotFoundException('Job opening was not found');
     }
+  }
+
+  public async archiveJobOpening(
+    user: User,
+    jobOpeningDTO: JobOpeningDTO
+  ): Promise<void> {
+    let employer: Employer;
+    try {
+      employer = await this.employerService.findByUser(user);
+    } catch (e) {
+      throw new BadRequestException('User is not an employer');
+    }
+
+    if (employer.id !== jobOpeningDTO.employerId) {
+      throw new ForbiddenException('You do not own this job opening');
+    }
+
+    await this.jobOpeningRepository.update(jobOpeningDTO.id, {
+      archived: jobOpeningDTO.archived,
+    });
   }
 
   public async getApplicants(
