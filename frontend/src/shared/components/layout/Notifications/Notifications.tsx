@@ -72,9 +72,8 @@ export const Notifications = () => {
           ) : (
             <Box maxH='64' overflowY='scroll'>
               {notificationsDTO?.notifications.map((n) => (
-                <>
+                <Box key={n.id}>
                   <Box
-                    key={n.id}
                     p='2'
                     bgColor={n.seen ? 'white' : 'teal.50'}
                     cursor='pointer'
@@ -93,7 +92,7 @@ export const Notifications = () => {
                       </Text>*/}
                   </Box>
                   <Divider />
-                </>
+                </Box>
               ))}
             </Box>
           )}

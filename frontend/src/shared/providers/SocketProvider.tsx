@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 import { useQueryClient } from 'react-query';
 import io, { Socket } from 'socket.io-client';
+import { WebSocketEvents } from '../enums/webSocketEvents';
 import { useGlobalStore } from '../stores';
 import { socketURL } from './ApiProvider';
 
@@ -22,8 +23,12 @@ export const SocketProvider = ({
 
     setSocket(newSocket);
 
-    newSocket.on('notifications', () => {
+    newSocket.on(WebSocketEvents.NOTIFICATIONS, () => {
       queryClient.invalidateQueries('notifications');
+    });
+
+    newSocket.on(WebSocketEvents.PRIVATE_MESSAGE, () => {
+      queryClient.invalidateQueries('rooms');
     });
 
     return () => {

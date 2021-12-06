@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
+import { Not, UpdateResult } from 'typeorm';
 import { User } from './user.entity';
 import { RegisterUserDTO } from '../authentication/dto/register-user.dto';
 import * as bcrypt from 'bcrypt';
@@ -72,6 +72,23 @@ export class UserService {
     return this.userRepository.update(userId, {
       currentHashedRefreshToken: null,
     });
+  }
+
+  public async getRoomsOfUser(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['rooms'],
+    });
+
+    return user.rooms;
+  }
+
+  public async getAllUsersExceptSelf(user: User) {
+    const users = await this.userRepository.find({
+      where: { id: Not(user.id) },
+    });
+
+    return users.map((u) => u.toDTO());
   }
 
   public async fromRegisterDTO(registerDTO: RegisterUserDTO): Promise<User> {

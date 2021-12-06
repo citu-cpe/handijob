@@ -13,6 +13,7 @@ import { AccountType } from '../account-type/account-type.entity';
 import { AccountTypes } from '../account-type/types/account-types.enum';
 import { UserDTO } from './dto/user.dto';
 import { Notification } from '../notifications/notification.entity';
+import { Room } from '../chat/room.entity';
 
 @Entity()
 export class User {
@@ -42,6 +43,9 @@ export class User {
   @ManyToMany(() => AccountType, { eager: true })
   @JoinTable()
   public accountTypes: AccountType[];
+
+  @ManyToMany(() => Room)
+  public rooms: Room[];
 
   @OneToMany(() => Notification, (notification) => notification.user)
   public notifications: Notification[];
