@@ -42,7 +42,7 @@ export const Navbar = ({ positionFixed, loggedIn }: NavbarProps) => {
                   variant='ghost'
                   py='4'
                   px='8'
-                  rounded='full'
+                  rounded='md'
                   onClick={() => logout()}
                   isLoading={logoutIsLoading}
                 >

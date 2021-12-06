@@ -51,6 +51,7 @@ export const SideNavbar = () => {
           href='/my/job-applications'
         />
       )}
+      {user && <SideNavbarLink linkText='Chat' href='/chat' />}
     </Box>
   );
 };

@@ -57,6 +57,8 @@ import { LoginResponseDTO } from '../models';
 // @ts-ignore
 import { LoginUserDTO } from '../models';
 // @ts-ignore
+import { Message } from '../models';
+// @ts-ignore
 import { NotificationDTO } from '../models';
 // @ts-ignore
 import { NotificationsDTO } from '../models';
@@ -64,6 +66,12 @@ import { NotificationsDTO } from '../models';
 import { RefreshTokenDTO } from '../models';
 // @ts-ignore
 import { RegisterUserDTO } from '../models';
+// @ts-ignore
+import { Room } from '../models';
+// @ts-ignore
+import { RoomDTO } from '../models';
+// @ts-ignore
+import { SendMessageDTO } from '../models';
 // @ts-ignore
 import { UserDTO } from '../models';
 /**
@@ -728,6 +736,114 @@ export const DefaultApiAxiosParamCreator = function (
     },
     /**
      *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getRoomsOfUser: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/chat/rooms`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUsers: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/user`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    joinRoom: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/chat/rooms`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
      * @param {LoginUserDTO} loginUserDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -815,6 +931,55 @@ export const DefaultApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         userDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {Array<string>} requestBody
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    markMessageAsSeen: async (
+      requestBody: Array<string>,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'requestBody' is not null or undefined
+      assertParamExists('markMessageAsSeen', 'requestBody', requestBody);
+      const localVarPath = `/api/v1/chat/messages`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        requestBody,
         localVarRequestOptions,
         configuration
       );
@@ -966,6 +1131,55 @@ export const DefaultApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         registerUserDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {SendMessageDTO} sendMessageDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sendMessage: async (
+      sendMessageDTO: SendMessageDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'sendMessageDTO' is not null or undefined
+      assertParamExists('sendMessage', 'sendMessageDTO', sendMessageDTO);
+      const localVarPath = `/api/v1/chat/messages`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        sendMessageDTO,
         localVarRequestOptions,
         configuration
       );
@@ -1327,6 +1541,66 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getRoomsOfUser(
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<RoomDTO>>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getRoomsOfUser(
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getUsers(
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDTO>>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getUsers(
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async joinRoom(
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Room>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.joinRoom(
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
      * @param {LoginUserDTO} loginUserDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1367,6 +1641,27 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         userDTO,
         options
       );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {Array<string>} requestBody
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async markMessageAsSeen(
+      requestBody: Array<string>,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.markMessageAsSeen(requestBody, options);
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1438,6 +1733,29 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.register(
         registerUserDTO,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {SendMessageDTO} sendMessageDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async sendMessage(
+      sendMessageDTO: SendMessageDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Message>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.sendMessage(
+        sendMessageDTO,
         options
       );
       return createRequestFunction(
@@ -1645,6 +1963,36 @@ export const DefaultApiFactory = function (
     },
     /**
      *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getRoomsOfUser(options?: any): AxiosPromise<Array<RoomDTO>> {
+      return localVarFp
+        .getRoomsOfUser(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUsers(options?: any): AxiosPromise<Array<UserDTO>> {
+      return localVarFp
+        .getUsers(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    joinRoom(options?: any): AxiosPromise<Room> {
+      return localVarFp
+        .joinRoom(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
      * @param {LoginUserDTO} loginUserDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1666,6 +2014,20 @@ export const DefaultApiFactory = function (
     logOut(userDTO: UserDTO, options?: any): AxiosPromise<void> {
       return localVarFp
         .logOut(userDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {Array<string>} requestBody
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    markMessageAsSeen(
+      requestBody: Array<string>,
+      options?: any
+    ): AxiosPromise<void> {
+      return localVarFp
+        .markMessageAsSeen(requestBody, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -1708,6 +2070,20 @@ export const DefaultApiFactory = function (
     ): AxiosPromise<LoginResponseDTO> {
       return localVarFp
         .register(registerUserDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {SendMessageDTO} sendMessageDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    sendMessage(
+      sendMessageDTO: SendMessageDTO,
+      options?: any
+    ): AxiosPromise<Message> {
+      return localVarFp
+        .sendMessage(sendMessageDTO, options)
         .then((request) => request(axios, basePath));
     },
   };
@@ -1914,6 +2290,42 @@ export class DefaultApi extends BaseAPI {
 
   /**
    *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getRoomsOfUser(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getRoomsOfUser(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getUsers(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getUsers(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public joinRoom(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .joinRoom(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
    * @param {LoginUserDTO} loginUserDTO
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
@@ -1935,6 +2347,19 @@ export class DefaultApi extends BaseAPI {
   public logOut(userDTO: UserDTO, options?: any) {
     return DefaultApiFp(this.configuration)
       .logOut(userDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {Array<string>} requestBody
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public markMessageAsSeen(requestBody: Array<string>, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .markMessageAsSeen(requestBody, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -1977,6 +2402,19 @@ export class DefaultApi extends BaseAPI {
   public register(registerUserDTO: RegisterUserDTO, options?: any) {
     return DefaultApiFp(this.configuration)
       .register(registerUserDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {SendMessageDTO} sendMessageDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public sendMessage(sendMessageDTO: SendMessageDTO, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .sendMessage(sendMessageDTO, options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

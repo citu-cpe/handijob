@@ -14,6 +14,8 @@ import { CategoryModule } from './category/cateogry.module';
 import { JobOpeningModule } from './job-opening/job-opening.module';
 import { JobApplicationModule } from './job-application/job-application.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { ChatModule } from './chat/chat.module';
+import { WebSocketsModule } from './web-sockets/web-sockets.module';
 
 @Module({
   imports: [
@@ -44,6 +46,8 @@ import { NotificationsModule } from './notifications/notifications.module';
     JobOpeningModule,
     JobApplicationModule,
     NotificationsModule,
+    ChatModule,
+    WebSocketsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

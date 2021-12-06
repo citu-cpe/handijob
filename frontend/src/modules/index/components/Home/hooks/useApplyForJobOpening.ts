@@ -2,6 +2,7 @@ import { useToast } from '@chakra-ui/react';
 import { CreateJobApplicationDTO } from 'generated-api';
 import { useContext } from 'react';
 import { useMutation, useQueryClient } from 'react-query';
+import { WebSocketEvents } from '../../../../../shared/enums/webSocketEvents';
 import { ApiContext } from '../../../../../shared/providers/ApiProvider';
 import { SocketContext } from '../../../../../shared/providers/SocketProvider';
 
@@ -24,7 +25,7 @@ export const useApplyForJobOpening = () => {
           variant: 'subtle',
         });
 
-        socket?.emit('applyJobOpening', {
+        socket?.emit(WebSocketEvents.APPLY_JOB_OPENING, {
           userId: 'test user id',
           content: 'test content',
         });

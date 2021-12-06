@@ -1,9 +1,6 @@
 import {
   ConnectedSocket,
   MessageBody,
-  OnGatewayConnection,
-  OnGatewayDisconnect,
-  OnGatewayInit,
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
@@ -11,30 +8,16 @@ import {
 import { Server, Socket } from 'socket.io';
 import { CreateJobApplicationDTO } from '../job-application/dto/create-job-application.dto';
 import { JobOpeningService } from '../job-opening/job-opening.service';
+import { WebSocketEvents } from '../web-sockets/enum/web-socket-events.enum';
 
-// tslint:disable:no-console
 @WebSocketGateway({ cors: true })
-export class NotificationsGateway
-  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
-{
+export class NotificationsGateway {
   @WebSocketServer()
   public server: Server;
 
   constructor(private readonly jobOpeningService: JobOpeningService) {}
 
-  public handleConnection() {
-    console.log('Gateway Connection');
-  }
-
-  public handleDisconnect() {
-    console.log('Gateway Disconnect');
-  }
-
-  public afterInit() {
-    console.log('Gateway Init');
-  }
-
-  @SubscribeMessage('applyJobOpening')
+  @SubscribeMessage(WebSocketEvents.APPLY_JOB_OPENING)
   public async handleEvent(
     @MessageBody() body: CreateJobApplicationDTO,
     @ConnectedSocket() socket: Socket
@@ -46,6 +29,8 @@ export class NotificationsGateway
     const userId = jobOpening.employer.user.id;
     const clientUserId = socket.handshake.headers.userid;
 
-    this.server.emit('notifications', { clientUserId, userId });
+    this.server
+      .to(userId)
+      .emit(WebSocketEvents.NOTIFICATIONS, { clientUserId, userId });
   }
 }
