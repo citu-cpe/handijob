@@ -134,7 +134,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
             onClick={() =>
               deleteJobApplication({
                 jobApplicationId: jobApplication?.id!,
-                freelancerDTO: { id: user?.freelancerId! },
+                freelancerDTO: { id: user?.freelancerId!, workExperiences: [] },
               })
             }
             isFullWidth
