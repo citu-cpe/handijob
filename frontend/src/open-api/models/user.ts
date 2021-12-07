@@ -82,4 +82,22 @@ export interface User {
    * @memberof User
    */
   notifications: Array<Notification>;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  bio?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  imageUrl?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof User
+   */
+  cloudinaryPublicId?: string;
 }

@@ -5,9 +5,13 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  IsUrl,
   IsUUID,
+  ValidateNested,
 } from 'class-validator';
 import { AccountTypes } from '../../account-type/types/account-types.enum';
+import { EmployerDTO } from '../../employer/dto/employer.dto';
+import { FreelancerDTO } from '../../freelancer/dto/freelancer.dto';
 
 export class UserDTO {
   @IsUUID()
@@ -40,4 +44,24 @@ export class UserDTO {
   @IsUUID()
   @IsOptional()
   public freelancerId?: string;
+
+  @IsString()
+  @IsOptional()
+  public bio?: string;
+
+  @IsUrl()
+  @IsOptional()
+  public imageUrl?: string;
+
+  @IsString()
+  @IsOptional()
+  public cloudinaryPublicId?: string;
+
+  @ValidateNested()
+  @IsOptional()
+  public employer?: EmployerDTO;
+
+  @ValidateNested()
+  @IsOptional()
+  public freelancer?: FreelancerDTO;
 }

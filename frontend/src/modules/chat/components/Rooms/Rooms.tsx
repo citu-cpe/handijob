@@ -1,4 +1,4 @@
-import { Box, Flex, IconButton, Input, Text } from '@chakra-ui/react';
+import { Box, Flex, IconButton, Img, Input, Text } from '@chakra-ui/react';
 import { RoomDTO, SendMessageDTO, UserDTO } from 'generated-api';
 import React, { useContext, useEffect, useState } from 'react';
 import { ChatBox } from '../Chatbox/Chatbox';
@@ -129,7 +129,9 @@ export const Rooms = ({ rooms }: RoomsProps) => {
           <Box>
             {showRooms
               ? rooms.map((room) => (
-                  <Box
+                  <Flex
+                    overflow='hidden'
+                    textOverflow='ellipsis'
                     key={room.id}
                     onClick={() => selectRoom(room)}
                     bgColor={
@@ -143,18 +145,37 @@ export const Rooms = ({ rooms }: RoomsProps) => {
                     py='2'
                     px='4'
                     rounded='md'
+                    justifyContent='space-between'
+                    alignItems='center'
                   >
-                    <Flex justifyContent='space-between' alignItems='center'>
-                      <Box
-                        whiteSpace='nowrap'
-                        overflow='hidden'
-                        flexBasis='90%'
-                      >
+                    <Box w='10' h='10' rounded='full' overflow='hidden'>
+                      <Img
+                        src={
+                          room.participants.find((p) =>
+                            users.map((u) => u.id).includes(p.id)
+                          )?.imageUrl ||
+                          'https://i0.wp.com/grocapitus.com/wp-content/uploads/placeholder-profile-male-500x500.png'
+                        }
+                        cursor='pointer'
+                      />
+                    </Box>
+                    <Flex
+                      justifyContent='space-between'
+                      alignItems='center'
+                      flexBasis='75%'
+                    >
+                      <Box whiteSpace='nowrap' overflow='hidden' w='full'>
                         <Text fontWeight='bold'>{room.name}</Text>
                         {room.messages.length > 0 && (
                           <Box>
                             <Text>
-                              {room.messages[room.messages.length - 1].content}
+                              {room.messages[room.messages.length - 1].content
+                                .length > 15
+                                ? room.messages[
+                                    room.messages.length - 1
+                                  ].content.slice(0, 15) + '...'
+                                : room.messages[room.messages.length - 1]
+                                    .content}
                             </Text>
                           </Box>
                         )}
@@ -163,11 +184,13 @@ export const Rooms = ({ rooms }: RoomsProps) => {
                         <Box w='2' h='2' bgColor='teal' rounded='full'></Box>
                       )}
                     </Flex>
-                  </Box>
+                  </Flex>
                 ))
               : filteredUsers.map((u) => (
-                  <Box
+                  <Flex
                     key={u.id}
+                    alignItems='center'
+                    justifyContent='space-between'
                     _hover={{
                       backgroundColor: 'teal.50',
                     }}
@@ -199,8 +222,19 @@ export const Rooms = ({ rooms }: RoomsProps) => {
                       resetUsers();
                     }}
                   >
-                    <Text fontWeight='bold'>{u.username}</Text>
-                  </Box>
+                    <Box w='10' h='10' rounded='full' overflow='hidden'>
+                      <Img
+                        src={
+                          u.imageUrl ||
+                          'https://i0.wp.com/grocapitus.com/wp-content/uploads/placeholder-profile-male-500x500.png'
+                        }
+                        cursor='pointer'
+                      />
+                    </Box>
+                    <Box flexBasis='75%'>
+                      <Text fontWeight='bold'>{u.username}</Text>
+                    </Box>
+                  </Flex>
                 ))}
           </Box>
         </Box>

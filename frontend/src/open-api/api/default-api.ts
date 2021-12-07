@@ -47,6 +47,14 @@ import { CreateJobOpeningDTO } from '../models';
 // @ts-ignore
 import { CreateNotificationDTO } from '../models';
 // @ts-ignore
+import { CreateWorkExperienceDTO } from '../models';
+// @ts-ignore
+import { EditEmployerDTO } from '../models';
+// @ts-ignore
+import { EditUserDTO } from '../models';
+// @ts-ignore
+import { Employer } from '../models';
+// @ts-ignore
 import { FreelancerDTO } from '../models';
 // @ts-ignore
 import { JobApplicationDTO } from '../models';
@@ -67,11 +75,11 @@ import { RefreshTokenDTO } from '../models';
 // @ts-ignore
 import { RegisterUserDTO } from '../models';
 // @ts-ignore
-import { Room } from '../models';
-// @ts-ignore
 import { RoomDTO } from '../models';
 // @ts-ignore
 import { SendMessageDTO } from '../models';
+// @ts-ignore
+import { User } from '../models';
 // @ts-ignore
 import { UserDTO } from '../models';
 /**
@@ -82,6 +90,59 @@ export const DefaultApiAxiosParamCreator = function (
   configuration?: Configuration
 ) {
   return {
+    /**
+     *
+     * @param {CreateWorkExperienceDTO} createWorkExperienceDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    addWorkExperience: async (
+      createWorkExperienceDTO: CreateWorkExperienceDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'createWorkExperienceDTO' is not null or undefined
+      assertParamExists(
+        'addWorkExperience',
+        'createWorkExperienceDTO',
+        createWorkExperienceDTO
+      );
+      const localVarPath = `/api/v1/freelancer/work-experience`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'POST',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        createWorkExperienceDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
     /**
      *
      * @param {JobOpeningDTO} jobOpeningDTO
@@ -390,6 +451,140 @@ export const DefaultApiAxiosParamCreator = function (
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
         jobOpeningDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteProfilePicture: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/user/profile-picture`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'DELETE',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {EditEmployerDTO} editEmployerDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    editEmployer: async (
+      editEmployerDTO: EditEmployerDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'editEmployerDTO' is not null or undefined
+      assertParamExists('editEmployer', 'editEmployerDTO', editEmployerDTO);
+      const localVarPath = `/api/v1/employer`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        editEmployerDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {EditUserDTO} editUserDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    editUser: async (
+      editUserDTO: EditUserDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'editUserDTO' is not null or undefined
+      assertParamExists('editUser', 'editUserDTO', editUserDTO);
+      const localVarPath = `/api/v1/user`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        editUserDTO,
         localVarRequestOptions,
         configuration
       );
@@ -741,6 +936,93 @@ export const DefaultApiAxiosParamCreator = function (
      */
     getRoomsOfUser: async (options: any = {}): Promise<RequestArgs> => {
       const localVarPath = `/api/v1/chat/rooms`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUser: async (id: string, options: any = {}): Promise<RequestArgs> => {
+      // verify required parameter 'id' is not null or undefined
+      assertParamExists('getUser', 'id', id);
+      const localVarPath = `/api/v1/user/{id}`.replace(
+        `{${'id'}}`,
+        encodeURIComponent(String(id))
+      );
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'GET',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
+     * @param {string} username
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUserProfile: async (
+      username: string,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'username' is not null or undefined
+      assertParamExists('getUserProfile', 'username', username);
+      const localVarPath = `/api/v1/user/profile/{username}`.replace(
+        `{${'username'}}`,
+        encodeURIComponent(String(username))
+      );
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
       let baseOptions;
@@ -1189,6 +1471,42 @@ export const DefaultApiAxiosParamCreator = function (
         options: localVarRequestOptions,
       };
     },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    uploadProfilePicture: async (options: any = {}): Promise<RequestArgs> => {
+      const localVarPath = `/api/v1/user/profile-picture`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
   };
 };
 
@@ -1199,6 +1517,30 @@ export const DefaultApiAxiosParamCreator = function (
 export const DefaultApiFp = function (configuration?: Configuration) {
   const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration);
   return {
+    /**
+     *
+     * @param {CreateWorkExperienceDTO} createWorkExperienceDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async addWorkExperience(
+      createWorkExperienceDTO: CreateWorkExperienceDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.addWorkExperience(
+          createWorkExperienceDTO,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
     /**
      *
      * @param {JobOpeningDTO} jobOpeningDTO
@@ -1342,6 +1684,71 @@ export const DefaultApiFp = function (configuration?: Configuration) {
           jobOpeningDTO,
           options
         );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async deleteProfilePicture(
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.deleteProfilePicture(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {EditEmployerDTO} editEmployerDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async editEmployer(
+      editEmployerDTO: EditEmployerDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Employer>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.editEmployer(
+        editEmployerDTO,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {EditUserDTO} editUserDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async editUser(
+      editUserDTO: EditUserDTO,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.editUser(
+        editUserDTO,
+        options
+      );
       return createRequestFunction(
         localVarAxiosArgs,
         globalAxios,
@@ -1561,6 +1968,52 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getUser(
+      id: string,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(
+        id,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
+     * @param {string} username
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async getUserProfile(
+      username: string,
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
+    > {
+      const localVarAxiosArgs = await localVarAxiosParamCreator.getUserProfile(
+        username,
+        options
+      );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -1587,7 +2040,7 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     async joinRoom(
       options?: any
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<Room>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<RoomDTO>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.joinRoom(
         options
@@ -1765,6 +2218,25 @@ export const DefaultApiFp = function (configuration?: Configuration) {
         configuration
       );
     },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async uploadProfilePicture(
+      options?: any
+    ): Promise<
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.uploadProfilePicture(options);
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
   };
 };
 
@@ -1779,6 +2251,20 @@ export const DefaultApiFactory = function (
 ) {
   const localVarFp = DefaultApiFp(configuration);
   return {
+    /**
+     *
+     * @param {CreateWorkExperienceDTO} createWorkExperienceDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    addWorkExperience(
+      createWorkExperienceDTO: CreateWorkExperienceDTO,
+      options?: any
+    ): AxiosPromise<object> {
+      return localVarFp
+        .addWorkExperience(createWorkExperienceDTO, options)
+        .then((request) => request(axios, basePath));
+    },
     /**
      *
      * @param {JobOpeningDTO} jobOpeningDTO
@@ -1863,6 +2349,41 @@ export const DefaultApiFactory = function (
     ): AxiosPromise<void> {
       return localVarFp
         .deleteJobOpening(jobOpeningDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    deleteProfilePicture(options?: any): AxiosPromise<UserDTO> {
+      return localVarFp
+        .deleteProfilePicture(options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {EditEmployerDTO} editEmployerDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    editEmployer(
+      editEmployerDTO: EditEmployerDTO,
+      options?: any
+    ): AxiosPromise<Employer> {
+      return localVarFp
+        .editEmployer(editEmployerDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {EditUserDTO} editUserDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    editUser(editUserDTO: EditUserDTO, options?: any): AxiosPromise<UserDTO> {
+      return localVarFp
+        .editUser(editUserDTO, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -1973,6 +2494,28 @@ export const DefaultApiFactory = function (
     },
     /**
      *
+     * @param {string} id
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUser(id: string, options?: any): AxiosPromise<User> {
+      return localVarFp
+        .getUser(id, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {string} username
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    getUserProfile(username: string, options?: any): AxiosPromise<UserDTO> {
+      return localVarFp
+        .getUserProfile(username, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -1986,7 +2529,7 @@ export const DefaultApiFactory = function (
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    joinRoom(options?: any): AxiosPromise<Room> {
+    joinRoom(options?: any): AxiosPromise<RoomDTO> {
       return localVarFp
         .joinRoom(options)
         .then((request) => request(axios, basePath));
@@ -2086,6 +2629,16 @@ export const DefaultApiFactory = function (
         .sendMessage(sendMessageDTO, options)
         .then((request) => request(axios, basePath));
     },
+    /**
+     *
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    uploadProfilePicture(options?: any): AxiosPromise<UserDTO> {
+      return localVarFp
+        .uploadProfilePicture(options)
+        .then((request) => request(axios, basePath));
+    },
   };
 };
 
@@ -2096,6 +2649,22 @@ export const DefaultApiFactory = function (
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+  /**
+   *
+   * @param {CreateWorkExperienceDTO} createWorkExperienceDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public addWorkExperience(
+    createWorkExperienceDTO: CreateWorkExperienceDTO,
+    options?: any
+  ) {
+    return DefaultApiFp(this.configuration)
+      .addWorkExperience(createWorkExperienceDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
   /**
    *
    * @param {JobOpeningDTO} jobOpeningDTO
@@ -2185,6 +2754,44 @@ export class DefaultApi extends BaseAPI {
   public deleteJobOpening(jobOpeningDTO: JobOpeningDTO, options?: any) {
     return DefaultApiFp(this.configuration)
       .deleteJobOpening(jobOpeningDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public deleteProfilePicture(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .deleteProfilePicture(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {EditEmployerDTO} editEmployerDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public editEmployer(editEmployerDTO: EditEmployerDTO, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .editEmployer(editEmployerDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {EditUserDTO} editUserDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public editUser(editUserDTO: EditUserDTO, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .editUser(editUserDTO, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -2297,6 +2904,32 @@ export class DefaultApi extends BaseAPI {
   public getRoomsOfUser(options?: any) {
     return DefaultApiFp(this.configuration)
       .getRoomsOfUser(options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {string} id
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getUser(id: string, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getUser(id, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {string} username
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public getUserProfile(username: string, options?: any) {
+    return DefaultApiFp(this.configuration)
+      .getUserProfile(username, options)
       .then((request) => request(this.axios, this.basePath));
   }
 
@@ -2415,6 +3048,18 @@ export class DefaultApi extends BaseAPI {
   public sendMessage(sendMessageDTO: SendMessageDTO, options?: any) {
     return DefaultApiFp(this.configuration)
       .sendMessage(sendMessageDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public uploadProfilePicture(options?: any) {
+    return DefaultApiFp(this.configuration)
+      .uploadProfilePicture(options)
       .then((request) => request(this.axios, this.basePath));
   }
 }

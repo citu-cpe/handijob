@@ -5,12 +5,20 @@ import { RegisterUserDTO } from '../authentication/dto/register-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from './user.repository';
 import { AccountTypeService } from '../account-type/account-type.service';
+import { EditUserDTO } from './dto/edit-user.dto';
+import { v2 as cloudinary } from 'cloudinary';
+import { deleteFile } from '../util/delete-file';
+import { UserDTO } from './dto/user.dto';
+import { FreelancerService } from '../freelancer/freelancer.service';
+import { EmployerService } from '../employer/employer.service';
 
 @Injectable()
 export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly accountTypeService: AccountTypeService
+    private readonly accountTypeService: AccountTypeService,
+    private readonly freelancerService: FreelancerService,
+    private readonly employerService: EmployerService
   ) {}
 
   public async findByEmail(email: string): Promise<User> {
@@ -31,6 +39,20 @@ export class UserService {
     }
 
     throw new NotFoundException('User with this id does not exist');
+  }
+
+  public async getProfile(username: string): Promise<UserDTO> {
+    const user = await this.userRepository.findOne({ username });
+    const employer = await this.employerService.findByUser(user);
+    const freelancer = await this.freelancerService.findByUser(user);
+
+    const userDTO = {
+      ...user.toDTO(),
+      employer: employer && employer.toDTO(),
+      freelancer: freelancer && freelancer.toDTO(),
+    };
+
+    return userDTO;
   }
 
   public async register(userData: RegisterUserDTO): Promise<User> {
@@ -89,6 +111,56 @@ export class UserService {
     });
 
     return users.map((u) => u.toDTO());
+  }
+
+  public async editUser(user: User, editUserDTO: EditUserDTO) {
+    await this.userRepository.update(user.id, editUserDTO);
+    const editedUser = await this.userRepository.findOne(user.id);
+
+    return editedUser.toDTO();
+  }
+
+  public async uploadProfilePicture(user: User, image?: Express.Multer.File) {
+    let imageUrl: string | undefined;
+    let cloudinaryPublicId: string | undefined;
+
+    if (image) {
+      const { secure_url, public_id } = await cloudinary.uploader.upload(
+        image.path
+      );
+      imageUrl = secure_url;
+      cloudinaryPublicId = public_id;
+
+      deleteFile(image.path);
+
+      const updatedUser = {
+        imageUrl,
+        cloudinaryPublicId,
+      };
+
+      await this.userRepository.update(user.id, updatedUser);
+    }
+
+    const editedUser = await this.userRepository.findOne(user.id);
+
+    return editedUser.toDTO();
+  }
+
+  public async deleteProfilePicture(user: User) {
+    if (user.cloudinaryPublicId) {
+      await cloudinary.uploader.destroy(user.cloudinaryPublicId);
+
+      const updatedUser = {
+        imageUrl: undefined,
+        cloudinaryPublicId: undefined,
+      };
+
+      await this.userRepository.update(user.id, updatedUser);
+    }
+
+    const editedUser = await this.userRepository.findOne(user.id);
+
+    return editedUser.toDTO();
   }
 
   public async fromRegisterDTO(registerDTO: RegisterUserDTO): Promise<User> {

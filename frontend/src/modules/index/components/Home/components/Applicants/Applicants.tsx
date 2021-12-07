@@ -1,4 +1,4 @@
-import { Box, Divider, Heading } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Img } from '@chakra-ui/react';
 import React from 'react';
 import { useGetApplicants } from '../../../../../my/pages/JobOpenings/hooks/useGetApplicants';
 import { ApplicantsSkeleton } from './ApplicantsSkeleton';
@@ -22,9 +22,20 @@ export const Applicants = ({ jobOpeningId }: ApplicantsProps) => {
       )}
       {applicants.map((a) => (
         <>
-          <Heading key={a.username} size='lg'>
-            @{a.username}
-          </Heading>
+          <Flex>
+            <Box w='10' h='10' rounded='full' overflow='hidden' mr='4'>
+              <Img
+                src={
+                  a.imageUrl ||
+                  'https://i0.wp.com/grocapitus.com/wp-content/uploads/placeholder-profile-male-500x500.png'
+                }
+                cursor='pointer'
+              />
+            </Box>
+            <Heading key={a.username} size='lg'>
+              @{a.username}
+            </Heading>
+          </Flex>
           <Divider my='4' />
         </>
       ))}

@@ -12,6 +12,9 @@
  * Do not edit the class manually.
  */
 
+import { EmployerDTO } from './employer-dto';
+import { FreelancerDTO } from './freelancer-dto';
+
 /**
  *
  * @export
@@ -66,6 +69,36 @@ export interface UserDTO {
    * @memberof UserDTO
    */
   freelancerId?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDTO
+   */
+  bio?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDTO
+   */
+  imageUrl?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UserDTO
+   */
+  cloudinaryPublicId?: string;
+  /**
+   *
+   * @type {EmployerDTO}
+   * @memberof UserDTO
+   */
+  employer?: EmployerDTO;
+  /**
+   *
+   * @type {FreelancerDTO}
+   * @memberof UserDTO
+   */
+  freelancer?: FreelancerDTO;
 }
 
 /**

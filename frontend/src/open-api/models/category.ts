@@ -12,24 +12,34 @@
  * Do not edit the class manually.
  */
 
-import { WorkExperienceDTO } from './work-experience-dto';
-
 /**
  *
  * @export
- * @interface FreelancerDTO
+ * @interface Category
  */
-export interface FreelancerDTO {
+export interface Category {
   /**
    *
    * @type {string}
-   * @memberof FreelancerDTO
+   * @memberof Category
    */
   id: string;
   /**
    *
-   * @type {Array<WorkExperienceDTO>}
-   * @memberof FreelancerDTO
+   * @type {string}
+   * @memberof Category
    */
-  workExperiences: Array<WorkExperienceDTO>;
+  createdAt: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Category
+   */
+  updatedAt: string;
+  /**
+   *
+   * @type {string}
+   * @memberof Category
+   */
+  name: string;
 }
