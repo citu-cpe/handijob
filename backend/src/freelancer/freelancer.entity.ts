@@ -11,6 +11,7 @@ import { AccountTypeEntity } from '../account-type/types/account-type-entity.int
 import { JobApplication } from '../job-application/job-application.entity';
 import { User } from '../user/user.entity';
 import { FreelancerDTO } from './dto/freelancer.dto';
+import { WorkExperience } from './work-experience.entity';
 
 @Entity()
 export class Freelancer implements AccountTypeEntity {
@@ -28,6 +29,12 @@ export class Freelancer implements AccountTypeEntity {
   public user: User;
 
   @OneToMany(
+    () => WorkExperience,
+    (workExperience) => workExperience.freelancer
+  )
+  public workExperiences: WorkExperience[];
+
+  @OneToMany(
     () => JobApplication,
     (jobApplication) => jobApplication.freelancer
   )
@@ -36,6 +43,9 @@ export class Freelancer implements AccountTypeEntity {
   public toDTO(): FreelancerDTO {
     return {
       id: this.id,
+      workExperiences: this.workExperiences
+        ? this.workExperiences.map((w) => w.toDTO())
+        : [],
     };
   }
 }

@@ -7,11 +7,14 @@ import { useGlobalStore } from '../../../stores';
 interface SideNavbarLinkProps {
   linkText: string;
   href: string;
+  username?: string;
 }
 
-const SideNavbarLink = ({ linkText, href }: SideNavbarLinkProps) => {
+const SideNavbarLink = ({ linkText, href, username }: SideNavbarLinkProps) => {
   const router = useRouter();
-  const isActive = router.pathname === href;
+  const isActive =
+    router.pathname === href ||
+    (username && router.query?.username?.includes(username));
 
   return (
     <NextLink href={href} passHref>
@@ -52,6 +55,13 @@ export const SideNavbar = () => {
         />
       )}
       {user && <SideNavbarLink linkText='Chat' href='/chat' />}
+      {user && (
+        <SideNavbarLink
+          linkText='Profile'
+          href={`/profile/${user.username}`}
+          username={user.username}
+        />
+      )}
     </Box>
   );
 };

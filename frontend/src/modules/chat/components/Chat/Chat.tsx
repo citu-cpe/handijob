@@ -6,6 +6,7 @@ import { Rooms } from '../Rooms/Rooms';
 // TODO; height styling
 // TODO: text overflow hidden
 // TODO: add is typing...
+// TODO: don't await send message
 export const Chat = () => {
   const { rooms, isLoading: roomsIsLoading } = useGetRooms();
 

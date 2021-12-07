@@ -12,24 +12,28 @@
  * Do not edit the class manually.
  */
 
-import { WorkExperienceDTO } from './work-experience-dto';
-
 /**
  *
  * @export
- * @interface FreelancerDTO
+ * @interface EditEmployerDTO
  */
-export interface FreelancerDTO {
+export interface EditEmployerDTO {
   /**
    *
    * @type {string}
-   * @memberof FreelancerDTO
+   * @memberof EditEmployerDTO
    */
-  id: string;
+  companyName?: string;
   /**
    *
-   * @type {Array<WorkExperienceDTO>}
-   * @memberof FreelancerDTO
+   * @type {string}
+   * @memberof EditEmployerDTO
    */
-  workExperiences: Array<WorkExperienceDTO>;
+  companyDescription?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof EditEmployerDTO
+   */
+  companyLink?: string;
 }

@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -10,6 +11,7 @@ import {
 import { AccountTypeEntity } from '../account-type/types/account-type-entity.interface';
 import { JobOpening } from '../job-opening/job-opening.entity';
 import { User } from '../user/user.entity';
+import { EmployerDTO } from './dto/employer.dto';
 
 @Entity()
 export class Employer implements AccountTypeEntity {
@@ -28,4 +30,24 @@ export class Employer implements AccountTypeEntity {
 
   @OneToMany(() => JobOpening, (jobOpening) => jobOpening.employer)
   public jobOpenings: JobOpening[];
+
+  @Column({ nullable: true })
+  public companyName?: string;
+
+  @Column({ nullable: true })
+  public companyDescription?: string;
+
+  @Column({ nullable: true })
+  public companyLink?: string;
+
+  public toDTO(): EmployerDTO {
+    return {
+      id: this.id,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+      companyName: this.companyName,
+      companyDescription: this.companyDescription,
+      companyLink: this.companyLink,
+    };
+  }
 }

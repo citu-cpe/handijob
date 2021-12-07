@@ -47,7 +47,7 @@ export class JobOpeningController {
   public createJobOpening(
     @Req() { user }: RequestWithUser,
     @Body() createJobOpeningDTO: CreateJobOpeningDTO,
-    @UploadedFile() image: Express.Multer.File
+    @UploadedFile() image?: Express.Multer.File
   ): Promise<JobOpeningDTO> {
     return this.jobOpeningService.createJobOpening(
       user,

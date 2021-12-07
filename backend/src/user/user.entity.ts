@@ -50,6 +50,15 @@ export class User {
   @OneToMany(() => Notification, (notification) => notification.user)
   public notifications: Notification[];
 
+  @Column({ nullable: true })
+  public bio?: string;
+
+  @Column({ nullable: true })
+  public imageUrl?: string;
+
+  @Column({ nullable: true })
+  public cloudinaryPublicId?: string;
+
   public toDTO(): UserDTO {
     return {
       id: this.id,
@@ -60,6 +69,9 @@ export class User {
       accountTypes:
         this.accountTypes &&
         this.accountTypes.map((accountType) => AccountTypes[accountType.type]),
+      bio: this.bio,
+      imageUrl: this.imageUrl,
+      cloudinaryPublicId: this.cloudinaryPublicId,
     };
   }
 }

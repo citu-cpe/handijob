@@ -56,7 +56,7 @@ export class JobOpeningService {
   public async createJobOpening(
     user: User,
     createJobOpeningDTO: CreateJobOpeningDTO,
-    image: Express.Multer.File
+    image?: Express.Multer.File
   ): Promise<JobOpeningDTO> {
     const employer = await this.employerService.findByUser(user);
 
