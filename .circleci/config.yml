@@ -129,9 +129,9 @@ workflows:
     jobs:
       # - test-backend-integration:
       #     name: Backend Integration Tests
-      - test-backend-mock:
-          name: Backend Mock Integration Tests
+      # - test-backend-mock:
+      #     name: Backend Mock Integration Tests
       - test-frontend:
           name: Frontend Component Tests
-      - test-e2e:
-          name: E2E Tests
+      # - test-e2e:
+      #     name: E2E Tests
