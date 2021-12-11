@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from '../category/cateogry.module';
 import { EmployerModule } from '../employer/employer.module';
+import { UserModule } from '../user/user.module';
 import { JobOpeningController } from './job-opening.controller';
 import { JobOpeningRepository } from './job-opening.repository';
 import { JobOpeningService } from './job-opening.service';
@@ -11,6 +12,7 @@ import { JobOpeningService } from './job-opening.service';
     TypeOrmModule.forFeature([JobOpeningRepository]),
     EmployerModule,
     CategoryModule,
+    UserModule,
   ],
   providers: [JobOpeningService],
   exports: [JobOpeningService],

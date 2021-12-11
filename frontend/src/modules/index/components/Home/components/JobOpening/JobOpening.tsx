@@ -69,12 +69,7 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
             label={jobOpening.title.length > overflowLength && jobOpening.title}
           >
             <Box>
-              <Heading
-                color='gray.700'
-                size='lg'
-                onClick={isOwner ? onOpen : undefined}
-                cursor={isOwner ? 'pointer' : 'default'}
-              >
+              <Heading color='gray.700' size='lg'>
                 {jobOpening.title.slice(0, overflowLength)}
                 {jobOpening.title.length > overflowLength && '...'}
               </Heading>
@@ -163,13 +158,27 @@ export const JobOpening = ({ jobOpening }: JobOpeningProps) => {
             Apply for this job
           </Button>
         )}
+
+        {isOwner && (
+          <Button
+            onClick={onOpen}
+            isFullWidth
+            mt='4'
+            isLoading={false}
+            colorScheme='teal'
+          >
+            Review job applications
+          </Button>
+        )}
       </Box>
       {isOwner && (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} size='full'>
           <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Applicants</ModalHeader>
-            <ModalCloseButton />
+          <ModalContent bgColor='teal'>
+            <ModalHeader color='white' textAlign='center'>
+              <Heading>Applicants</Heading>
+            </ModalHeader>
+            <ModalCloseButton color='white' />
             <ModalBody>
               <Applicants jobOpeningId={jobOpening.id} />
             </ModalBody>

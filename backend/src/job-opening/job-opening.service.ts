@@ -14,13 +14,15 @@ import { JobOpeningRepository } from './job-opening.repository';
 import { JobOpeningDTO } from './dto/job-opening.dto';
 import { CreateJobOpeningDTO } from './dto/create-job-opening.dto';
 import { UserDTO } from '../user/dto/user.dto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class JobOpeningService {
   constructor(
     private readonly jobOpeningRepository: JobOpeningRepository,
     private readonly employerService: EmployerService,
-    private readonly categoryService: CategoryService
+    private readonly categoryService: CategoryService,
+    private readonly userService: UserService
   ) {}
 
   public findById(id: string) {
@@ -171,6 +173,11 @@ export class JobOpeningService {
       throw new ForbiddenException('You do not own this job opening');
     }
 
-    return jobOpening.jobApplications.map((j) => j.freelancer.user.toDTO());
+    return Promise.all(
+      jobOpening.jobApplications.map(
+        async (j) =>
+          await this.userService.getProfile(j.freelancer.user.username)
+      )
+    );
   }
 }

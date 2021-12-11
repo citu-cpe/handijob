@@ -40,7 +40,7 @@ export class JobApplication {
       id: this.id,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      freelancer: this.freelancer.toDTO(),
+      freelancer: this.freelancer && this.freelancer.toDTO(),
       jobOpening: this.jobOpening && this.jobOpening.toDTO(),
       status: this.status,
     };

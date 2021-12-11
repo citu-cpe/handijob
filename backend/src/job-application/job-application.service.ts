@@ -6,6 +6,8 @@ import {
 import { FreelancerService } from '../freelancer/freelancer.service';
 import { JobOpeningService } from '../job-opening/job-opening.service';
 import { NotificationService } from '../notifications/notification.service';
+import { NotificationsGateway } from '../notifications/notifications.gateway';
+import { WebSocketEvents } from '../web-sockets/enum/web-socket-events.enum';
 import { CreateJobApplicationDTO } from './dto/create-job-application.dto';
 import { JobApplicationDTO } from './dto/job-application.dto';
 import { JobApplicationRepository } from './job-application.repository';
@@ -16,7 +18,8 @@ export class JobApplicationService {
     private readonly jobApplicationRepository: JobApplicationRepository,
     private readonly freelancerService: FreelancerService,
     private readonly jobOpeningService: JobOpeningService,
-    private readonly notificationService: NotificationService
+    private readonly notificationService: NotificationService,
+    private readonly notificationGateway: NotificationsGateway
   ) {}
 
   public async createJobApplication(
@@ -108,5 +111,43 @@ export class JobApplicationService {
     }
 
     return this.jobApplicationRepository.delete(jobApplicationId);
+  }
+
+  public async updateJobApplication(jobApplicationDTO: JobApplicationDTO) {
+    const jobApplication = await this.jobApplicationRepository.findOne(
+      jobApplicationDTO.id,
+      {
+        relations: [
+          'jobOpening',
+          'jobOpening.employer',
+          'jobOpening.employer.user',
+          'freelancer',
+          'freelancer.user',
+        ],
+      }
+    );
+
+    if (!jobApplication) {
+      throw new NotFoundException('Job application not found');
+    }
+
+    await this.jobApplicationRepository.update(jobApplication.id, {
+      status: jobApplicationDTO.status,
+    });
+
+    const updatedJobApplication = await this.jobApplicationRepository.findOne(
+      jobApplicationDTO.id
+    );
+
+    await this.notificationService.createNotification({
+      content: `@${jobApplication.jobOpening.employer.user.username} has ${jobApplicationDTO.status} your job application`,
+      userId: jobApplication.freelancer.user.id,
+    });
+
+    this.notificationGateway.server
+      .to(jobApplication.freelancer.user.id)
+      .emit(WebSocketEvents.NOTIFICATIONS);
+
+    return updatedJobApplication.toDTO();
   }
 }
