@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
@@ -63,5 +64,11 @@ export class JobApplicationController {
       freelancerDTO.id,
       jobApplicationId
     );
+  }
+
+  @UseGuards(JwtAuthenticationGuard)
+  @Put()
+  public updateJobApplication(@Body() jobApplicationDTO: JobApplicationDTO) {
+    return this.jobApplicationService.updateJobApplication(jobApplicationDTO);
   }
 }

@@ -43,6 +43,7 @@ export class Freelancer implements AccountTypeEntity {
   public toDTO(): FreelancerDTO {
     return {
       id: this.id,
+      user: this.user && this.user.toDTO(),
       workExperiences: this.workExperiences
         ? this.workExperiences.map((w) => w.toDTO())
         : [],

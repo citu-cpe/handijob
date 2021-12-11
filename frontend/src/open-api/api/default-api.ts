@@ -1473,6 +1473,59 @@ export const DefaultApiAxiosParamCreator = function (
     },
     /**
      *
+     * @param {JobApplicationDTO} jobApplicationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updateJobApplication: async (
+      jobApplicationDTO: JobApplicationDTO,
+      options: any = {}
+    ): Promise<RequestArgs> => {
+      // verify required parameter 'jobApplicationDTO' is not null or undefined
+      assertParamExists(
+        'updateJobApplication',
+        'jobApplicationDTO',
+        jobApplicationDTO
+      );
+      const localVarPath = `/api/v1/job-application`;
+      // use dummy base URL string because the URL constructor only accepts absolute URLs.
+      const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+      let baseOptions;
+      if (configuration) {
+        baseOptions = configuration.baseOptions;
+      }
+
+      const localVarRequestOptions = {
+        method: 'PUT',
+        ...baseOptions,
+        ...options,
+      };
+      const localVarHeaderParameter = {} as any;
+      const localVarQueryParameter = {} as any;
+
+      localVarHeaderParameter['Content-Type'] = 'application/json';
+
+      setSearchParams(localVarUrlObj, localVarQueryParameter, options.query);
+      let headersFromBaseOptions =
+        baseOptions && baseOptions.headers ? baseOptions.headers : {};
+      localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+      };
+      localVarRequestOptions.data = serializeDataIfNeeded(
+        jobApplicationDTO,
+        localVarRequestOptions,
+        configuration
+      );
+
+      return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+      };
+    },
+    /**
+     *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -2220,6 +2273,33 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     },
     /**
      *
+     * @param {JobApplicationDTO} jobApplicationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    async updateJobApplication(
+      jobApplicationDTO: JobApplicationDTO,
+      options?: any
+    ): Promise<
+      (
+        axios?: AxiosInstance,
+        basePath?: string
+      ) => AxiosPromise<JobApplicationDTO>
+    > {
+      const localVarAxiosArgs =
+        await localVarAxiosParamCreator.updateJobApplication(
+          jobApplicationDTO,
+          options
+        );
+      return createRequestFunction(
+        localVarAxiosArgs,
+        globalAxios,
+        BASE_PATH,
+        configuration
+      );
+    },
+    /**
+     *
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
@@ -2627,6 +2707,20 @@ export const DefaultApiFactory = function (
     ): AxiosPromise<Message> {
       return localVarFp
         .sendMessage(sendMessageDTO, options)
+        .then((request) => request(axios, basePath));
+    },
+    /**
+     *
+     * @param {JobApplicationDTO} jobApplicationDTO
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    updateJobApplication(
+      jobApplicationDTO: JobApplicationDTO,
+      options?: any
+    ): AxiosPromise<JobApplicationDTO> {
+      return localVarFp
+        .updateJobApplication(jobApplicationDTO, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -3048,6 +3142,22 @@ export class DefaultApi extends BaseAPI {
   public sendMessage(sendMessageDTO: SendMessageDTO, options?: any) {
     return DefaultApiFp(this.configuration)
       .sendMessage(sendMessageDTO, options)
+      .then((request) => request(this.axios, this.basePath));
+  }
+
+  /**
+   *
+   * @param {JobApplicationDTO} jobApplicationDTO
+   * @param {*} [options] Override http request option.
+   * @throws {RequiredError}
+   * @memberof DefaultApi
+   */
+  public updateJobApplication(
+    jobApplicationDTO: JobApplicationDTO,
+    options?: any
+  ) {
+    return DefaultApiFp(this.configuration)
+      .updateJobApplication(jobApplicationDTO, options)
       .then((request) => request(this.axios, this.basePath));
   }
 

@@ -12,6 +12,7 @@
  * Do not edit the class manually.
  */
 
+import { UserDTO } from './user-dto';
 import { WorkExperienceDTO } from './work-experience-dto';
 
 /**
@@ -32,4 +33,10 @@ export interface FreelancerDTO {
    * @memberof FreelancerDTO
    */
   workExperiences: Array<WorkExperienceDTO>;
+  /**
+   *
+   * @type {UserDTO}
+   * @memberof FreelancerDTO
+   */
+  user?: UserDTO;
 }

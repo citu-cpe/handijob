@@ -15,7 +15,13 @@ export class JobApplicationRepository extends Repository<JobApplication> {
   public findByJobOpening(jobOpening: JobOpening): Promise<JobApplication[]> {
     return this.find({
       where: { jobOpening },
-      relations: ['freelancer', 'jobOpening', 'jobOpening.employer'],
+      relations: [
+        'freelancer',
+        'freelancer.user',
+        'freelancer.workExperiences',
+        'jobOpening',
+        'jobOpening.employer',
+      ],
     });
   }
 }

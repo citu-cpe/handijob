@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsUUID, ValidateNested } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsOptional,
+  IsUUID,
+  ValidateNested,
+} from 'class-validator';
+import { UserDTO } from '../../user/dto/user.dto';
 import { WorkExperienceDTO } from './work-experience.dto';
 
 export class FreelancerDTO {
@@ -8,4 +14,8 @@ export class FreelancerDTO {
 
   @ValidateNested({ each: true })
   public workExperiences: WorkExperienceDTO[];
+
+  @ValidateNested()
+  @IsOptional()
+  public user?: UserDTO;
 }
