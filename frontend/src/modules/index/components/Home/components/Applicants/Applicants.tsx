@@ -5,13 +5,18 @@ import {
   Flex,
   Heading,
   Img,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  Spinner,
   Text,
 } from '@chakra-ui/react';
-import { JobApplicationDTOStatusEnum } from 'generated-api';
-import React from 'react';
+import { JobApplicationDTO, JobApplicationDTOStatusEnum } from 'generated-api';
+import React, { useEffect, useState } from 'react';
 import { useGetJobApplicationsByJobOpening } from '../../hooks/useGetJobApplicationsByJobOpening';
 import { useUpdateJobApplication } from '../../hooks/useUpdateJobApplication';
-import { ApplicantsSkeleton } from './ApplicantsSkeleton';
 import Link from 'next/link';
 
 interface ApplicantsProps {
@@ -25,18 +30,53 @@ export const Applicants = ({ jobOpeningId }: ApplicantsProps) => {
     mutate: updateJobApplication,
     isLoading: updateJobApplicationLoading,
   } = useUpdateJobApplication();
+  const [yearsOfExperience, setYearsOfExperience] = useState(0);
+  const [filteredJobApplications, setFilteredJobApplications] = useState<
+    JobApplicationDTO[]
+  >([]);
+
+  useEffect(() => {
+    setFilteredJobApplications(
+      getFilteredJobApplications(jobApplications, yearsOfExperience)
+    );
+  }, [yearsOfExperience, jobApplications]);
+
+  const getFilteredJobApplications = (
+    originalJobApplications: JobApplicationDTO[],
+    newYearsOfExperience: number
+  ) => {
+    if (newYearsOfExperience === 0) { return originalJobApplications; }
+
+    return originalJobApplications.filter((j) => {
+      const totalYearsOfExperience =
+        j.freelancer!.workExperiences.reduce<number>(
+          (acc, w) => acc + Number(w.yearsOfExperience),
+          0
+        );
+
+      return totalYearsOfExperience >= newYearsOfExperience;
+    });
+  };
 
   return (
     <Flex flexDir='column' alignItems='center'>
-      {jobApplicationsIsLoading && (
-        <>
-          <ApplicantsSkeleton />
-          <ApplicantsSkeleton />
-          <ApplicantsSkeleton />
-          <ApplicantsSkeleton />
-        </>
-      )}
-      {jobApplications.map((j) => (
+      {jobApplicationsIsLoading && <Spinner color='white' />}
+      <Box bgColor='white' rounded='md' shadow='md' w='50%' p='4' mb='4'>
+        <Text mb='2' fontWeight='bold'>
+          Filter by total years of experience:
+        </Text>
+        <NumberInput
+          onChange={(val) => setYearsOfExperience(Number(val))}
+          defaultValue={0}
+        >
+          <NumberInputField />
+          <NumberInputStepper>
+            <NumberIncrementStepper />
+            <NumberDecrementStepper />
+          </NumberInputStepper>
+        </NumberInput>
+      </Box>
+      {filteredJobApplications.map((j) => (
         <Box key={j.id} w='50%' bgColor='white' rounded='md' p='4' mb='4'>
           <Box>
             <Link href={`/profile/${j.freelancer?.user?.username}`}>
