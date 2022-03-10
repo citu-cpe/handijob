@@ -1,12 +1,13 @@
 import { axiosInstance as axios } from '../axios';
-import { useToast, UseToastOptions } from '@chakra-ui/react';
+import { useToast, AlertStatus } from '@chakra-ui/react';
 import { AxiosResponse } from 'axios';
 import { LocalStorageKeys } from '../enums/localStorageKeys';
+import { TokensDTO } from 'generated-api';
 
 interface UseAxiosOptions {
   showToastOnError?: boolean;
   showToastOnSuccess?: boolean;
-  toastStatus?: UseToastOptions['status'];
+  toastStatus?: AlertStatus;
   toastTitle?: string;
   toastDescription?: string;
 }
@@ -62,23 +63,50 @@ export const useAxios = ({
     async (e: any) => {
       if (e) {
         const { message, statusCode, invalidRefreshToken } = e.response.data;
+        // TODO: check why this returns "null" string when empty
         const refreshToken = localStorage.getItem(
           LocalStorageKeys.REFRESH_TOKEN
         );
 
-        if (refreshToken && statusCode === 401 && !invalidRefreshToken) {
+        if (invalidRefreshToken) {
+          localStorage.removeItem(LocalStorageKeys.ACCESS_TOKEN);
+          localStorage.removeItem(LocalStorageKeys.REFRESH_TOKEN);
+        }
+
+        // if unauthorized and refresh token is valid, refresh token
+        if (
+          !!refreshToken &&
+          refreshToken !== 'null' &&
+          statusCode === 401 &&
+          !invalidRefreshToken
+        ) {
           try {
             e.config._retry = true;
 
-            const { data: accessTokenDTO }: any = await axios.post(
-              '/auth/refresh',
-              { refreshToken }
-            );
+            const response = await axios.post<
+              TokensDTO,
+              AxiosResponse<TokensDTO>
+            >('/auth/refresh', {
+              refreshToken,
+            });
 
-            const { accessToken } = accessTokenDTO;
+            const {
+              accessToken: newAccessToken,
+              refreshToken: newRefreshToken,
+            } = response.data;
 
-            if (accessToken) {
-              localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
+            if (newAccessToken) {
+              localStorage.setItem(
+                LocalStorageKeys.ACCESS_TOKEN,
+                newAccessToken
+              );
+            }
+
+            if (newRefreshToken) {
+              localStorage.setItem(
+                LocalStorageKeys.REFRESH_TOKEN,
+                newRefreshToken
+              );
             }
 
             return axios(e.config);
@@ -86,6 +114,7 @@ export const useAxios = ({
           } catch (e) {}
         }
 
+        // if error that's not an invalidRefreshToken error
         if (showToastOnError && !invalidRefreshToken) {
           let description = '';
 

@@ -2,7 +2,6 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -13,16 +12,30 @@ import { TokenPayload } from './types/token-payload.interface';
 import { PostgresErrorCode } from '../database/postgresErrorCodes.enum';
 import { LoginUserDTO } from './dto/login-user.dto';
 import { LoginResponseDTO } from './dto/login-response.dto';
-import { AccessTokenDTO } from './dto/access-token.dto';
+import { TokensDTO } from './dto/tokens.dto';
 import { FreelancerService } from '../freelancer/freelancer.service';
 import { Freelancer } from '../freelancer/freelancer.entity';
 import { AccountTypes } from '../account-type/types/account-types.enum';
 import { EmployerService } from '../employer/employer.service';
 import { Employer } from '../employer/employer.entity';
 import { User } from '../user/user.entity';
+import { EnvironmentVariableKeys } from '../config/environment-variable-keys';
 
 @Injectable()
 export class AuthenticationService {
+  private readonly JWT_ACCESS_TOKEN_SECRET = this.configService.get(
+    EnvironmentVariableKeys.JWT_ACCESS_TOKEN_SECRET
+  );
+  private readonly JWT_REFRESH_TOKEN_SECRET = this.configService.get(
+    EnvironmentVariableKeys.JWT_REFRESH_TOKEN_SECRET
+  );
+  private readonly JWT_ACCESS_TOKEN_EXPIRATION_TIME = this.configService.get(
+    EnvironmentVariableKeys.JWT_ACCESS_TOKEN_EXPIRATION_TIME
+  );
+  private readonly JWT_REFRESH_TOKEN_EXPIRATION_TIME = this.configService.get(
+    EnvironmentVariableKeys.JWT_REFRESH_TOKEN_EXPIRATION_TIME
+  );
+
   constructor(
     private readonly userService: UserService,
     private readonly freelancerService: FreelancerService,
@@ -50,14 +63,17 @@ export class AuthenticationService {
     if (employer) {
       userDTO.employerId = employer.id;
     }
+
     if (freelancer) {
       userDTO.freelancerId = freelancer.id;
     }
 
     return {
       user: userDTO,
-      accessToken,
-      refreshToken,
+      tokens: {
+        accessToken,
+        refreshToken,
+      },
     };
   }
 
@@ -91,15 +107,15 @@ export class AuthenticationService {
     this.userService.deleteRefreshToken(userId);
   }
 
-  public async refresh(refreshToken?: string): Promise<AccessTokenDTO> {
+  public async refresh(refreshToken?: string): Promise<TokensDTO> {
     if (!refreshToken) {
-      throw new UnauthorizedException({ invalidRefreshToken: true });
+      throw new BadRequestException({ invalidRefreshToken: true });
     }
 
     const payload = this.jwtService.decode(refreshToken) as TokenPayload;
 
     if (this.tokenExpired(payload.exp)) {
-      throw new UnauthorizedException({ invalidRefreshToken: true });
+      throw new BadRequestException({ invalidRefreshToken: true });
     }
 
     const user = await this.userService.getUserIfRefreshTokenMatches(
@@ -108,41 +124,41 @@ export class AuthenticationService {
     );
 
     const accessToken = this.getJwtAccessToken(user.id);
+    const newRefreshToken = this.getRefreshToken(user.id);
+    await this.userService.setCurrentRefreshToken(newRefreshToken, user.id);
 
-    return { accessToken };
+    return { accessToken, refreshToken: newRefreshToken };
   }
 
-  public async getAuthenticatedUser(email: string, plainTextPassword: string) {
+  private async getAuthenticatedUser(email: string, plainTextPassword: string) {
     const user = await this.userService.findByEmail(email);
     await this.verifyPassword(plainTextPassword, user.password);
     return user;
   }
 
-  public getJwtAccessToken(userId: string) {
+  private getJwtAccessToken(userId: string) {
     const payload: TokenPayload = { userId };
-    const secret = this.configService.get('JWT_ACCESS_TOKEN_SECRET');
-    const expiresIn = this.configService.get(
-      'JWT_ACCESS_TOKEN_EXPIRATION_TIME'
-    );
 
-    const token = this.jwtService.sign(payload, { secret, expiresIn });
+    const token = this.jwtService.sign(payload, {
+      secret: this.JWT_ACCESS_TOKEN_SECRET,
+      expiresIn: this.JWT_ACCESS_TOKEN_EXPIRATION_TIME,
+    });
 
     return token;
   }
 
-  public getRefreshToken(userId: string) {
+  private getRefreshToken(userId: string) {
     const payload: TokenPayload = { userId };
-    const secret = this.configService.get('JWT_REFRESH_TOKEN_SECRET');
-    const expiresIn = this.configService.get(
-      'JWT_REFRESH_TOKEN_EXPIRATION_TIME'
-    );
 
-    const token = this.jwtService.sign(payload, { secret, expiresIn });
+    const token = this.jwtService.sign(payload, {
+      secret: this.JWT_REFRESH_TOKEN_SECRET,
+      expiresIn: this.JWT_REFRESH_TOKEN_EXPIRATION_TIME,
+    });
 
     return token;
   }
 
-  public async verifyPassword(
+  private async verifyPassword(
     plainTextPassword: string,
     hashedPassword: string
   ) {
@@ -156,7 +172,7 @@ export class AuthenticationService {
     }
   }
 
-  public tokenExpired(exp: number) {
+  private tokenExpired(exp: number) {
     return Date.now() > exp * 1000;
   }
 

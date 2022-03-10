@@ -13,13 +13,13 @@ import { RoomDTO } from './room.dto';
 
 export class MessageDTO {
   @IsUUID()
-  @IsNotEmpty({ message: 'Id is required' })
+  @IsNotEmpty()
   public id: string;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public createdAt: Date;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public updatedAt: Date;
 
   @IsNotEmpty()

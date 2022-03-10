@@ -41,5 +41,14 @@ export interface AccountType {
    * @type {string}
    * @memberof AccountType
    */
-  type: string;
+  type: AccountTypeTypeEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum AccountTypeTypeEnum {
+  Freelancer = 'FREELANCER',
+  Employer = 'EMPLOYER',
 }

@@ -1,4 +1,3 @@
-export * from './access-token-dto';
 export * from './account-type';
 export * from './category';
 export * from './category-dto';
@@ -23,11 +22,11 @@ export * from './message-dto';
 export * from './notification';
 export * from './notification-dto';
 export * from './notifications-dto';
-export * from './refresh-token-dto';
 export * from './register-user-dto';
 export * from './room';
 export * from './room-dto';
 export * from './send-message-dto';
+export * from './tokens-dto';
 export * from './user';
 export * from './user-dto';
 export * from './work-experience';

@@ -19,12 +19,19 @@ export const useGlobalStore = create<GlobalState>((set) => ({
   // isFreelancer: !!get().user?.freelancerId,
   // isEmployer: !!get().user?.employerId,
   loginUser: (loginResponseDTO: LoginResponseDTO) => {
-    const { user, accessToken, refreshToken } = loginResponseDTO;
+    const { user, tokens } = loginResponseDTO;
+    const { accessToken, refreshToken } = tokens;
 
     set(() => ({ user }));
 
-    localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken);
-    localStorage.setItem(LocalStorageKeys.REFRESH_TOKEN, refreshToken);
+    if (!!accessToken) {
+      localStorage.setItem(LocalStorageKeys.ACCESS_TOKEN, accessToken!);
+    }
+
+    if (!!refreshToken) {
+      localStorage.setItem(LocalStorageKeys.REFRESH_TOKEN, refreshToken!);
+    }
+
     localStorage.setItem(LocalStorageKeys.USER, JSON.stringify(user));
   },
   logoutUser: () => {

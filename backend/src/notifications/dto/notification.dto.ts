@@ -2,22 +2,22 @@ import { IsUUID, IsNotEmpty, IsString, IsBoolean } from 'class-validator';
 
 export class NotificationDTO {
   @IsUUID()
-  @IsNotEmpty({ message: 'Id is required' })
+  @IsNotEmpty()
   public id: string;
 
   @IsUUID()
-  @IsNotEmpty({ message: 'User id is required' })
+  @IsNotEmpty()
   public userId: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Content is required' })
+  @IsNotEmpty()
   public content: string;
 
   @IsBoolean()
-  @IsNotEmpty({ message: 'Seen is required' })
+  @IsNotEmpty()
   public seen: boolean;
 
   @IsString()
-  @IsNotEmpty({ message: 'Time ago is required' })
+  @IsNotEmpty()
   public timeAgo: string;
 }

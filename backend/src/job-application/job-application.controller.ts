@@ -6,9 +6,7 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
-import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
 import { FreelancerDTO } from '../freelancer/dto/freelancer.dto';
 import { CreateJobApplicationDTO } from './dto/create-job-application.dto';
 import { JobApplicationDTO } from './dto/job-application.dto';
@@ -17,12 +15,14 @@ import { JobApplicationService } from './job-application.service';
 @Controller(JobApplicationController.JOB_APPLICATION_API_ROUTE)
 export class JobApplicationController {
   public static readonly JOB_APPLICATION_API_ROUTE = 'job-application';
-  public static readonly GET_FOR_JOB_OPENING_API_ROUTE = 'job-opening';
-  public static readonly GET_FOR_FREELANCER_API_ROUTE = 'freelancer';
+  public static readonly GET_FOR_JOB_OPENING_API_ROUTE =
+    'job-opening/:jobOpeningId';
+  public static readonly GET_FOR_FREELANCER_API_ROUTE =
+    'freelancer/:freelancerId';
+  public static readonly DELETE_JOB_APPLICATION_API_ROUTE = ':jobApplicationId';
 
   constructor(private readonly jobApplicationService: JobApplicationService) {}
 
-  @UseGuards(JwtAuthenticationGuard)
   @Post()
   public createJobApplication(
     @Body() createJobApplicationDTO: CreateJobApplicationDTO
@@ -32,10 +32,7 @@ export class JobApplicationController {
     );
   }
 
-  @UseGuards(JwtAuthenticationGuard)
-  @Get(
-    `${JobApplicationController.GET_FOR_JOB_OPENING_API_ROUTE}/:jobOpeningId`
-  )
+  @Get(JobApplicationController.GET_FOR_JOB_OPENING_API_ROUTE)
   public getJobApplicationsByJobOpening(
     @Param('jobOpeningId') jobOpeningId: string
   ): Promise<JobApplicationDTO[]> {
@@ -44,8 +41,7 @@ export class JobApplicationController {
     );
   }
 
-  @UseGuards(JwtAuthenticationGuard)
-  @Get(`${JobApplicationController.GET_FOR_FREELANCER_API_ROUTE}/:freelancerId`)
+  @Get(JobApplicationController.GET_FOR_FREELANCER_API_ROUTE)
   public getJobApplicationsByFreelancer(
     @Param('freelancerId') freelancerId: string
   ): Promise<JobApplicationDTO[]> {
@@ -54,8 +50,7 @@ export class JobApplicationController {
     );
   }
 
-  @UseGuards(JwtAuthenticationGuard)
-  @Delete(':jobApplicationId')
+  @Delete(JobApplicationController.DELETE_JOB_APPLICATION_API_ROUTE)
   public async deleteJobApplication(
     @Body() freelancerDTO: FreelancerDTO,
     @Param('jobApplicationId') jobApplicationId: string
@@ -66,7 +61,6 @@ export class JobApplicationController {
     );
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Put()
   public updateJobApplication(@Body() jobApplicationDTO: JobApplicationDTO) {
     return this.jobApplicationService.updateJobApplication(jobApplicationDTO);

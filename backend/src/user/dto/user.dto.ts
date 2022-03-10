@@ -15,26 +15,26 @@ import { FreelancerDTO } from '../../freelancer/dto/freelancer.dto';
 
 export class UserDTO {
   @IsUUID()
-  @IsNotEmpty({ message: 'Id is required' })
+  @IsNotEmpty()
   public id: string;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public createdAt: Date;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public updatedAt: Date;
 
-  @IsEmail({}, { message: 'Invalid email' })
+  @IsEmail()
   @IsString()
-  @IsNotEmpty({ message: 'Email is required' })
+  @IsNotEmpty()
   public email: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Email is required' })
+  @IsNotEmpty()
   public username: string;
 
   @IsArray()
-  @IsNotEmpty({ message: 'Account types is required' })
+  @IsNotEmpty()
   public accountTypes: AccountTypes[];
 
   @IsUUID()

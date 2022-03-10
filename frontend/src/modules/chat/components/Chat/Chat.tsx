@@ -12,7 +12,11 @@ export const Chat = () => {
 
   return (
     <Box>
-      {roomsIsLoading ? <Spinner color='teal' /> : <Rooms rooms={rooms} />}
+      {roomsIsLoading ? (
+        <Spinner color='teal' />
+      ) : (
+        rooms && <Rooms rooms={rooms} />
+      )}
     </Box>
   );
 };

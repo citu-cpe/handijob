@@ -15,28 +15,28 @@ import { JobApplicationDTO } from '../../job-application/dto/job-application.dto
 
 export class JobOpeningDTO {
   @IsString()
-  @IsNotEmpty({ message: 'Id is required' })
+  @IsNotEmpty()
   public id: string;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public createdAt: Date;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public updatedAt: Date;
 
   @IsString()
-  @IsNotEmpty({ message: 'Title is required' })
+  @IsNotEmpty()
   public title: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Description is required' })
+  @IsNotEmpty()
   public description: string;
 
   @IsBoolean()
-  @IsNotEmpty({ message: 'Archived is required' })
+  @IsNotEmpty()
   public archived: boolean;
 
-  @IsUrl(undefined, { message: 'Invalid url' })
+  @IsUrl()
   @IsOptional()
   public imageUrl?: string;
 
@@ -46,14 +46,13 @@ export class JobOpeningDTO {
 
   @IsEnum(Categories, {
     each: true,
-    message: 'Each value must be a valid category',
   })
-  @ArrayNotEmpty({ message: 'Categories should not be empty' })
-  @IsNotEmpty({ message: 'Categories is required' })
+  @ArrayNotEmpty()
+  @IsNotEmpty()
   public categories: Categories[];
 
-  @IsUUID(undefined, { message: 'Invalid id' })
-  @IsNotEmpty({ message: 'Employer id is required' })
+  @IsUUID()
+  @IsNotEmpty()
   public employerId: string;
 
   @IsNotEmptyObject({}, { each: true })

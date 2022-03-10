@@ -1,7 +1,7 @@
 import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class EditUserDTO {
-  @IsEmail({}, { message: 'Invalid email' })
+  @IsEmail()
   @IsString()
   @IsOptional()
   public email?: string;

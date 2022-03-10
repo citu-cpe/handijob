@@ -8,13 +8,13 @@ import {
 
 export class EmployerDTO {
   @IsUUID()
-  @IsNotEmpty({ message: 'Id is required' })
+  @IsNotEmpty()
   public id: string;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public createdAt: Date;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public updatedAt: Date;
 
   @IsString()

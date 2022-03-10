@@ -37,8 +37,6 @@ import {
   RequiredError,
 } from '../base';
 // @ts-ignore
-import { AccessTokenDTO } from '../models';
-// @ts-ignore
 import { CategoryDTO } from '../models';
 // @ts-ignore
 import { CreateJobApplicationDTO } from '../models';
@@ -71,13 +69,13 @@ import { NotificationDTO } from '../models';
 // @ts-ignore
 import { NotificationsDTO } from '../models';
 // @ts-ignore
-import { RefreshTokenDTO } from '../models';
-// @ts-ignore
 import { RegisterUserDTO } from '../models';
 // @ts-ignore
 import { RoomDTO } from '../models';
 // @ts-ignore
 import { SendMessageDTO } from '../models';
+// @ts-ignore
+import { TokensDTO } from '../models';
 // @ts-ignore
 import { User } from '../models';
 // @ts-ignore
@@ -1326,16 +1324,16 @@ export const DefaultApiAxiosParamCreator = function (
     },
     /**
      *
-     * @param {RefreshTokenDTO} refreshTokenDTO
+     * @param {TokensDTO} tokensDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     refresh: async (
-      refreshTokenDTO: RefreshTokenDTO,
+      tokensDTO: TokensDTO,
       options: any = {}
     ): Promise<RequestArgs> => {
-      // verify required parameter 'refreshTokenDTO' is not null or undefined
-      assertParamExists('refresh', 'refreshTokenDTO', refreshTokenDTO);
+      // verify required parameter 'tokensDTO' is not null or undefined
+      assertParamExists('refresh', 'tokensDTO', tokensDTO);
       const localVarPath = `/api/v1/auth/refresh`;
       // use dummy base URL string because the URL constructor only accepts absolute URLs.
       const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1363,7 +1361,7 @@ export const DefaultApiAxiosParamCreator = function (
         ...options.headers,
       };
       localVarRequestOptions.data = serializeDataIfNeeded(
-        refreshTokenDTO,
+        tokensDTO,
         localVarRequestOptions,
         configuration
       );
@@ -2201,18 +2199,18 @@ export const DefaultApiFp = function (configuration?: Configuration) {
     },
     /**
      *
-     * @param {RefreshTokenDTO} refreshTokenDTO
+     * @param {TokensDTO} tokensDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     async refresh(
-      refreshTokenDTO: RefreshTokenDTO,
+      tokensDTO: TokensDTO,
       options?: any
     ): Promise<
-      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccessTokenDTO>
+      (axios?: AxiosInstance, basePath?: string) => AxiosPromise<TokensDTO>
     > {
       const localVarAxiosArgs = await localVarAxiosParamCreator.refresh(
-        refreshTokenDTO,
+        tokensDTO,
         options
       );
       return createRequestFunction(
@@ -2669,16 +2667,13 @@ export const DefaultApiFactory = function (
     },
     /**
      *
-     * @param {RefreshTokenDTO} refreshTokenDTO
+     * @param {TokensDTO} tokensDTO
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    refresh(
-      refreshTokenDTO: RefreshTokenDTO,
-      options?: any
-    ): AxiosPromise<AccessTokenDTO> {
+    refresh(tokensDTO: TokensDTO, options?: any): AxiosPromise<TokensDTO> {
       return localVarFp
-        .refresh(refreshTokenDTO, options)
+        .refresh(tokensDTO, options)
         .then((request) => request(axios, basePath));
     },
     /**
@@ -3108,14 +3103,14 @@ export class DefaultApi extends BaseAPI {
 
   /**
    *
-   * @param {RefreshTokenDTO} refreshTokenDTO
+   * @param {TokensDTO} tokensDTO
    * @param {*} [options] Override http request option.
    * @throws {RequiredError}
    * @memberof DefaultApi
    */
-  public refresh(refreshTokenDTO: RefreshTokenDTO, options?: any) {
+  public refresh(tokensDTO: TokensDTO, options?: any) {
     return DefaultApiFp(this.configuration)
-      .refresh(refreshTokenDTO, options)
+      .refresh(tokensDTO, options)
       .then((request) => request(this.axios, this.basePath));
   }
 

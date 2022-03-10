@@ -40,14 +40,18 @@ export const Home = ({ user }: HomeProps) => {
   >([]);
 
   useEffect(() => {
-    setFilteredJobOpenings(getFilteredJobOpenings(jobOpenings, filters));
+    if (jobOpenings) {
+      setFilteredJobOpenings(getFilteredJobOpenings(jobOpenings, filters));
+    }
   }, [jobOpenings, filters]);
 
   const getFilteredJobOpenings = (
     originalJobOpenings: JobOpeningDTO[],
     newFilters: JobOpeningDTOCategoriesEnum[]
   ) => {
-    if (newFilters.length === 0) { return originalJobOpenings; }
+    if (newFilters.length === 0) {
+      return originalJobOpenings;
+    }
 
     return originalJobOpenings.filter((j) =>
       j.categories.some((c) => newFilters.includes(c))

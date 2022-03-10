@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { User } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 import { SendMessageDTO } from './dto/send-message.dto';
-import { Message } from './message.entity';
 import { MessageRepository } from './message.repository';
 import { Room } from './room.entity';
 import { RoomRepository } from './room.repository';

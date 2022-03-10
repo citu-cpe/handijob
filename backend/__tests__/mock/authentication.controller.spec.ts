@@ -9,10 +9,10 @@ import { UserRepository } from '../../src/user/user.repository';
 import * as bcrypt from 'bcrypt';
 import { UserDTO } from '../../src/user/dto/user.dto';
 import { createApp } from './utils/create-app';
-import { AccessTokenDTO } from '../../src/authentication/dto/access-token.dto';
 import { LoginResponseDTO } from '../../src/authentication/dto/login-response.dto';
 import { AccountTypes } from '../../src/account-type/types/account-types.enum';
 import { AccountType } from '../../src/account-type/account-type.entity';
+import { TokensDTO } from '../../src/authentication/dto/tokens.dto';
 
 describe('AuthenticationController', () => {
   let loginRoute: string;
@@ -69,7 +69,8 @@ describe('AuthenticationController', () => {
       .send(loginUserDTO)
       .expect(HttpStatus.OK);
 
-    const { user, accessToken, refreshToken } = body as LoginResponseDTO;
+    const { user, tokens } = body as LoginResponseDTO;
+    const { accessToken, refreshToken } = tokens;
 
     expect(user.email).toBe(loginUser.email);
     expect(accessToken).toBeTruthy();
@@ -132,7 +133,8 @@ describe('AuthenticationController', () => {
         .send(registerUserDTO)
         .expect(HttpStatus.CREATED);
 
-      const { user, accessToken, refreshToken } = body as LoginResponseDTO;
+      const { user, tokens } = body as LoginResponseDTO;
+      const { accessToken, refreshToken } = tokens;
 
       expect(user.email).toBe(registerUser.email);
       expect(accessToken).toBeTruthy();
@@ -214,7 +216,7 @@ describe('AuthenticationController', () => {
         .post(refreshRoute)
         .send({ refreshToken })
         .expect(HttpStatus.OK);
-      const { accessToken } = body as AccessTokenDTO;
+      const { accessToken } = body as TokensDTO;
 
       expect(accessToken).toBeTruthy();
     });

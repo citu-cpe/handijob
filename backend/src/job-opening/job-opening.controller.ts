@@ -8,11 +8,9 @@ import {
   Put,
   Req,
   UploadedFile,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
 import { RequestWithUser } from '../authentication/types/request-with-user.interface';
 import { UserDTO } from '../user/dto/user.dto';
 import { CreateJobOpeningDTO } from './dto/create-job-opening.dto';
@@ -28,7 +26,6 @@ export class JobOpeningController {
 
   constructor(private readonly jobOpeningService: JobOpeningService) {}
 
-  @UseGuards(JwtAuthenticationGuard)
   @Get()
   public getAllJobOpenings(): Promise<JobOpeningDTO[]> {
     return this.jobOpeningService.getAllJobOpenings();
@@ -41,7 +38,6 @@ export class JobOpeningController {
     return this.jobOpeningService.getJobOpeningsByEmployer(employerId);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @UseInterceptors(FileInterceptor('image', { dest: 'images' }))
   @Post()
   public createJobOpening(
@@ -56,7 +52,6 @@ export class JobOpeningController {
     );
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Delete()
   public deleteJobOpening(
     @Req() { user }: RequestWithUser,
@@ -65,7 +60,6 @@ export class JobOpeningController {
     return this.jobOpeningService.deleteJobOpening(user, jobOpeningDTO);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Put(JobOpeningController.ARCHIVE_JOB_OPENING)
   public archiveJobOpening(
     @Req() { user }: RequestWithUser,
@@ -74,7 +68,6 @@ export class JobOpeningController {
     return this.jobOpeningService.archiveJobOpening(user, jobOpeningDTO);
   }
 
-  @UseGuards(JwtAuthenticationGuard)
   @Get(JobOpeningController.GET_JOB_APPLICANTS)
   public getApplicants(
     @Req() { user }: RequestWithUser,

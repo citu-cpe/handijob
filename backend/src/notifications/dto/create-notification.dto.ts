@@ -2,10 +2,10 @@ import { IsUUID, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateNotificationDTO {
   @IsUUID()
-  @IsNotEmpty({ message: 'User id is required' })
+  @IsNotEmpty()
   public userId: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Content is required' })
+  @IsNotEmpty()
   public content: string;
 }
