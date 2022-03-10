@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { CategoryDTO } from './dto/category.dto';
+import { Categories } from './types/categories.enum';
 
 @Entity()
 export class Category {
@@ -18,8 +19,8 @@ export class Category {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @Column()
-  public name: string;
+  @Column({ type: 'enum', unique: true, enum: Categories })
+  public name: Categories;
 
   public toDTO(): CategoryDTO {
     return {

@@ -1,13 +1,11 @@
 import { HttpStatus } from '@nestjs/common';
 import { AuthenticationController } from '../../../src/authentication/authentication.controller';
-import { AccessTokenDTO } from '../../../src/authentication/dto/access-token.dto';
 import { LoginResponseDTO } from '../../../src/authentication/dto/login-response.dto';
 import { LoginUserDTO } from '../../../src/authentication/dto/login-user.dto';
 import { RegisterUserDTO } from '../../../src/authentication/dto/register-user.dto';
-import { User } from '../../../src/user/user.entity';
-import * as bcrypt from 'bcrypt';
 import { AccountTypes } from '../../../src/account-type/types/account-types.enum';
-import { AccountType } from '../../../src/account-type/account-type.entity';
+import { createUser, registerUser } from '../fixtures/auth.fixtures';
+import { TokensDTO } from '../../../src/authentication/dto/tokens.dto';
 
 const request = global.request;
 
@@ -17,36 +15,13 @@ describe('Authentication Controller', () => {
   let logoutRoute: string;
   let refreshRoute: string;
 
-  beforeAll(async () => {
+  beforeAll(() => {
     const authRoute = AuthenticationController.AUTH_API_ROUTE;
     loginRoute = authRoute + AuthenticationController.LOGIN_API_ROUTE;
     registerRoute = authRoute + AuthenticationController.REGISTER_API_ROUTE;
     logoutRoute = authRoute + AuthenticationController.LOGOUT_API_ROUTE;
     refreshRoute = authRoute + AuthenticationController.REFRESH_API_ROUTE;
   });
-
-  const createUser = async (
-    user: LoginUserDTO | RegisterUserDTO
-  ): Promise<User> => {
-    const newUser = new User();
-
-    newUser.id = '';
-    newUser.email = user.email;
-    newUser.createdAt = new Date();
-    newUser.updatedAt = new Date();
-    newUser.password = await bcrypt.hash(user.password, 10);
-
-    if (user instanceof RegisterUserDTO) {
-      newUser.username = user.username;
-      newUser.accountTypes = user.accountTypes.map((accountType) => {
-        const accType = new AccountType();
-        accType.type = accountType;
-        return accType;
-      });
-    }
-
-    return newUser;
-  };
 
   describe('POST /login', () => {
     it('should throw bad request exception when data is invalid', async () => {
@@ -93,7 +68,8 @@ describe('Authentication Controller', () => {
         .send(registerUserDTO)
         .expect(HttpStatus.CREATED);
 
-      const { user, accessToken, refreshToken } = body as LoginResponseDTO;
+      const { user, tokens } = body as LoginResponseDTO;
+      const { accessToken, refreshToken } = tokens;
 
       expect(user.email).toBe(registerUser.email);
       expect(accessToken).toBeTruthy();
@@ -140,30 +116,6 @@ describe('Authentication Controller', () => {
     });
   });
 
-  const registerUser = async () => {
-    const registerUserDTO: RegisterUserDTO = {
-      username: 'new_mock_user',
-      email: 'new_mock@mock.com',
-      password: 'mock',
-      accountTypes: [AccountTypes.FREELANCER],
-    };
-
-    const registerUser = await createUser(registerUserDTO);
-
-    const { body } = await request
-      .post(registerRoute)
-      .send(registerUserDTO)
-      .expect(HttpStatus.CREATED);
-
-    const { user, accessToken, refreshToken } = body as LoginResponseDTO;
-
-    expect(user.email).toBe(registerUser.email);
-    expect(accessToken).toBeTruthy();
-    expect(refreshToken).toBeTruthy();
-
-    return body;
-  };
-
   describe('POST /logout', () => {
     it('should successfully log out when user is sent', async () => {
       const { user } = await registerUser();
@@ -178,13 +130,14 @@ describe('Authentication Controller', () => {
 
   describe('POST /refresh', () => {
     it('should refresh access token', async () => {
-      const { refreshToken } = await registerUser();
+      const { tokens } = await registerUser();
+      const { refreshToken } = tokens;
 
       const { body } = await request
         .post(refreshRoute)
         .send({ refreshToken })
         .expect(HttpStatus.OK);
-      const { accessToken } = body as AccessTokenDTO;
+      const { accessToken } = body as TokensDTO;
 
       expect(accessToken).toBeTruthy();
     });

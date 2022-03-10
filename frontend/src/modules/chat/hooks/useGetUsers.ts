@@ -7,7 +7,7 @@ export const useGetUsers = () => {
   const api = useContext(ApiContext);
 
   const query = useQuery('users', () => api.getUsers());
-  let users: UserDTO[] = [];
+  let users: UserDTO[] | undefined;
 
   const { data } = query;
 

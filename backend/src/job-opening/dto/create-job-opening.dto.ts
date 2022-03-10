@@ -3,18 +3,17 @@ import { Categories } from '../../category/types/categories.enum';
 
 export class CreateJobOpeningDTO {
   @IsString()
-  @IsNotEmpty({ message: 'Title is required' })
+  @IsNotEmpty()
   public title: string;
 
   @IsString()
-  @IsNotEmpty({ message: 'Description is required' })
+  @IsNotEmpty()
   public description: string;
 
   @IsEnum(Categories, {
     each: true,
-    message: 'Each value must be a valid category',
   })
-  @ArrayNotEmpty({ message: 'Categories should not be empty' })
-  @IsNotEmpty({ message: 'Categories is required' })
+  @ArrayNotEmpty()
+  @IsNotEmpty()
   public categories: Categories[];
 }

@@ -8,6 +8,7 @@ import { MessageService } from './message.service';
 import { RoomRepository } from './room.repository';
 import { RoomService } from './room.service';
 
+// TODO: improve chat
 @Module({
   imports: [
     TypeOrmModule.forFeature([RoomRepository, MessageRepository]),

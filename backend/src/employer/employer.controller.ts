@@ -1,5 +1,4 @@
-import { Body, Controller, Put, Req, UseGuards } from '@nestjs/common';
-import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
+import { Body, Controller, Put, Req } from '@nestjs/common';
 import { RequestWithUser } from '../authentication/types/request-with-user.interface';
 import { EditEmployerDTO } from './dto/edit-employer.dto';
 import { EmployerService } from './employer.service';
@@ -10,7 +9,6 @@ export class EmployerController {
 
   constructor(private readonly employerService: EmployerService) {}
 
-  @UseGuards(JwtAuthenticationGuard)
   @Put()
   public editEmployer(
     @Req() { user }: RequestWithUser,

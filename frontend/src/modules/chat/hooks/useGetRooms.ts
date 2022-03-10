@@ -7,7 +7,7 @@ export const useGetRooms = () => {
   const api = useContext(ApiContext);
 
   const query = useQuery('rooms', () => api.getRoomsOfUser());
-  let rooms: RoomDTO[] = [];
+  let rooms: RoomDTO[] | undefined;
 
   const { data } = query;
 

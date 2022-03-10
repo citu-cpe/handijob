@@ -5,6 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { AccountTypes } from './types/account-types.enum';
 
 @Entity()
 export class AccountType {
@@ -17,6 +18,6 @@ export class AccountType {
   @UpdateDateColumn()
   public updatedAt: Date;
 
-  @Column({ unique: true })
-  public type: string;
+  @Column({ type: 'enum', unique: true, enum: AccountTypes })
+  public type: AccountTypes;
 }

@@ -8,6 +8,7 @@ import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from './authentication.controller';
 import { FreelancerModule } from '../freelancer/freelancer.module';
 import { EmployerModule } from '../employer/employer.module';
+import { EnvironmentVariableKeys } from '../config/environment-variable-keys';
 
 @Module({
   imports: [
@@ -20,9 +21,13 @@ import { EmployerModule } from '../employer/employer.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get('JWT_ACCESS_TOKEN_SECRET'),
+        secret: configService.get(
+          EnvironmentVariableKeys.JWT_ACCESS_TOKEN_SECRET
+        ),
         signOptions: {
-          expiresIn: configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME'),
+          expiresIn: configService.get(
+            EnvironmentVariableKeys.JWT_ACCESS_TOKEN_EXPIRATION_TIME
+          ),
         },
       }),
     }),

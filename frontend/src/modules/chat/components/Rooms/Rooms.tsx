@@ -24,7 +24,9 @@ export const Rooms = ({ rooms }: RoomsProps) => {
   const [filteredUsers, setFilteredUsers] = useState<UserDTO[]>([]);
 
   const resetUsers = () => {
-    setFilteredUsers(users);
+    if (users) {
+      setFilteredUsers(users);
+    }
     setSearch('');
   };
 
@@ -64,7 +66,9 @@ export const Rooms = ({ rooms }: RoomsProps) => {
   }, [rooms, queryClient]);
 
   useEffect(() => {
-    setFilteredUsers(users);
+    if (users) {
+      setFilteredUsers(users);
+    }
   }, [users]);
 
   useEffect(() => {
@@ -112,12 +116,14 @@ export const Rooms = ({ rooms }: RoomsProps) => {
               value={search}
               onChange={(e) => {
                 const searchString = e.target.value;
-                const newFilteredUsers = users.filter((u) =>
-                  u.username.includes(searchString)
-                );
+                const newFilteredUsers =
+                  users &&
+                  users.filter((u) => u.username.includes(searchString));
 
                 setSearch(searchString);
-                setFilteredUsers(newFilteredUsers);
+                if (newFilteredUsers) {
+                  setFilteredUsers(newFilteredUsers);
+                }
               }}
               placeholder='Search for users'
               bgColor='gray.200'
@@ -151,8 +157,9 @@ export const Rooms = ({ rooms }: RoomsProps) => {
                     <Box w='10' h='10' rounded='full' overflow='hidden'>
                       <Img
                         src={
-                          room.participants.find((p) =>
-                            users.map((u) => u.id).includes(p.id)
+                          room.participants.find(
+                            (p) =>
+                              users && users.map((u) => u.id).includes(p.id)
                           )?.imageUrl ||
                           'https://i0.wp.com/grocapitus.com/wp-content/uploads/placeholder-profile-male-500x500.png'
                         }

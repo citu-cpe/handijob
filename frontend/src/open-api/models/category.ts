@@ -41,5 +41,22 @@ export interface Category {
    * @type {string}
    * @memberof Category
    */
-  name: string;
+  name: CategoryNameEnum;
+}
+
+/**
+ * @export
+ * @enum {string}
+ */
+export enum CategoryNameEnum {
+  It = 'IT',
+  Art = 'Art',
+  ConstructionWorker = 'Construction Worker',
+  Foreman = 'Foreman',
+  Plumber = 'Plumber',
+  Carpenter = 'Carpenter',
+  Electrician = 'Electrician',
+  Welder = 'Welder',
+  AirconRepair = 'Aircon Repair',
+  GadgetRepair = 'Gadget Repair',
 }

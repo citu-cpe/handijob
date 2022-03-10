@@ -9,7 +9,6 @@ common.ts
 configuration.ts
 git_push.sh
 index.ts
-models/access-token-dto.ts
 models/account-type.ts
 models/category-dto.ts
 models/category.ts
@@ -35,11 +34,11 @@ models/message.ts
 models/notification-dto.ts
 models/notification.ts
 models/notifications-dto.ts
-models/refresh-token-dto.ts
 models/register-user-dto.ts
 models/room-dto.ts
 models/room.ts
 models/send-message-dto.ts
+models/tokens-dto.ts
 models/user-dto.ts
 models/user.ts
 models/work-experience-dto.ts

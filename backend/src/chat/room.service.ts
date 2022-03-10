@@ -13,6 +13,7 @@ export class RoomService {
   public async getRoomsOfUser(userId: string): Promise<RoomDTO[]> {
     const user = await this.userService.findById(userId);
 
+    // TODO: find by user
     const rooms = await this.roomRepository.find({
       relations: ['participants', 'messages', 'messages.sender'],
     });

@@ -1,5 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
-import { JwtAuthenticationGuard } from '../authentication/guards/jwtAuthentication.guard';
+import { Body, Controller, Post, Req } from '@nestjs/common';
 import { RequestWithUser } from '../authentication/types/request-with-user.interface';
 import { CreateWorkExperienceDTO } from './dto/create-work-experience.dto';
 import { FreelancerService } from './freelancer.service';
@@ -11,7 +10,6 @@ export class FreelancerController {
 
   constructor(private readonly freelancerService: FreelancerService) {}
 
-  @UseGuards(JwtAuthenticationGuard)
   @Post(FreelancerController.WORK_EXPERIENCE_API_ROUTE)
   public addWorkExperience(
     @Req() { user }: RequestWithUser,

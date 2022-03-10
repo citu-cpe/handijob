@@ -27,6 +27,7 @@ type AppPropsWithLayout = AppProps & {
 
 const queryClient = new QueryClient();
 
+// TODO: refresh every page unauthorized
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const user = useGlobalStore((state) => state.user);
   const loginUser = useGlobalStore((state) => state.loginUser);
@@ -47,10 +48,16 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const accessToken = localStorage.getItem(LocalStorageKeys.ACCESS_TOKEN)!;
     const refreshToken = localStorage.getItem(LocalStorageKeys.REFRESH_TOKEN)!;
 
+    if (!accessToken || !refreshToken) {
+      return logoutUser();
+    }
+
     const data: LoginResponseDTO = {
       user: userDTO,
-      accessToken,
-      refreshToken,
+      tokens: {
+        accessToken,
+        refreshToken,
+      },
     };
 
     loginUser(data);

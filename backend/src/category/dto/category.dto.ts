@@ -2,16 +2,16 @@ import { IsUUID, IsNotEmpty, IsDateString, IsString } from 'class-validator';
 
 export class CategoryDTO {
   @IsUUID()
-  @IsNotEmpty({ message: 'Id is required' })
+  @IsNotEmpty()
   public id: string;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public createdAt: Date;
 
-  @IsDateString(undefined, { message: 'Invalid date string' })
+  @IsDateString()
   public updatedAt: Date;
 
   @IsString()
-  @IsNotEmpty({ message: 'Category name is required' })
+  @IsNotEmpty()
   public name: string;
 }

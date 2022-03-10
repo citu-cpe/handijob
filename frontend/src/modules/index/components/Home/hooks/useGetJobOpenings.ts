@@ -8,7 +8,7 @@ export const useGetJobOpenings = () => {
 
   const query = useQuery('jobOpenings', () => api.getAllJobOpenings());
   const { data } = query;
-  let jobOpenings: JobOpeningDTO[] = [];
+  let jobOpenings: JobOpeningDTO[] | undefined;
 
   if (data) {
     jobOpenings = data.data;

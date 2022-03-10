@@ -10,7 +10,7 @@ import {
   SwaggerDocumentOptions,
 } from '@nestjs/swagger';
 import { v2 as cloudinary } from 'cloudinary';
-// import * as csurf from 'csurf';
+import { JwtAuthenticationGuard } from './authentication/guards/jwtAuthentication.guard';
 
 // FIXME: cookies not setting in production
 async function bootstrap() {
@@ -29,11 +29,12 @@ async function bootstrap() {
     });
   }
 
+  const reflector = app.get(Reflector);
+  app.useGlobalGuards(new JwtAuthenticationGuard(reflector));
   app.useGlobalPipes(new ValidationPipe());
-  app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
   app.use(cookieParser());
   app.use(helmet());
-  // app.use(csurf({ cookie: true }));
 
   app.setGlobalPrefix('/api/v1');
 
@@ -60,6 +61,7 @@ async function bootstrap() {
 }
 bootstrap();
 
+// TODO: refactor this
 declare global {
   namespace NodeJS {
     interface Global {
