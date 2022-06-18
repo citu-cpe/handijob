@@ -4,6 +4,9 @@
     "max-line-length": {
       "options": [120]
     },
+    "quotemark": [true, "single", "jsx-single"],
+    "ordered-imports": false,
+    "object-literal-sort-keys": false,
     "new-parens": true,
     "no-arg": true,
     "no-bitwise": true,
