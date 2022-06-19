@@ -6,8 +6,9 @@ import { RegisterUserDTO } from '../../../src/authentication/dto/register-user.d
 import { AccountTypes } from '../../../src/account-type/types/account-types.enum';
 import { createUser, registerUser } from '../fixtures/auth.fixtures';
 import { TokensDTO } from '../../../src/authentication/dto/tokens.dto';
+import { SuperTest, Test } from 'supertest';
 
-const request = global.request;
+const request: SuperTest<Test> = global.request;
 
 describe('Authentication Controller', () => {
   let loginRoute: string;
