@@ -26,20 +26,24 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   public async handleConnection(socket: Socket) {
     const userId = socket.handshake.headers.userid as string;
 
-    const rooms = await this.roomService.getRoomsOfUser(userId);
+    if (!!userId && userId !== 'undefined') {
+      const rooms = await this.roomService.getRoomsOfUser(userId);
 
-    for (const room of rooms) {
-      socket.join(room.id);
+      for (const room of rooms) {
+        socket.join(room.id);
+      }
     }
   }
 
   public async handleDisconnect(socket: Socket) {
     const userId = socket.handshake.headers.userid as string;
 
-    const rooms = await this.roomService.getRoomsOfUser(userId);
+    if (!!userId && userId !== 'undefined') {
+      const rooms = await this.roomService.getRoomsOfUser(userId);
 
-    for (const room of rooms) {
-      socket.leave(room.id);
+      for (const room of rooms) {
+        socket.leave(room.id);
+      }
     }
   }
 
@@ -50,11 +54,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   ) {
     const userId = socket.handshake.headers.userid as string;
 
-    await this.messageService.sendMessage(userId, sendMessageDTO);
+    if (!!userId && userId !== 'undefined') {
+      await this.messageService.sendMessage(userId, sendMessageDTO);
 
-    this.server
-      .to(sendMessageDTO.roomId)
-      .emit(WebSocketEvents.PRIVATE_MESSAGE, sendMessageDTO);
+      this.server
+        .to(sendMessageDTO.roomId)
+        .emit(WebSocketEvents.PRIVATE_MESSAGE, sendMessageDTO);
+    }
   }
 
   @SubscribeMessage(WebSocketEvents.MESSAGES_SEEN)
@@ -66,7 +72,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     const userId = socket.handshake.headers.userid as string;
 
-    this.server.to(userId).emit(WebSocketEvents.MESSAGES_SEEN);
+    if (!!userId && userId !== 'undefined') {
+      this.server.to(userId).emit(WebSocketEvents.MESSAGES_SEEN);
+    }
   }
 
   @SubscribeMessage(WebSocketEvents.JOIN_ROOM)
@@ -75,10 +83,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @ConnectedSocket() socket: Socket
   ) {
     const userId = socket.handshake.headers.userid as string;
-    const room = await this.roomService.joinRoom(userId, otherUserId);
 
-    socket.join(room.id);
+    if (!!userId && userId !== 'undefined') {
+      const room = await this.roomService.joinRoom(userId, otherUserId);
 
-    this.server.to(userId).emit(WebSocketEvents.JOIN_ROOM, room);
+      socket.join(room.id);
+
+      this.server.to(userId).emit(WebSocketEvents.JOIN_ROOM, room);
+    }
   }
 }

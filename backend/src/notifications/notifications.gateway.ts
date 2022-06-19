@@ -29,8 +29,15 @@ export class NotificationsGateway {
     const userId = jobOpening.employer.user.id;
     const clientUserId = socket.handshake.headers.userid;
 
-    this.server
-      .to(userId)
-      .emit(WebSocketEvents.NOTIFICATIONS, { clientUserId, userId });
+    if (
+      !!userId &&
+      userId !== 'undefined' &&
+      !!clientUserId &&
+      clientUserId !== 'undefined'
+    ) {
+      this.server
+        .to(userId)
+        .emit(WebSocketEvents.NOTIFICATIONS, { clientUserId, userId });
+    }
   }
 }

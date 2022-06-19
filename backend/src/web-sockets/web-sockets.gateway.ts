@@ -16,12 +16,16 @@ export class WebSocketsGateway
   public handleConnection(socket: Socket) {
     const userId = socket.handshake.headers.userid as string;
 
-    socket.join(userId);
+    if (!!userId && userId !== 'undefined') {
+      socket.join(userId);
+    }
   }
 
   public handleDisconnect(socket: Socket) {
     const userId = socket.handshake.headers.userid as string;
 
-    socket.leave(userId);
+    if (!!userId && userId !== 'undefined') {
+      socket.leave(userId);
+    }
   }
 }
