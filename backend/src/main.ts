@@ -2,7 +2,6 @@ import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 import { NestFactory, Reflector } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { Test, SuperTest } from 'supertest';
 import * as helmet from 'helmet';
 import {
   DocumentBuilder,
@@ -60,13 +59,3 @@ async function bootstrap() {
   await app.listen(process.env.PORT || 5001);
 }
 bootstrap();
-
-// TODO: refactor this
-declare global {
-  namespace NodeJS {
-    interface Global {
-      // used to add type in tests
-      request: SuperTest<Test>;
-    }
-  }
-}

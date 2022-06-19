@@ -1,6 +1,8 @@
 // TODO: create more tests
+import { SuperTest, Test } from 'supertest';
 
-const request = global.request;
+// TODO: make this variable global
+const request: SuperTest<Test> = global.request;
 
 describe('App Controller', () => {
   describe('GET /', () => {

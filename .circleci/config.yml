@@ -5,7 +5,7 @@ orbs:
   cypress: cypress-io/cypress@1
 
 jobs:
-  test-backend-integration:
+  test-backend:
     docker:
       - image: cimg/node:16.13
       - image: circleci/postgres
@@ -39,27 +39,6 @@ jobs:
       - run:
           name: Run backend integration tests
           command: npm run test:backend:ci
-          environment:
-            JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
-      - store_test_results:
-          path: ./backend/reports/junit/
-      - store_artifacts:
-          path: ./backend/reports/junit
-  test-backend-mock:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - run:
-          name: Install backend dependencies
-          command: npm install
-          working_directory: ./backend
-      - run:
-          name: Install JUnit coverage reporter
-          command: npm install -D jest-junit
-      - run:
-          name: Run backend mock tests
-          command: npm run test:backend:mock:ci
           environment:
             JEST_JUNIT_OUTPUT_DIR: ./reports/junit/
       - store_test_results:
@@ -127,11 +106,9 @@ jobs:
 workflows:
   test:
     jobs:
-      # - test-backend-integration:
-      #     name: Backend Integration Tests
-      # - test-backend-mock:
-      #     name: Backend Mock Integration Tests
+      - test-backend:
+          name: Backend Integration Tests
       - test-frontend:
           name: Frontend Component Tests
-      # - test-e2e:
-      #     name: E2E Tests
+      - test-e2e:
+          name: E2E Tests
